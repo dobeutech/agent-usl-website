@@ -27,18 +27,18 @@ export function Hero() {
             <Button
               size="lg"
               className="text-base px-8 py-6 h-auto group"
-              onClick={() => scrollToSection("contact")}
+              onClick={() => scrollToSection("apply")}
             >
-              Find Top Talent
+              Apply Now
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="text-base px-8 py-6 h-auto bg-background hover:bg-secondary"
-              onClick={() => scrollToSection("services")}
+              onClick={() => scrollToSection("contact")}
             >
-              Explore Services
+              Hire Talent
             </Button>
           </div>
         </div>

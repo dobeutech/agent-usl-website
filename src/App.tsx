@@ -1,28 +1,30 @@
-import { Navigation } from "@/components/Navigation"
-import { Hero } from "@/components/Hero"
-import { Services } from "@/components/Services"
-import { Industries } from "@/components/Industries"
-import { WhyChooseUs } from "@/components/WhyChooseUs"
-import { Testimonials } from "@/components/Testimonials"
-import { Contact } from "@/components/Contact"
-import { Footer } from "@/components/Footer"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { AuthProvider } from "@/contexts/AuthContext"
+import { ProtectedRoute } from "@/components/ProtectedRoute"
+import { Home } from "@/pages/Home"
+import { AdminLogin } from "@/pages/AdminLogin"
+import { AdminDashboard } from "@/pages/AdminDashboard"
 import { Toaster } from "@/components/ui/sonner"
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <main>
-        <Hero />
-        <Services />
-        <Industries />
-        <WhyChooseUs />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-      <Toaster />
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Toaster />
+      </Router>
+    </AuthProvider>
   )
 }
 

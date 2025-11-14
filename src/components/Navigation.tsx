@@ -17,6 +17,7 @@ export function Navigation() {
     { label: "Services", id: "services" },
     { label: "Industries", id: "industries" },
     { label: "About", id: "about" },
+    { label: "Apply Now", id: "apply" },
     { label: "Contact", id: "contact" },
   ]
 
@@ -45,9 +46,15 @@ export function Navigation() {
             ))}
           </div>
 
-          <div className="hidden md:block">
-            <Button onClick={() => scrollToSection("contact")} size="lg">
-              Get Started
+          <div className="hidden md:flex items-center gap-4">
+            <a
+              href="/admin/login"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Admin
+            </a>
+            <Button onClick={() => scrollToSection("apply")} size="lg">
+              Apply Now
             </Button>
           </div>
 
@@ -73,12 +80,18 @@ export function Navigation() {
               </button>
             ))}
             <Button
-              onClick={() => scrollToSection("contact")}
+              onClick={() => scrollToSection("apply")}
               className="w-full"
               size="lg"
             >
-              Get Started
+              Apply Now
             </Button>
+            <a
+              href="/admin/login"
+              className="block text-center text-sm text-muted-foreground hover:text-foreground py-2"
+            >
+              Admin Login
+            </a>
           </div>
         </div>
       )}
