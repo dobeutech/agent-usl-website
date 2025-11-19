@@ -1,93 +1,92 @@
 import { Card } from "@/components/ui/card"
 import { Zap, Heart, Shield, Users, Lightbulb, Handshake, Target, Award, Clock, Bus, GraduationCap, TrendingUp } from "lucide-react"
-
-const coreValues = [
-  {
-    icon: Zap,
-    title: "Empowerment",
-    description: "Equipping individuals with opportunities to thrive and succeed."
-  },
-  {
-    icon: Heart,
-    title: "Community Impact",
-    description: "Making a positive difference in the communities we serve."
-  },
-  {
-    icon: Shield,
-    title: "Integrity",
-    description: "Upholding honesty and ethical standards in all we do."
-  },
-  {
-    icon: Users,
-    title: "Inclusivity",
-    description: "Embracing diversity and creating opportunities for all."
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovation",
-    description: "Continuously improving our staffing solutions and services."
-  },
-  {
-    icon: Handshake,
-    title: "Collaboration",
-    description: "Building strong partnerships with clients and candidates."
-  },
-  {
-    icon: Target,
-    title: "Resilience",
-    description: "Adapting and overcoming challenges to deliver results."
-  },
-  {
-    icon: Award,
-    title: "Service Excellence",
-    description: "Committed to delivering outstanding service quality."
-  }
-]
-
-const keyFeatures = [
-  {
-    icon: Clock,
-    title: "24/7 Application Portal",
-    description: "Apply anytime, anywhere through our convenient online system."
-  },
-  {
-    icon: Bus,
-    title: "Transportation Services",
-    description: "We help ensure reliable transportation for our workforce."
-  },
-  {
-    icon: GraduationCap,
-    title: "Safety Training",
-    description: "Comprehensive training programs to keep everyone safe."
-  },
-  {
-    icon: TrendingUp,
-    title: "Performance Bonuses",
-    description: "Rewarding excellence and dedication in the workplace."
-  }
-]
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function WhyChooseUs() {
-  return (
+  const { t } = useLanguage()
+
+  const coreValues = [
+    {
+      icon: Zap,
+      title: t('whyChooseUs.empowerment.title'),
+      description: t('whyChooseUs.empowerment.description')
+    },
+    {
+      icon: Heart,
+      title: t('whyChooseUs.communityImpact.title'),
+      description: t('whyChooseUs.communityImpact.description')
+    },
+    {
+      icon: Shield,
+      title: t('whyChooseUs.integrity.title'),
+      description: t('whyChooseUs.integrity.description')
+    },
+    {
+      icon: Users,
+      title: t('whyChooseUs.inclusivity.title'),
+      description: t('whyChooseUs.inclusivity.description')
+    },
+    {
+      icon: Lightbulb,
+      title: t('whyChooseUs.innovation.title'),
+      description: t('whyChooseUs.innovation.description')
+    },
+    {
+      icon: Handshake,
+      title: t('whyChooseUs.collaboration.title'),
+      description: t('whyChooseUs.collaboration.description')
+    },
+    {
+      icon: Target,
+      title: t('whyChooseUs.resilience.title'),
+      description: t('whyChooseUs.resilience.description')
+    },
+    {
+      icon: Award,
+      title: t('whyChooseUs.serviceExcellence.title'),
+      description: t('whyChooseUs.serviceExcellence.description')
+    }
+  ]
+
+const keyFeatures = [
+    {
+      icon: Clock,
+      title: t('whyChooseUs.portal247.title'),
+      description: t('whyChooseUs.portal247.description')
+    },
+    {
+      icon: Bus,
+      title: t('whyChooseUs.transportation.title'),
+      description: t('whyChooseUs.transportation.description')
+    },
+    {
+      icon: GraduationCap,
+      title: t('whyChooseUs.safetyTraining.title'),
+      description: t('whyChooseUs.safetyTraining.description')
+    },
+    {
+      icon: TrendingUp,
+      title: t('whyChooseUs.performanceBonuses.title'),
+      description: t('whyChooseUs.performanceBonuses.description')
+    }
+  ]
+
+return (
     <section id="about" className="py-16 lg:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             <h2 className="font-heading font-bold text-3xl lg:text-4xl text-foreground mb-6">
-              Why Choose Unique Staffing Professionals Inc.?
+              {t('whyChooseUs.title')}
             </h2>
             <p className="text-lg text-foreground/80 mb-6 leading-relaxed">
-              Led by CEO Otniel Morilla, we are committed to expanding access to meaningful employment
-              through innovative staffing solutions and local partnerships.
+              {t('whyChooseUs.description1')}
             </p>
             <p className="text-base text-muted-foreground leading-relaxed mb-8">
-              Our community-focused approach combines comprehensive employment solutions with
-              dedicated support services including transportation assistance, safety training programs,
-              and performance incentives. We believe in empowering individuals and building bridges
-              between talent and opportunity.
+              {t('whyChooseUs.description2')}
             </p>
             <div className="space-y-4 mb-8">
-              <h3 className="font-heading font-semibold text-xl text-foreground">Key Features</h3>
+              <h3 className="font-heading font-semibold text-xl text-foreground">{t('whyChooseUs.keyFeatures')}</h3>
               <div className="grid grid-cols-2 gap-4">
                 {keyFeatures.map((feature, index) => {
                   const Icon = feature.icon
@@ -108,7 +107,7 @@ export function WhyChooseUs() {
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-xl text-foreground mb-6">Our Core Values</h3>
+            <h3 className="font-heading font-semibold text-xl text-foreground mb-6">{t('whyChooseUs.coreValues')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {coreValues.map((feature, index) => {
               const Icon = feature.icon

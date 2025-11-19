@@ -2,36 +2,37 @@ import { Card } from "@/components/ui/card"
 import { Sparkles, Users, ShoppingCart, Phone, Factory } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 
-const services = [
-  {
-    icon: Sparkles,
-    title: "Janitorial",
-    description: "Professional cleaning and facility maintenance services to keep your workspace spotless and welcoming."
-  },
-  {
-    icon: Users,
-    title: "Human Resources",
-    description: "Comprehensive staffing and recruitment solutions to build your ideal workforce."
-  },
-  {
-    icon: ShoppingCart,
-    title: "Retail & Sales",
-    description: "Customer-facing retail positions and sales roles to drive your business growth."
-  },
-  {
-    icon: Phone,
-    title: "Call Center & Customer Service",
-    description: "Support representatives and customer service specialists to enhance client satisfaction."
-  },
-  {
-    icon: Factory,
-    title: "Industrial & Manufacturing",
-    description: "Production workers, warehouse staff, and manufacturing positions for operational excellence."
-  }
-]
-
 export function Services() {
   const { t } = useLanguage()
+
+  const services = [
+    {
+      icon: Sparkles,
+      title: t('services.janitorial.title'),
+      description: t('services.janitorial.description')
+    },
+    {
+      icon: Users,
+      title: t('services.humanResources.title'),
+      description: t('services.humanResources.description')
+    },
+    {
+      icon: ShoppingCart,
+      title: t('services.retailSales.title'),
+      description: t('services.retailSales.description')
+    },
+    {
+      icon: Phone,
+      title: t('services.callCenter.title'),
+      description: t('services.callCenter.description')
+    },
+    {
+      icon: Factory,
+      title: t('services.industrial.title'),
+      description: t('services.industrial.description')
+    }
+  ]
+
   return (
     <section id="services" className="py-16 lg:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

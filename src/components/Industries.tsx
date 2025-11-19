@@ -1,59 +1,53 @@
 import { Card } from "@/components/ui/card"
 import { Sparkles, Users, ShoppingCart, Phone, Factory, MapPin } from "lucide-react"
-
-const regions = [
-  { name: "Washington D.C.", abbr: "DC" },
-  { name: "Maryland", abbr: "MD" },
-  { name: "Virginia", abbr: "VA" },
-  { name: "Illinois", abbr: "IL" },
-  { name: "Ohio", abbr: "OH" },
-  { name: "New Jersey", abbr: "NJ" }
-]
-
-const industries = [
-  {
-    icon: Sparkles,
-    title: "Janitorial",
-    description: "Professional cleaning and maintenance"
-  },
-  {
-    icon: Users,
-    title: "Human Resources",
-    description: "Staffing and recruitment solutions"
-  },
-  {
-    icon: ShoppingCart,
-    title: "Retail & Sales",
-    description: "Customer-facing positions"
-  },
-  {
-    icon: Phone,
-    title: "Call Center",
-    description: "Customer service specialists"
-  },
-  {
-    icon: Factory,
-    title: "Industrial",
-    description: "Manufacturing and warehouse"
-  }
-]
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function Industries() {
+  const { t } = useLanguage()
+
+  const industries = [
+    {
+      icon: Sparkles,
+      title: t('industries.janitorial'),
+      description: t('industries.janitorialDesc')
+    },
+    {
+      icon: Users,
+      title: t('industries.humanResources'),
+      description: t('industries.humanResourcesDesc')
+    },
+    {
+      icon: ShoppingCart,
+      title: t('industries.retailSales'),
+      description: t('industries.retailSalesDesc')
+    },
+    {
+      icon: Phone,
+      title: t('industries.callCenter'),
+      description: t('industries.callCenterDesc')
+    },
+    {
+      icon: Factory,
+      title: t('industries.industrial'),
+      description: t('industries.industrialDesc')
+    }
+  ]
+
   return (
     <section id="industries" className="py-16 lg:py-24 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-heading font-bold text-3xl lg:text-4xl text-foreground mb-4">
-            Where We Serve
+            {t('industries.title')}
           </h2>
           <div className="flex items-center justify-center gap-2 mb-4">
             <MapPin className="text-primary" size={20} />
             <p className="text-lg font-semibold text-foreground">
-              Serving Washington D.C., Maryland, Virginia, Illinois, Ohio, and New Jersey
+              {t('industries.servingRegions')}
             </p>
           </div>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto">
-            Professional staffing solutions across five key industries
+            {t('industries.subtitle')}
           </p>
         </div>
 
