@@ -5,9 +5,39 @@
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: auto;
+    height: auto;
+    padding: 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    z-index: 9999;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-md);
   }
 }
 

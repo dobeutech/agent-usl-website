@@ -1,9 +1,11 @@
 import { Phone, Mail, MapPin, MessageSquare, Printer } from "lucide-react"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { BusinessAddress, BusinessPhone, BusinessEmail } from "@/components/seo/NAPDisplay"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function Footer() {
   const { businessInfo } = useBusinessInfo()
+  const { t } = useLanguage()
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -44,14 +46,14 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">Quick Links</h4>
+            <h4 className="font-heading font-semibold text-lg mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2">
               <li>
                 <button
                   onClick={() => scrollToSection("services")}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  Services
+                  {t('nav.services')}
                 </button>
               </li>
               <li>
@@ -59,7 +61,7 @@ export function Footer() {
                   onClick={() => scrollToSection("industries")}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  Industries
+                  {t('nav.industries')}
                 </button>
               </li>
               <li>
@@ -67,7 +69,7 @@ export function Footer() {
                   onClick={() => scrollToSection("about")}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  About Us
+                  {t('nav.about')}
                 </button>
               </li>
               <li>
@@ -75,14 +77,14 @@ export function Footer() {
                   onClick={() => scrollToSection("contact")}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  Contact
+                  {t('nav.contact')}
                 </button>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">Contact Info</h4>
+            <h4 className="font-heading font-semibold text-lg mb-4">{t('footer.contactUs')}</h4>
             <ul className="space-y-3 text-primary-foreground/80 text-sm">
               <li className="flex items-start gap-2">
                 <MapPin size={18} className="flex-shrink-0 mt-0.5" />
@@ -109,7 +111,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center text-primary-foreground/60 text-sm">
-          <p>&copy; {new Date().getFullYear()} {businessInfo.name}. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {businessInfo.name}. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

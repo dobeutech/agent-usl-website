@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card"
 import { Sparkles, Users, ShoppingCart, Phone, Factory } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 const services = [
   {
@@ -30,15 +31,16 @@ const services = [
 ]
 
 export function Services() {
+  const { t } = useLanguage()
   return (
     <section id="services" className="py-16 lg:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-heading font-bold text-3xl lg:text-4xl text-foreground mb-4">
-            Industries We Serve
+            {t('services.title')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Professional staffing solutions across diverse industries
+            {t('services.subtitle')}
           </p>
         </div>
 

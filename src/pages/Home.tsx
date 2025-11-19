@@ -10,9 +10,11 @@ import { Footer } from "@/components/Footer"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { SEOHead } from "@/components/seo/SEOHead"
 import { StructuredData } from "@/components/seo/StructuredData"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function Home() {
   const { businessInfo } = useBusinessInfo()
+  const { t } = useLanguage()
 
   if (!businessInfo) {
     return (
@@ -24,6 +26,12 @@ export function Home() {
 
   return (
     <div className="min-h-screen">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only"
+      >
+        {t('accessibility.skipToContent')}
+      </a>
       <SEOHead
         businessInfo={businessInfo}
         keywords={[
@@ -38,7 +46,7 @@ export function Home() {
       />
       <StructuredData businessInfo={businessInfo} type="home" />
       <Navigation />
-      <main>
+      <main id="main-content">
         <Hero />
         <Services />
         <Industries />

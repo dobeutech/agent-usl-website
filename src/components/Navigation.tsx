@@ -1,9 +1,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { List, X } from "@phosphor-icons/react"
+import { ThemeToggle } from "@/components/ThemeToggle"
+import { LanguageToggle } from "@/components/LanguageToggle"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { t } = useLanguage()
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -14,11 +18,11 @@ export function Navigation() {
   }
 
   const navItems = [
-    { label: "Services", id: "services" },
-    { label: "Industries", id: "industries" },
-    { label: "About", id: "about" },
-    { label: "Apply Now", id: "apply" },
-    { label: "Contact", id: "contact" },
+    { label: t('nav.services'), id: "services" },
+    { label: t('nav.industries'), id: "industries" },
+    { label: t('nav.about'), id: "about" },
+    { label: t('nav.apply'), id: "apply" },
+    { label: t('nav.contact'), id: "contact" },
   ]
 
   return (
@@ -46,7 +50,9 @@ export function Navigation() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
+            <LanguageToggle />
+            <ThemeToggle />
             <a
               href="/admin/login"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -54,16 +60,21 @@ export function Navigation() {
               Admin
             </a>
             <Button onClick={() => scrollToSection("apply")} size="lg">
-              Apply Now
+              {t('nav.apply')}
             </Button>
           </div>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-foreground"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <List size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <LanguageToggle />
+            <ThemeToggle />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-foreground"
+              aria-label={mobileMenuOpen ? t('accessibility.closeMenu') : t('accessibility.openMenu')}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <List size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -84,7 +95,7 @@ export function Navigation() {
               className="w-full"
               size="lg"
             >
-              Apply Now
+              {t('nav.apply')}
             </Button>
             <a
               href="/admin/login"
