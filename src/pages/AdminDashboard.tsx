@@ -9,10 +9,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { SignOut, MagnifyingGlass, Download, Eye, Funnel, SortAscending } from "@phosphor-icons/react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { SignOut, MagnifyingGlass, Download, Eye, Funnel, SortAscending, Buildings } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { useAuth } from "@/contexts/AuthContext"
 import { supabase, Applicant } from "@/lib/supabase"
+import { BusinessInfoManager } from "@/components/admin/BusinessInfoManager"
 
 const statusColors = {
   new: "bg-blue-100 text-blue-800",
@@ -215,6 +217,16 @@ export function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Tabs defaultValue="applicants" className="w-full">
+          <TabsList className="mb-6">
+            <TabsTrigger value="applicants">Applicants</TabsTrigger>
+            <TabsTrigger value="business-info">
+              <Buildings size={16} className="mr-2" />
+              Business Info & SEO
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="applicants"  className="space-y-6">
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
           <Card className="p-4">
@@ -371,7 +383,6 @@ export function AdminDashboard() {
             </Table>
           </div>
         </Card>
-      </main>
 
       {/* Detail Dialog */}
       <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
@@ -487,6 +498,13 @@ export function AdminDashboard() {
           )}
         </DialogContent>
       </Dialog>
+          </TabsContent>
+
+          <TabsContent value="business-info">
+            <BusinessInfoManager />
+          </TabsContent>
+        </Tabs>
+      </main>
     </div>
   )
 }

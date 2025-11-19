@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
 import { Phone, Mail, MapPin, Printer, MessageSquare } from "lucide-react"
 import { toast } from "sonner"
+import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
+import { BusinessAddress, BusinessPhone, BusinessEmail } from "@/components/seo/NAPDisplay"
 
 interface ContactSubmission {
   id: string
@@ -19,6 +21,7 @@ interface ContactSubmission {
 }
 
 export function Contact() {
+  const { businessInfo } = useBusinessInfo()
   const [submissions, setSubmissions] = useKV<ContactSubmission[]>("contact-submissions", [])
   const [formData, setFormData] = useState({
     name: "",
@@ -55,6 +58,8 @@ export function Contact() {
 
     setIsSubmitting(false)
   }
+
+  if (!businessInfo) return null
 
   return (
     <section id="contact" className="py-16 lg:py-24 bg-background">
@@ -151,9 +156,7 @@ export function Contact() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Phone</h3>
                   <p className="text-muted-foreground text-sm">Mon-Fri 8am-6pm</p>
-                  <a href="tel:+13012385182" className="text-primary hover:underline font-medium">
-                    (301) 238-5182
-                  </a>
+                  <BusinessPhone businessInfo={businessInfo} type="phone" className="text-primary hover:underline font-medium" />
                 </div>
               </div>
             </Card>
@@ -166,9 +169,7 @@ export function Contact() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Text for Work</h3>
                   <p className="text-muted-foreground text-sm">Quick response via text</p>
-                  <a href="sms:+13012385183" className="text-primary hover:underline font-medium">
-                    1 (301) 238-5183
-                  </a>
+                  <BusinessPhone businessInfo={businessInfo} type="text" className="text-primary hover:underline font-medium" />
                 </div>
               </div>
             </Card>
@@ -182,7 +183,7 @@ export function Contact() {
                   <h3 className="font-semibold text-foreground mb-1">Fax</h3>
                   <p className="text-muted-foreground text-sm">Document submissions</p>
                   <span className="text-primary font-medium">
-                    (240) 392-3898
+                    <BusinessPhone businessInfo={businessInfo} type="fax" />
                   </span>
                 </div>
               </div>
@@ -196,9 +197,7 @@ export function Contact() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Email</h3>
                   <p className="text-muted-foreground text-sm">We'll respond within 24 hours</p>
-                  <a href="mailto:info@uniquestaffingprofessionals.com" className="text-primary hover:underline font-medium break-all">
-                    info@uniquestaffingprofessionals.com
-                  </a>
+                  <BusinessEmail businessInfo={businessInfo} className="text-primary hover:underline font-medium break-all" />
                 </div>
               </div>
             </Card>
@@ -210,11 +209,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Office Address</h3>
-                  <p className="text-muted-foreground text-sm">
-                    6200 Baltimore Avenue<br />
-                    Floor 3, Suite R35<br />
-                    Riverdale, MD 20737
-                  </p>
+                  <BusinessAddress businessInfo={businessInfo} className="text-muted-foreground text-sm" />
                 </div>
               </div>
             </Card>
