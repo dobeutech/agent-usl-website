@@ -1,0 +1,219 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual triggering
+
+# Ensure only one deployment runs at a time
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '20'
+  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+jobs:
+  # Pre-deployment checks
+  pre-deployment-checks:
+    name: Pre-Deployment Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit
+        run: |
+          npm audit --audit-level=high || {
+            echo "⚠️ High severity vulnerabilities found!"
+            echo "Please fix before deploying to production"
+            exit 1
+          }
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Lint check
+        run: npm run lint
+
+      - name: Build test
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Check for sensitive data
+        run: |
+          # Check for potential secrets in code
+          if grep -r "api[_-]key\|secret\|password" src/ --exclude-dir=node_modules | grep -v "placeholder\|example"; then
+            echo "⚠️ Potential sensitive data found in source code"
+            exit 1
+          fi
+          echo "✅ No sensitive data detected"
+
+  # Security scan before deployment
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: pre-deployment-checks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'unique-staffing-professionals'
+          path: '.'
+          format: 'HTML'
+        continue-on-error: true
+
+      - name: Upload dependency check results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dependency-check-report
+          path: reports/
+
+  # Build for production
+  build-production:
+    name: Build Production
+    runs-on: ubuntu-latest
+    needs: [pre-deployment-checks, security-scan]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --production=false
+
+      - name: Build for production
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          if [ ! -d "dist" ] || [ -z "$(ls -A dist)" ]; then
+            echo "❌ Build failed or dist directory is empty"
+            exit 1
+          fi
+          echo "✅ Build verified successfully"
+          ls -lah dist/
+
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: dist/
+          retention-days: 30
+
+  # Deploy to Netlify
+  deploy-to-netlify:
+    name: Deploy to Netlify
+    runs-on: ubuntu-latest
+    needs: build-production
+    environment:
+      name: production
+      url: https://uniquestaffingprofessionals.com
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download production build
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build
+          path: dist/
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './dist'
+          production-branch: main
+          production-deploy: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions - ${{ github.event.head_commit.message }}"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          enable-commit-status: true
+          alias: production
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 10
+
+  # Post-deployment verification
+  post-deployment-check:
+    name: Post-Deployment Verification
+    runs-on: ubuntu-latest
+    needs: deploy-to-netlify
+    steps:
+      - name: Wait for deployment to stabilize
+        run: sleep 30
+
+      - name: Check website availability
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://uniquestaffingprofessionals.com)
+          if [ "$response" -eq 200 ]; then
+            echo "✅ Website is live and responding"
+          else
+            echo "❌ Website returned status code: $response"
+            exit 1
+          fi
+
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            https://uniquestaffingprofessionals.com
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  # Notify on success/failure
+  notify:
+    name: Deployment Notification
+    runs-on: ubuntu-latest
+    needs: [deploy-to-netlify, post-deployment-check]
+    if: always()
+    steps:
+      - name: Deployment Status
+        run: |
+          if [ "${{ needs.post-deployment-check.result }}" == "success" ]; then
+            echo "🎉 Production deployment successful!"
+            echo "URL: https://uniquestaffingprofessionals.com"
+          else
+            echo "❌ Production deployment failed!"
+            exit 1
+          fi
+
