@@ -17,7 +17,7 @@ export function JobListings() {
   const [searchZip, setSearchZip] = useState("")
   const [loading, setLoading] = useState(true)
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { once: true, amount: 0.1 })
 
   useEffect(() => {
     fetchJobs()
@@ -171,7 +171,7 @@ export function JobListings() {
             ref={ref}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            animate="visible"
             variants={containerVariants}
           >
             {filteredJobs.map((job) => (

@@ -68,7 +68,7 @@ serve(async (req) => {
     }
 
     // GET /applicants/:id - Get single applicant
-    if (path.match(/^\/applicants\/[^\/]+$/) && req.method === 'GET') {
+    if (path.match(/^\/applicants\/[^/]+$/) && req.method === 'GET') {
       const id = path.split('/').pop()
 
       const { data, error } = await supabaseClient
@@ -86,7 +86,7 @@ serve(async (req) => {
     }
 
     // PUT /applicants/:id - Update applicant
-    if (path.match(/^\/applicants\/[^\/]+$/) && req.method === 'PUT') {
+    if (path.match(/^\/applicants\/[^/]+$/) && req.method === 'PUT') {
       const id = path.split('/').pop()
       const body = await req.json()
 

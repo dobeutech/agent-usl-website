@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Upload, CheckCircle, X, AlertCircle, FileText } from "lucide-react"
 import { toast } from "sonner"
 import { supabase, ApplicantInsert, ApplicantDocument } from "@/lib/supabase"
+import { useLanguage } from "@/contexts/LanguageContext"
 import {
   normalizePhone,
   checkPhoneDuplicate,
@@ -49,6 +50,7 @@ const DOCUMENT_TYPES = [
 ]
 
 export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -342,11 +344,11 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
               {/* Personal Information */}
               <div className="space-y-6">
                 <h3 className="font-heading font-semibold text-xl text-foreground">
-                  Personal Information
+                  {t('applyForm.personalInfo')}
                 </h3>
 
                 <div className="space-y-2">
-                  <Label htmlFor="full_name">Full Name *</Label>
+                  <Label htmlFor="full_name">{t('applyForm.fullName')} *</Label>
                   <Input
                     id="full_name"
                     value={formData.full_name}
@@ -364,7 +366,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
 
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
+                    <Label htmlFor="email">{t('applyForm.email')} *</Label>
                     <Input
                       id="email"
                       type="email"
@@ -382,7 +384,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email_confirmed">Confirm Email *</Label>
+                    <Label htmlFor="email_confirmed">{t('applyForm.emailConfirm')} *</Label>
                     <Input
                       id="email_confirmed"
                       type="email"
@@ -401,7 +403,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Label htmlFor="phone">{t('applyForm.phone')} *</Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -422,11 +424,11 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
               {/* Professional Information */}
               <div className="space-y-6">
                 <h3 className="font-heading font-semibold text-xl text-foreground">
-                  Professional Information
+                  {t('applyForm.professionalInfo')}
                 </h3>
 
                 <div className="space-y-3">
-                  <Label>Positions/Fields of Interest * (Select all that apply)</Label>
+                  <Label>{t('applyForm.positionsLabel')} * {t('applyForm.selectAllApply')}</Label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {POSITIONS.map((position) => (
                       <div key={position} className="flex items-center space-x-2">
@@ -453,7 +455,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="experience_years">Years of Experience *</Label>
+                  <Label htmlFor="experience_years">{t('applyForm.experience')} *</Label>
                   <select
                     id="experience_years"
                     value={formData.experience_years}
@@ -476,7 +478,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="resume">Resume/CV *</Label>
+                  <Label htmlFor="resume">{t('applyForm.resume')} *</Label>
                   <div className="flex items-center gap-4">
                     <Input
                       ref={resumeInputRef}
@@ -493,7 +495,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                       className="w-full sm:w-auto"
                     >
                       <Upload className="mr-2 h-4 w-4" />
-                      {resume ? "Change Resume" : "Upload Resume"}
+                      {resume ? t('applyForm.changeResume') : t('applyForm.uploadResume')}
                     </Button>
                     {resume && (
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -514,7 +516,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="cover_letter_text">Cover Letter (Optional)</Label>
+                  <Label htmlFor="cover_letter_text">{t('applyForm.coverLetter')} (Optional)</Label>
                   <Textarea
                     id="cover_letter_text"
                     value={formData.cover_letter_text}
@@ -593,7 +595,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="job_posting_url">Job Posting URL</Label>
+                    <Label htmlFor="job_posting_url">{t('applyForm.jobPostingUrlOptional')}</Label>
                     <Input
                       id="job_posting_url"
                       type="url"
@@ -614,7 +616,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="linkedin_url">LinkedIn Profile</Label>
+                    <Label htmlFor="linkedin_url">{t('applyForm.linkedinProfileOptional')}</Label>
                     <Input
                       id="linkedin_url"
                       type="url"
@@ -632,7 +634,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="portfolio_url">Portfolio or Career Site</Label>
+                    <Label htmlFor="portfolio_url">{t('applyForm.portfolioSiteOptional')}</Label>
                     <Input
                       id="portfolio_url"
                       type="url"

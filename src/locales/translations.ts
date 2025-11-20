@@ -121,13 +121,27 @@ export interface Translations {
     subtitle: string
     personalInfo: string
     professionalInfo: string
+    additionalQuestions: string
     fullName: string
     email: string
+    emailConfirm: string
     phone: string
     position: string
+    positionsLabel: string
+    selectAllApply: string
     experience: string
     resume: string
     coverLetter: string
+    additionalDocs: string
+    additionalDocsOptional: string
+    documentType: string
+    addDocument: string
+    jobPostingUrl: string
+    jobPostingUrlOptional: string
+    linkedinProfile: string
+    linkedinProfileOptional: string
+    portfolioSite: string
+    portfolioSiteOptional: string
     submit: string
     submitting: string
     success: string
@@ -147,6 +161,24 @@ export interface Translations {
     years3to5: string
     years6to10: string
     years10plus: string
+  }
+  cookieConsent: {
+    title: string
+    description: string
+    acceptAll: string
+    rejectAll: string
+    customize: string
+    savePreferences: string
+    back: string
+    essential: string
+    essentialDesc: string
+    analytics: string
+    analyticsDesc: string
+    marketing: string
+    marketingDesc: string
+    ccpaNotice: string
+    learnMore: string
+    privacyPolicy: string
   }
   testimonials: {
     title: string
@@ -474,13 +506,27 @@ export const translations: Record<Language, Translations> = {
       subtitle: 'Submit your application and let us match you with the perfect opportunity',
       personalInfo: 'Personal Information',
       professionalInfo: 'Professional Information',
+      additionalQuestions: 'Additional Questions',
       fullName: 'Full Name',
       email: 'Email Address',
+      emailConfirm: 'Confirm Email',
       phone: 'Phone Number',
       position: 'Position/Field of Interest',
+      positionsLabel: 'Positions/Fields of Interest',
+      selectAllApply: '(Select all that apply)',
       experience: 'Years of Experience',
       resume: 'Resume/CV',
-      coverLetter: 'Cover Letter (Optional)',
+      coverLetter: 'Cover Letter',
+      additionalDocs: 'Additional Documents',
+      additionalDocsOptional: 'Additional Documents (Optional)',
+      documentType: 'Document Type',
+      addDocument: 'Add Another Document',
+      jobPostingUrl: 'Job Posting URL',
+      jobPostingUrlOptional: 'Job Posting URL (Optional)',
+      linkedinProfile: 'LinkedIn Profile',
+      linkedinProfileOptional: 'LinkedIn Profile (Optional)',
+      portfolioSite: 'Portfolio or Career Site',
+      portfolioSiteOptional: 'Portfolio or Career Site (Optional)',
       submit: 'Submit Application',
       submitting: 'Submitting Application...',
       success: 'Application submitted successfully! We will contact you soon.',
@@ -500,6 +546,24 @@ export const translations: Record<Language, Translations> = {
       years3to5: '3-5 years',
       years6to10: '6-10 years',
       years10plus: '10+ years',
+    },
+    cookieConsent: {
+      title: 'We Value Your Privacy',
+      description: 'We use cookies to enhance your browsing experience, analyze site traffic, and provide personalized content. You can customize your preferences below.',
+      acceptAll: 'Accept All Cookies',
+      rejectAll: 'Reject All',
+      customize: 'Customize Preferences',
+      savePreferences: 'Save My Preferences',
+      back: 'Back',
+      essential: 'Essential Cookies',
+      essentialDesc: 'These cookies are necessary for the website to function and cannot be disabled. They enable core functionality such as security, network management, and accessibility.',
+      analytics: 'Analytics Cookies',
+      analyticsDesc: 'These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously. This includes tracking IP address, location, device type, browser information, time on page, scroll depth, and referral sources.',
+      marketing: 'Marketing Cookies',
+      marketingDesc: 'These cookies are used to track your activity across websites to deliver personalized advertisements and measure campaign effectiveness. This includes tracking UTM parameters, device fingerprinting, and user behavior patterns.',
+      ccpaNotice: 'California Residents: You have the right to opt-out of the sale of your personal information. Click "Reject All" to exercise this right. For more information, contact us at omorilla@uniquestaffingprofessionals.com',
+      learnMore: 'Learn more in our',
+      privacyPolicy: 'Privacy Policy',
     },
     testimonials: {
       title: 'What Our Clients Say',
@@ -825,13 +889,27 @@ export const translations: Record<Language, Translations> = {
       subtitle: 'Envíe su solicitud y permítanos conectarlo con la oportunidad perfecta',
       personalInfo: 'Información Personal',
       professionalInfo: 'Información Profesional',
+      additionalQuestions: 'Preguntas Adicionales',
       fullName: 'Nombre Completo',
       email: 'Correo Electrónico',
+      emailConfirm: 'Confirmar Correo Electrónico',
       phone: 'Número de Teléfono',
       position: 'Puesto/Campo de Interés',
+      positionsLabel: 'Puestos/Campos de Interés',
+      selectAllApply: '(Seleccione todos los que correspondan)',
       experience: 'Años de Experiencia',
       resume: 'Currículum',
-      coverLetter: 'Carta de Presentación (Opcional)',
+      coverLetter: 'Carta de Presentación',
+      additionalDocs: 'Documentos Adicionales',
+      additionalDocsOptional: 'Documentos Adicionales (Opcional)',
+      documentType: 'Tipo de Documento',
+      addDocument: 'Agregar Otro Documento',
+      jobPostingUrl: 'URL de Oferta de Trabajo',
+      jobPostingUrlOptional: 'URL de Oferta de Trabajo (Opcional)',
+      linkedinProfile: 'Perfil de LinkedIn',
+      linkedinProfileOptional: 'Perfil de LinkedIn (Opcional)',
+      portfolioSite: 'Portafolio o Sitio Profesional',
+      portfolioSiteOptional: 'Portafolio o Sitio Profesional (Opcional)',
       submit: 'Enviar Solicitud',
       submitting: 'Enviando Solicitud...',
       success: '¡Solicitud enviada con éxito! Nos pondremos en contacto pronto.',
@@ -1176,13 +1254,27 @@ export const translations: Record<Language, Translations> = {
       subtitle: 'Soumettez votre candidature et laissez-nous vous connecter avec l\'opportunité parfaite',
       personalInfo: 'Informations Personnelles',
       professionalInfo: 'Informations Professionnelles',
+      additionalQuestions: 'Questions Supplémentaires',
       fullName: 'Nom Complet',
       email: 'Adresse Email',
+      emailConfirm: 'Confirmer l\'Adresse Email',
       phone: 'Numéro de Téléphone',
       position: 'Poste/Domaine d\'Intérêt',
+      positionsLabel: 'Postes/Domaines d\'Intérêt',
+      selectAllApply: '(Sélectionnez toutes les options applicables)',
       experience: 'Années d\'Expérience',
       resume: 'CV',
-      coverLetter: 'Lettre de Motivation (Optionnel)',
+      coverLetter: 'Lettre de Motivation',
+      additionalDocs: 'Documents Supplémentaires',
+      additionalDocsOptional: 'Documents Supplémentaires (Optionnel)',
+      documentType: 'Type de Document',
+      addDocument: 'Ajouter un Autre Document',
+      jobPostingUrl: 'URL de l\'Offre d\'Emploi',
+      jobPostingUrlOptional: 'URL de l\'Offre d\'Emploi (Optionnel)',
+      linkedinProfile: 'Profil LinkedIn',
+      linkedinProfileOptional: 'Profil LinkedIn (Optionnel)',
+      portfolioSite: 'Portfolio ou Site Professionnel',
+      portfolioSiteOptional: 'Portfolio ou Site Professionnel (Optionnel)',
       submit: 'Soumettre la Candidature',
       submitting: 'Envoi de la Candidature...',
       success: 'Candidature soumise avec succès ! Nous vous contacterons bientôt.',

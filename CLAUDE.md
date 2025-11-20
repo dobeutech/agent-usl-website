@@ -10,14 +10,20 @@ A professional staffing agency website with integrated applicant tracking system
 
 ```bash
 # Development
-npm run dev          # Start dev server (default port 5173)
-npm run build        # Production build (TypeScript + Vite)
-npm run preview      # Preview production build
+npm run dev          # Start dev server (port 5173)
+npm run build        # Production build (skips type checking for speed)
+npm run preview      # Preview production build locally
 npm run lint         # Run ESLint
 
-# Port management (Linux/Mac)
-npm run kill         # Kill process on port 5000
+# Deployment (Netlify)
+npx netlify deploy --prod    # Deploy to production
+npx netlify deploy           # Deploy preview
+
+# Type checking (not in scripts, run manually)
+npx tsc --noEmit             # Full type check without building
 ```
+
+**Note**: The build script uses `tsc -b --noCheck` which skips type checking for faster builds. Run `npx tsc --noEmit` separately for type validation.
 
 ## Architecture
 
@@ -123,3 +129,10 @@ Complete setup SQL and storage bucket configuration in `SUPABASE_SETUP.md`. Key 
 ## Vite Configuration
 
 Uses GitHub Spark plugins for icon optimization. The `createIconImportProxy` and `sparkPlugin` must not be removed from vite.config.ts.
+
+## Important Notes
+
+- **No test suite**: This project currently has no testing framework or test scripts
+- **shadcn/ui components**: Located in `src/components/ui/`, do not modify these directly—customize via CSS variables or wrapper components
+- **Tailwind v4**: Uses the new `@tailwindcss/vite` plugin, not PostCSS configuration
+- **OKLCH colors**: Theme uses OKLCH color space for better color interpolation

@@ -1,0 +1,205 @@
+name: Code Quality
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [develop]
+
+jobs:
+  # Code formatting and style check
+  formatting:
+    name: Code Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check code formatting (if Prettier configured)
+        run: |
+          if [ -f ".prettierrc" ] || [ -f ".prettierrc.json" ]; then
+            npx prettier --check "src/**/*.{ts,tsx,js,jsx}"
+          else
+            echo "Prettier not configured, skipping"
+          fi
+        continue-on-error: true
+
+  # TypeScript strict mode check
+  typescript-strict:
+    name: TypeScript Strict Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit --strict
+
+      - name: Check for any types
+        run: |
+          if grep -r ": any" src/ --exclude-dir=node_modules | grep -v ".test." | grep -v "TODO"; then
+            echo "⚠️ Found 'any' types in source code"
+            echo "Consider using proper types for better type safety"
+          fi
+        continue-on-error: true
+
+  # Bundle size check
+  bundle-size:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Analyze bundle size
+        run: |
+          echo "📦 Bundle Size Analysis"
+          echo "======================="
+          du -sh dist/
+          du -sh dist/assets/*
+          
+          # Check if bundle is too large (> 5MB warning)
+          size=$(du -sm dist/ | cut -f1)
+          if [ $size -gt 5 ]; then
+            echo "⚠️ Warning: Bundle size is ${size}MB (> 5MB)"
+            echo "Consider code splitting or lazy loading"
+          else
+            echo "✅ Bundle size is acceptable: ${size}MB"
+          fi
+
+      - name: Upload bundle for comparison
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-analysis
+          path: dist/
+          retention-days: 7
+
+  # Accessibility check
+  accessibility:
+    name: Accessibility Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for accessibility issues
+        run: |
+          echo "Checking for common accessibility issues..."
+          
+          # Check for missing alt attributes
+          if grep -r "<img" src/ --exclude-dir=node_modules | grep -v "alt="; then
+            echo "⚠️ Found <img> tags without alt attributes"
+          fi
+          
+          # Check for proper semantic HTML
+          if ! grep -r "<main\|<header\|<nav\|<footer" src/ --exclude-dir=node_modules; then
+            echo "⚠️ Consider using semantic HTML elements"
+          fi
+          
+          echo "✅ Basic accessibility check complete"
+        continue-on-error: true
+
+  # Performance check
+  performance:
+    name: Performance Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for performance anti-patterns
+        run: |
+          echo "Checking for performance anti-patterns..."
+          
+          # Check for console.log in production code
+          if grep -r "console.log\|console.warn" src/ --exclude-dir=node_modules | grep -v ".test."; then
+            echo "⚠️ Found console statements in production code"
+          fi
+          
+          # Check for useEffect without dependencies
+          if grep -r "useEffect.*\[\]" src/ --exclude-dir=node_modules; then
+            echo "ℹ️ Found useEffect with empty dependencies - verify this is intentional"
+          fi
+          
+          echo "✅ Performance check complete"
+        continue-on-error: true
+
+  # Code complexity analysis
+  complexity:
+    name: Code Complexity Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install complexity analyzer
+        run: npm install -g complexity-report
+
+      - name: Analyze code complexity
+        run: |
+          echo "Analyzing code complexity..."
+          cr src/**/*.{ts,tsx} --format json > complexity-report.json || true
+          echo "✅ Complexity analysis complete"
+        continue-on-error: true
+
+      - name: Upload complexity report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: complexity-report
+          path: complexity-report.json
+

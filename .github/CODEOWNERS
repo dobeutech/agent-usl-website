@@ -1,0 +1,50 @@
+# Code Owners for Unique Staffing Professionals
+# 
+# These owners will be automatically requested for review when someone 
+# opens a pull request that modifies code in the specified paths.
+#
+# Order matters - last matching pattern takes precedence.
+
+# Default owners for everything in the repo
+# Uncomment and add your GitHub username
+# * @your-github-username
+
+# Core application code
+/src/ @your-github-username
+
+# Configuration files
+*.config.js @your-github-username
+*.config.ts @your-github-username
+netlify.toml @your-github-username
+package.json @your-github-username
+
+# Database migrations - require careful review
+/supabase/migrations/ @your-github-username
+
+# CI/CD workflows - require admin review
+/.github/workflows/ @your-github-username
+
+# Security-sensitive files
+/.github/dependabot.yml @your-github-username
+/.github/workflows/security-scan.yml @your-github-username
+
+# Documentation
+*.md @your-github-username
+
+# Infrastructure as Code
+/supabase/ @your-github-username
+
+# Build and deployment
+netlify.toml @your-github-username
+vite.config.ts @your-github-username
+
+# API and backend
+/supabase/functions/ @your-github-username
+
+# UI Components
+/src/components/ @your-github-username
+
+# Business logic
+/src/lib/ @your-github-username
+/src/contexts/ @your-github-username
+

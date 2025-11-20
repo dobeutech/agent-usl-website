@@ -9,14 +9,14 @@ export function OpenAPIDocs() {
     script.src = 'https://unpkg.com/swagger-ui-dist@5.9.0/swagger-ui-bundle.js'
     script.async = true
     script.onload = () => {
-      // @ts-ignore
+      // @ts-expect-error SwaggerUIBundle is loaded from CDN
       window.SwaggerUIBundle({
         url: '/openapi.yaml',
         dom_id: '#swagger-ui',
         presets: [
-          // @ts-ignore
+          // @ts-expect-error SwaggerUIBundle types not available
           window.SwaggerUIBundle.presets.apis,
-          // @ts-ignore
+          // @ts-expect-error SwaggerUIBundle types not available
           window.SwaggerUIBundle.SwaggerUIStandalonePreset
         ],
         layout: 'StandaloneLayout'

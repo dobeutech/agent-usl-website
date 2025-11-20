@@ -1,0 +1,226 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-updates:
+    name: Check for Dependency Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Check for outdated dependencies
+        id: outdated
+        run: |
+          npm outdated --json > outdated.json || true
+          cat outdated.json
+
+      - name: Create issue for outdated dependencies
+        if: hashFiles('outdated.json') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            let outdated = {};
+            try {
+              outdated = JSON.parse(fs.readFileSync('outdated.json', 'utf8'));
+            } catch (e) {
+              console.log('No outdated dependencies or error reading file');
+              return;
+            }
+
+            if (Object.keys(outdated).length === 0) {
+              console.log('No outdated dependencies found');
+              return;
+            }
+
+            let body = '## 📦 Outdated Dependencies Report\n\n';
+            body += 'The following dependencies have updates available:\n\n';
+            body += '| Package | Current | Latest | Type |\n';
+            body += '|---------|---------|--------|------|\n';
+
+            for (const [name, info] of Object.entries(outdated)) {
+              body += `| ${name} | ${info.current} | ${info.latest} | ${info.type || 'N/A'} |\n`;
+            }
+
+            body += '\n### Recommended Actions:\n';
+            body += '1. Review the changelog for each package\n';
+            body += '2. Test updates in a development environment\n';
+            body += '3. Update dependencies using `npm update` or manually in package.json\n';
+            body += '4. Run tests to ensure compatibility\n';
+
+            // Check if an issue already exists
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'dependencies,automated'
+            });
+
+            const existingIssue = issues.find(issue => 
+              issue.title.includes('Outdated Dependencies Report')
+            );
+
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: body + `\n\n---\n*Updated: ${new Date().toISOString()}*`
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '📦 Outdated Dependencies Report',
+                body: body,
+                labels: ['dependencies', 'automated', 'maintenance']
+              });
+            }
+
+  # Auto-update patch versions
+  auto-update-patches:
+    name: Auto-update Patch Versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Update patch versions
+        run: |
+          npm update --save
+          npm audit fix --audit-level=moderate
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --exit-code package.json package-lock.json; then
+            echo "No changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: update patch dependencies'
+          title: '🔧 Automated Dependency Updates (Patches)'
+          body: |
+            ## Automated Dependency Updates
+            
+            This PR contains automated updates for patch-level dependencies.
+            
+            ### Changes:
+            - Updated patch versions in package.json
+            - Applied security fixes (moderate and above)
+            - Updated package-lock.json
+            
+            ### Testing:
+            - [ ] All CI checks pass
+            - [ ] Manual testing completed
+            - [ ] No breaking changes detected
+            
+            *This PR was automatically created by GitHub Actions*
+          branch: automated-dependency-updates
+          labels: dependencies,automated,maintenance
+          assignees: ${{ github.repository_owner }}
+
+  # Security audit
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Run npm audit
+        id: audit
+        run: |
+          npm audit --json > audit-results.json || true
+          npm audit
+        continue-on-error: true
+
+      - name: Check for critical vulnerabilities
+        run: |
+          critical=$(jq '.metadata.vulnerabilities.critical // 0' audit-results.json)
+          high=$(jq '.metadata.vulnerabilities.high // 0' audit-results.json)
+          
+          if [ "$critical" -gt 0 ] || [ "$high" -gt 0 ]; then
+            echo "⚠️ Found $critical critical and $high high severity vulnerabilities"
+            echo "AUDIT_FAILED=true" >> $GITHUB_ENV
+          else
+            echo "✅ No critical or high severity vulnerabilities found"
+          fi
+
+      - name: Create security issue
+        if: env.AUDIT_FAILED == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const audit = JSON.parse(fs.readFileSync('audit-results.json', 'utf8'));
+            
+            const critical = audit.metadata.vulnerabilities.critical || 0;
+            const high = audit.metadata.vulnerabilities.high || 0;
+            
+            const body = `## 🔒 Security Audit Alert
+            
+            Critical vulnerabilities detected in dependencies:
+            
+            - **Critical**: ${critical}
+            - **High**: ${high}
+            
+            ### Action Required:
+            1. Run \`npm audit\` locally to see details
+            2. Run \`npm audit fix\` to automatically fix issues
+            3. For vulnerabilities that can't be auto-fixed, review and update manually
+            
+            ### Command to fix:
+            \`\`\`bash
+            npm audit fix --force
+            \`\`\`
+            
+            **⚠️ This is a high-priority security issue that should be addressed immediately.**
+            `;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🔒 Security Alert: Vulnerabilities in Dependencies',
+              body: body,
+              labels: ['security', 'critical', 'dependencies']
+            });
+

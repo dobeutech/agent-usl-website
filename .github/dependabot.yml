@@ -1,11 +1,87 @@
 version: 2
+
 updates:
+  # Enable version updates for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    
+    # Keep pull requests up to date with the base branch
+    rebase-strategy: "auto"
+    
+    # Automatically merge minor and patch updates
+    open-pull-requests-limit: 10
+    
+    # Pull request settings
+    pull-request-branch-name:
+      separator: "-"
+    
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    
+    # Grouping updates
+    groups:
+      # Group React and related packages
+      react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      
+      # Group Radix UI packages
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      
+      # Group dev dependencies
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      
+      # Group security updates
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+    
+    # Allow specific dependencies
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    
+    # Ignore specific versions (example)
+    ignore:
+      # Ignore major version updates for these packages
+      # - dependency-name: "react"
+      #   update-types: ["version-update:semver-major"]
+    
+    labels:
+      - "dependencies"
+      - "automated"
+    
+    reviewers:
+      - "${{ github.repository_owner }}"
+    
+    # Security updates are always enabled
+    # This will create PRs for security vulnerabilities regardless of schedule
 
-  - package-ecosystem: "devcontainers"
+  # GitHub Actions workflow dependencies
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+    labels:
+      - "github-actions"
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "ci"

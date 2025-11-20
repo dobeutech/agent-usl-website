@@ -6,6 +6,8 @@
   NODE_VERSION = "20"
 
 # SPA routing - redirect all routes to index.html
+# Without 'force = true', Netlify will serve existing files first
+# This redirect only applies when the requested file doesn't exist
 [[redirects]]
   from = "/*"
   to = "/index.html"

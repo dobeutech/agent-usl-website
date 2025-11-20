@@ -1,0 +1,288 @@
+name: Security Scanning
+
+on:
+  schedule:
+    # Run security scans daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  issues: write
+
+jobs:
+  # Comprehensive Security Scan
+  security-scan:
+    name: Comprehensive Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 1. NPM Audit
+      - name: Run npm audit
+        id: npm-audit
+        run: |
+          npm audit --json > npm-audit-results.json || true
+          npm audit || echo "Vulnerabilities found"
+        continue-on-error: true
+
+      # 2. Trivy Vulnerability Scanner
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+          exit-code: '0'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'trivy'
+
+      # 3. Snyk Security Scan
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --json-file-output=snyk-results.json
+        continue-on-error: true
+
+      # 4. OWASP Dependency Check
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'unique-staffing-professionals'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --enableRetired
+            --enableExperimental
+        continue-on-error: true
+
+      # 5. Secret Scanning
+      - name: GitLeaks Secret Scanning
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+      - name: TruffleHog Secret Scanning
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
+
+      # 6. Check for hardcoded credentials
+      - name: Check for hardcoded secrets
+        run: |
+          echo "Checking for potential hardcoded secrets..."
+          
+          # Check for common secret patterns
+          if grep -r -i "api[_-]key.*=.*['\"][a-zA-Z0-9]\{20,\}['\"]" src/ --exclude-dir=node_modules; then
+            echo "⚠️ Potential API key found"
+            exit 1
+          fi
+          
+          if grep -r -i "password.*=.*['\"][^'\"]\{8,\}['\"]" src/ --exclude-dir=node_modules | grep -v "placeholder\|example"; then
+            echo "⚠️ Potential password found"
+            exit 1
+          fi
+          
+          echo "✅ No obvious hardcoded secrets detected"
+
+      # 7. Check for vulnerable patterns
+      - name: Check for security anti-patterns
+        run: |
+          echo "Checking for security anti-patterns..."
+          
+          # Check for eval usage
+          if grep -r "eval(" src/ --exclude-dir=node_modules; then
+            echo "⚠️ Found eval() usage - potential security risk"
+            exit 1
+          fi
+          
+          # Check for dangerouslySetInnerHTML
+          if grep -r "dangerouslySetInnerHTML" src/ --exclude-dir=node_modules; then
+            echo "⚠️ Found dangerouslySetInnerHTML usage - review for XSS risks"
+          fi
+          
+          # Check for unsafe regex patterns
+          if grep -r "new RegExp.*\+" src/ --exclude-dir=node_modules; then
+            echo "⚠️ Found potentially unsafe regex - ReDoS risk"
+          fi
+          
+          echo "✅ Security pattern check complete"
+        continue-on-error: true
+
+      # 8. Upload all artifacts
+      - name: Upload security scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-scan-results
+          path: |
+            npm-audit-results.json
+            trivy-results.sarif
+            snyk-results.json
+            reports/
+          retention-days: 30
+
+  # Analyze results and create issues
+  analyze-results:
+    name: Analyze Security Results
+    runs-on: ubuntu-latest
+    needs: security-scan
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download security scan results
+        uses: actions/download-artifact@v4
+        with:
+          name: security-scan-results
+          path: security-results/
+        continue-on-error: true
+
+      - name: Analyze and report
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            
+            let criticalIssues = [];
+            let highIssues = [];
+            
+            // Check if npm audit results exist
+            try {
+              const npmAudit = JSON.parse(fs.readFileSync('security-results/npm-audit-results.json', 'utf8'));
+              const metadata = npmAudit.metadata || {};
+              const vulns = metadata.vulnerabilities || {};
+              
+              if (vulns.critical > 0 || vulns.high > 0) {
+                criticalIssues.push(`NPM Audit found ${vulns.critical} critical and ${vulns.high} high severity vulnerabilities`);
+              }
+            } catch (e) {
+              console.log('Could not read npm audit results');
+            }
+            
+            // If critical issues found, create an issue
+            if (criticalIssues.length > 0 || highIssues.length > 0) {
+              const body = `## 🔒 Security Scan Alert
+              
+              Critical security issues detected:
+              
+              ### Critical Issues:
+              ${criticalIssues.map(issue => `- ${issue}`).join('\n') || '- None'}
+              
+              ### High Priority Issues:
+              ${highIssues.map(issue => `- ${issue}`).join('\n') || '- None'}
+              
+              ### Action Required:
+              1. Review the security scan artifacts
+              2. Address critical vulnerabilities immediately
+              3. Update dependencies using \`npm audit fix\`
+              4. Review code for security anti-patterns
+              
+              **Scan Date**: ${new Date().toISOString()}
+              **Triggered by**: ${context.eventName}
+              `;
+              
+              // Check for existing security issue
+              const { data: issues } = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: 'security'
+              });
+              
+              const existingIssue = issues.find(issue => 
+                issue.title.includes('Security Scan Alert')
+              );
+              
+              if (existingIssue) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existingIssue.number,
+                  body: body
+                });
+              } else {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: '🔒 Security Scan Alert',
+                  body: body,
+                  labels: ['security', 'critical', 'automated']
+                });
+              }
+            } else {
+              console.log('✅ No critical security issues found');
+            }
+
+  # License compliance check
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install license checker
+        run: npm install -g license-checker
+
+      - name: Check licenses
+        run: |
+          license-checker --json --out licenses.json
+          license-checker --summary
+          
+          # Check for problematic licenses
+          if license-checker --onlyAllow "MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;0BSD" --failOn "GPL;LGPL;AGPL"; then
+            echo "✅ All licenses are compatible"
+          else
+            echo "⚠️ Found potentially incompatible licenses"
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Upload license report
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-report
+          path: licenses.json
+

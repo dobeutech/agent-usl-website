@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { X, Cookie } from "lucide-react"
-import { Link } from "react-router-dom"
-import { useLanguage } from "@/contexts/LanguageContext"
+import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
+import { X, Cookie, Shield } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useLanguage } from '@/contexts/LanguageContext'
+import { supabase } from '@/lib/supabase'
+import { trackVisitor, updateCookieConsent } from '@/lib/analytics'
 
-type ConsentStatus = "pending" | "accepted" | "rejected" | "customized"
+const CONSENT_KEY = 'cookie_consent'
+const CONSENT_TIMESTAMP_KEY = 'cookie_consent_timestamp'
 
 interface ConsentPreferences {
   essential: boolean
@@ -13,12 +17,9 @@ interface ConsentPreferences {
   marketing: boolean
 }
 
-const CONSENT_KEY = "cookie_consent"
-const PREFERENCES_KEY = "cookie_preferences"
-
 export function CookieConsent() {
   const { t } = useLanguage()
-  const [visible, setVisible] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [showDetails, setShowDetails] = useState(false)
   const [preferences, setPreferences] = useState<ConsentPreferences>({
     essential: true,
@@ -27,184 +28,236 @@ export function CookieConsent() {
   })
 
   useEffect(() => {
+    // Check if user has already provided consent
     const consent = localStorage.getItem(CONSENT_KEY)
-    if (!consent) {
-      // Small delay for better UX
-      const timer = setTimeout(() => setVisible(true), 1000)
+    const timestamp = localStorage.getItem(CONSENT_TIMESTAMP_KEY)
+    
+    if (!consent || !timestamp) {
+      // Show banner after 2 seconds
+      const timer = setTimeout(() => setIsOpen(true), 2000)
       return () => clearTimeout(timer)
     } else {
-      // Load saved preferences
-      const savedPrefs = localStorage.getItem(PREFERENCES_KEY)
-      if (savedPrefs) {
-        setPreferences(JSON.parse(savedPrefs))
+      // Check if consent was given more than 365 days ago (re-consent required)
+      const consentDate = new Date(parseInt(timestamp))
+      const daysSinceConsent = (Date.now() - consentDate.getTime()) / (1000 * 60 * 60 * 24)
+      
+      if (daysSinceConsent > 365) {
+        setIsOpen(true)
+      } else {
+        // Load existing preferences
+        const savedPrefs = JSON.parse(consent)
+        setPreferences(savedPrefs)
+        
+        // Initialize tracking if consent was given
+        if (savedPrefs.analytics || savedPrefs.marketing) {
+          trackVisitor(savedPrefs)
+        }
       }
     }
   }, [])
 
-  const saveConsent = (status: ConsentStatus, prefs: ConsentPreferences) => {
-    localStorage.setItem(CONSENT_KEY, status)
-    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(prefs))
-    setPreferences(prefs)
-    setVisible(false)
-
-    // Dispatch event for analytics integration
-    window.dispatchEvent(new CustomEvent("cookieConsentUpdate", {
-      detail: { status, preferences: prefs }
-    }))
-
-    // Initialize analytics if accepted
-    if (prefs.analytics && typeof window !== "undefined") {
-      initializeAnalytics()
+  const saveConsent = async (prefs: ConsentPreferences) => {
+    // Save to localStorage
+    localStorage.setItem(CONSENT_KEY, JSON.stringify(prefs))
+    localStorage.setItem(CONSENT_TIMESTAMP_KEY, Date.now().toString())
+    
+    // Save to database
+    try {
+      await updateCookieConsent(prefs)
+    } catch (error) {
+      console.error('Failed to save cookie consent:', error)
     }
-  }
 
-  const initializeAnalytics = () => {
-    // Google Analytics initialization will be handled here
-    // This is where GA4 would be enabled based on consent
-    console.log("Analytics enabled")
+    // Initialize tracking if consent given
+    if (prefs.analytics || prefs.marketing) {
+      trackVisitor(prefs)
+    }
+    
+    setIsOpen(false)
   }
 
   const handleAcceptAll = () => {
-    saveConsent("accepted", {
+    const allConsent = {
       essential: true,
       analytics: true,
       marketing: true
-    })
+    }
+    setPreferences(allConsent)
+    saveConsent(allConsent)
   }
 
-  const handleRejectNonEssential = () => {
-    saveConsent("rejected", {
+  const handleAcceptSelected = () => {
+    saveConsent(preferences)
+  }
+
+  const handleRejectAll = () => {
+    const minimalConsent = {
       essential: true,
       analytics: false,
       marketing: false
-    })
+    }
+    setPreferences(minimalConsent)
+    saveConsent(minimalConsent)
   }
 
-  const handleSavePreferences = () => {
-    saveConsent("customized", preferences)
-  }
-
-  const handleDoNotSell = () => {
-    // CCPA "Do Not Sell My Personal Information" compliance
-    saveConsent("rejected", {
-      essential: true,
-      analytics: false,
-      marketing: false
-    })
-  }
-
-  if (!visible) return null
+  if (!isOpen) return null
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6">
-      <Card className="max-w-4xl mx-auto p-4 sm:p-6 shadow-lg border-border bg-card">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <Cookie className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
-                  {t('cookieConsent.title')}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t('cookieConsent.description')}{" "}
-                  <Link to="/privacy" className="text-primary hover:underline">
-                    {t('cookieConsent.learnMore')}
-                  </Link>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6"
+        >
+          <Card className="max-w-4xl mx-auto p-6 shadow-2xl border-border bg-card">
+            <div className="flex items-start gap-4">
+              <Cookie className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+              
+              <div className="flex-1 space-y-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
+                      {t('cookieConsent.title')}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {t('cookieConsent.description')}
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleRejectAll}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label="Close"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {!showDetails && (
+                  <div className="flex flex-wrap gap-3">
+                    <Button
+                      onClick={handleAcceptAll}
+                      className="flex-1 sm:flex-none"
+                    >
+                      {t('cookieConsent.acceptAll')}
+                    </Button>
+                    <Button
+                      onClick={() => setShowDetails(true)}
+                      variant="outline"
+                      className="flex-1 sm:flex-none"
+                    >
+                      {t('cookieConsent.customize')}
+                    </Button>
+                    <Button
+                      onClick={handleRejectAll}
+                      variant="ghost"
+                      className="flex-1 sm:flex-none"
+                    >
+                      {t('cookieConsent.rejectAll')}
+                    </Button>
+                  </div>
+                )}
+
+                {showDetails && (
+                  <div className="space-y-4 pt-4 border-t border-border">
+                    <div className="space-y-3">
+                      {/* Essential Cookies */}
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="essential"
+                          checked={preferences.essential}
+                          disabled
+                          className="mt-1"
+                        />
+                        <div className="flex-1">
+                          <label htmlFor="essential" className="font-medium text-sm text-foreground cursor-pointer">
+                            {t('cookieConsent.essential')}
+                          </label>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {t('cookieConsent.essentialDesc')}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Analytics Cookies */}
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="analytics"
+                          checked={preferences.analytics}
+                          onCheckedChange={(checked) =>
+                            setPreferences({ ...preferences, analytics: checked as boolean })
+                          }
+                          className="mt-1"
+                        />
+                        <div className="flex-1">
+                          <label htmlFor="analytics" className="font-medium text-sm text-foreground cursor-pointer">
+                            {t('cookieConsent.analytics')}
+                          </label>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {t('cookieConsent.analyticsDesc')}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Marketing Cookies */}
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="marketing"
+                          checked={preferences.marketing}
+                          onCheckedChange={(checked) =>
+                            setPreferences({ ...preferences, marketing: checked as boolean })
+                          }
+                          className="mt-1"
+                        />
+                        <div className="flex-1">
+                          <label htmlFor="marketing" className="font-medium text-sm text-foreground cursor-pointer">
+                            {t('cookieConsent.marketing')}
+                          </label>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {t('cookieConsent.marketingDesc')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* CCPA Notice */}
+                    <div className="flex items-start gap-2 p-3 bg-secondary/50 rounded-md">
+                      <Shield className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                      <p className="text-xs text-muted-foreground">
+                        {t('cookieConsent.ccpaNotice')}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      <Button
+                        onClick={handleAcceptSelected}
+                        className="flex-1 sm:flex-none"
+                      >
+                        {t('cookieConsent.savePreferences')}
+                      </Button>
+                      <Button
+                        onClick={() => setShowDetails(false)}
+                        variant="outline"
+                        className="flex-1 sm:flex-none"
+                      >
+                        {t('cookieConsent.back')}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-xs text-muted-foreground">
+                  {t('cookieConsent.learnMore')}{' '}
+                  <a href="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </a>
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setVisible(false)}
-              className="text-muted-foreground hover:text-foreground"
-              aria-label={t('accessibility.close')}
-            >
-              <X size={20} />
-            </button>
-          </div>
-
-          {showDetails && (
-            <div className="border-t border-border pt-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-sm">{t('cookieConsent.necessary')}</p>
-                  <p className="text-xs text-muted-foreground">{t('cookieConsent.necessaryDesc')}</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.essential}
-                  disabled
-                  className="h-4 w-4"
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-sm">{t('cookieConsent.analytics')}</p>
-                  <p className="text-xs text-muted-foreground">{t('cookieConsent.analyticsDesc')}</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.analytics}
-                  onChange={(e) => setPreferences({ ...preferences, analytics: e.target.checked })}
-                  className="h-4 w-4"
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-sm">{t('cookieConsent.marketing')}</p>
-                  <p className="text-xs text-muted-foreground">{t('cookieConsent.marketingDesc')}</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.marketing}
-                  onChange={(e) => setPreferences({ ...preferences, marketing: e.target.checked })}
-                  className="h-4 w-4"
-                />
-              </div>
-            </div>
-          )}
-
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-            <div className="flex items-center gap-2 text-xs">
-              <button
-                onClick={() => setShowDetails(!showDetails)}
-                className="text-primary hover:underline"
-              >
-                {showDetails ? t('cookieConsent.hideDetails') : t('cookieConsent.customize')}
-              </button>
-              <span className="text-muted-foreground">|</span>
-              <button
-                onClick={handleDoNotSell}
-                className="text-primary hover:underline"
-              >
-                {t('cookieConsent.doNotSell')}
-              </button>
-            </div>
-            <div className="flex items-center gap-2">
-              {showDetails ? (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleSavePreferences}
-                >
-                  {t('cookieConsent.save')}
-                </Button>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRejectNonEssential}
-                >
-                  {t('cookieConsent.rejectAll')}
-                </Button>
-              )}
-              <Button size="sm" onClick={handleAcceptAll}>
-                {t('cookieConsent.acceptAll')}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Card>
-    </div>
+          </Card>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
