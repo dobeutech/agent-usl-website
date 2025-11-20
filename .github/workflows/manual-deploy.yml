@@ -85,7 +85,7 @@ jobs:
     if: always() && (needs.pre-deployment-checks.result == 'success' || inputs.skip_tests == true)
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ inputs.environment == 'production' && 'https://uniquestaffingprofessionals.com' || 'https://staging.uniquestaffingprofessionals.com' }}
+      url: ${{ inputs.environment == 'production' && 'https://unique-staffing-professionals.netlify.app' || 'https://staging-unique-staffing-professionals.netlify.app' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -135,18 +135,20 @@ jobs:
       - name: Health check
         run: |
           if [ "${{ inputs.environment }}" == "production" ]; then
-            URL="https://uniquestaffingprofessionals.com"
+            URL="https://unique-staffing-professionals.netlify.app"
           else
-            URL="https://staging.uniquestaffingprofessionals.com"
+            URL="https://staging-unique-staffing-professionals.netlify.app"
           fi
           
           echo "Checking $URL..."
           response=$(curl -s -o /dev/null -w "%{http_code}" $URL)
           
-          if [ "$response" -eq 200 ]; then
-            echo "✅ Deployment successful! Site is responding"
+          # Accept 200, 401, or 403 (password protection)
+          if [ "$response" -eq 200 ] || [ "$response" -eq 401 ] || [ "$response" -eq 403 ]; then
+            echo "✅ Deployment successful! Site is responding (status: $response)"
+            echo "ℹ️ Site is password protected - this is expected"
           else
-            echo "❌ Warning: Site returned status code: $response"
+            echo "❌ Warning: Site returned unexpected status code: $response"
             exit 1
           fi
 

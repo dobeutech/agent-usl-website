@@ -145,7 +145,7 @@ jobs:
     needs: build-production
     environment:
       name: production
-      url: https://uniquestaffingprofessionals.com
+      url: https://unique-staffing-professionals.netlify.app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -184,11 +184,13 @@ jobs:
 
       - name: Check website availability
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://uniquestaffingprofessionals.com)
-          if [ "$response" -eq 200 ]; then
-            echo "✅ Website is live and responding"
+          # Note: Site is password protected, so we check for 401/403 or 200
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://unique-staffing-professionals.netlify.app)
+          if [ "$response" -eq 200 ] || [ "$response" -eq 401 ] || [ "$response" -eq 403 ]; then
+            echo "✅ Website is live and responding (status: $response)"
+            echo "ℹ️ Site is password protected - this is expected"
           else
-            echo "❌ Website returned status code: $response"
+            echo "❌ Website returned unexpected status code: $response"
             exit 1
           fi
 
@@ -196,9 +198,10 @@ jobs:
         uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            https://uniquestaffingprofessionals.com
+            https://unique-staffing-professionals.netlify.app
           uploadArtifacts: true
           temporaryPublicStorage: true
+        continue-on-error: true  # May fail due to password protection
 
   # Notify on success/failure
   notify:
@@ -211,7 +214,8 @@ jobs:
         run: |
           if [ "${{ needs.post-deployment-check.result }}" == "success" ]; then
             echo "🎉 Production deployment successful!"
-            echo "URL: https://uniquestaffingprofessionals.com"
+            echo "URL: https://unique-staffing-professionals.netlify.app"
+            echo "ℹ️ Site is password protected (expected before domain transfer)"
           else
             echo "❌ Production deployment failed!"
             exit 1
