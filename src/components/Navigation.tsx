@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { List, X } from "@phosphor-icons/react"
-import { ThemeToggle } from "@/components/ThemeToggle"
+import { ThemeToggle, SystemToggle } from "@/components/ThemeToggle"
 import { LanguageToggle } from "@/components/LanguageToggle"
 import { useLanguage } from "@/contexts/LanguageContext"
 
@@ -60,6 +60,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-3">
             <LanguageToggle />
             <ThemeToggle />
+            <SystemToggle />
             <a
               href="/admin/login"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -74,6 +75,7 @@ export function Navigation() {
           <div className="md:hidden flex items-center gap-2">
             <LanguageToggle />
             <ThemeToggle />
+            <SystemToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-foreground"
