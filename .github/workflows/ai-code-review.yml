@@ -15,6 +15,9 @@ jobs:
   claude-review:
     name: Claude AI Review
     runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      claude_result: ${{ steps.claude-outcome.outputs.result }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,7 +35,8 @@ jobs:
             **/*.jsx
 
       - name: Claude Code Review
-        if: steps.changed-files.outputs.any_changed == 'true'
+        id: claude-review-step
+        if: ${{ steps.changed-files.outputs.any_changed == 'true' && secrets.ANTHROPIC_API_KEY != '' }}
         uses: anthropics/anthropic-code-review-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -48,6 +52,11 @@ jobs:
             - Accessibility concerns
           max_tokens: 4000
         continue-on-error: true
+
+      - name: Capture Claude review result
+        if: always()
+        id: claude-outcome
+        run: echo "result=${{ steps.claude-review-step.outcome || 'skipped' }}" >> "$GITHUB_OUTPUT"
 
   # GitHub Copilot Review (if available)
   copilot-review:
@@ -144,22 +153,41 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const pull_number = context.payload.pull_request.number;
-            
+
+            const formatStatus = (result) => {
+              const normalized = (result || '').toLowerCase();
+              switch (normalized) {
+                case 'success':
+                  return '✅ Success';
+                case 'failure':
+                  return '❌ Failed';
+                case 'skipped':
+                  return '⏭️ Skipped';
+                case 'cancelled':
+                  return '🚫 Cancelled';
+                default:
+                  return normalized ? `ℹ️ ${result}` : 'ℹ️ Not run';
+              }
+            };
+
+            const claudeResult = formatStatus('${{ needs.claude-review.outputs.claude_result || 'skipped' }}');
+            const codeqlResult = formatStatus('${{ needs.codeql-analysis.result || 'unknown' }}');
+
             const comment = `## 🤖 AI Code Review Complete
-            
+
             The automated code review has been completed:
-            
-            - ✅ Claude AI Review: ${{ needs.claude-review.result }}
-            - ✅ CodeQL Analysis: ${{ needs.codeql-analysis.result }}
-            
+
+            - Claude AI Review: ${claudeResult}
+            - CodeQL Analysis: ${codeqlResult}
+
             Please review the detailed findings in the checks section above.
-            
+
             ### Next Steps:
             1. Review and address any security findings
             2. Consider the AI suggestions for code improvements
             3. Ensure all tests pass before merging
             `;
-            
+
             await github.rest.issues.createComment({
               owner,
               repo,
