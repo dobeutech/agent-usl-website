@@ -167,7 +167,7 @@ export function AnimatedBackground({
     return () => {
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
-      if (animationFrameRef.current) {
+      if (animationFrameRef.current != null) {
         cancelAnimationFrame(animationFrameRef.current)
       }
     }
