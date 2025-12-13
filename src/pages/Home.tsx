@@ -2,15 +2,20 @@ import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/Navigation"
 import { Hero } from "@/components/Hero"
+import { ClientLogos } from "@/components/ClientLogos"
 import { Services } from "@/components/Services"
 import { Industries } from "@/components/Industries"
 import { WhyChooseUs } from "@/components/WhyChooseUs"
+import { EmployerCTA } from "@/components/EmployerCTA"
+import { JobListings } from "@/components/JobListings"
+import { JobAlerts } from "@/components/JobAlerts"
 import { EnhancedApplyForm } from "@/components/EnhancedApplyForm"
+import { FAQ } from "@/components/FAQ"
 import { Testimonials } from "@/components/Testimonials"
 import { Contact } from "@/components/Contact"
 import { Footer } from "@/components/Footer"
-import { JobListings } from "@/components/JobListings"
 import { TalentNetworkModal } from "@/components/TalentNetworkModal"
+import { LiveChat } from "@/components/LiveChat"
 import { AnimatedBackground, FloatingOrbs } from "@/components/AnimatedBackground"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { SEOHead } from "@/components/seo/SEOHead"
@@ -89,6 +94,9 @@ export function Home() {
       <main id="main-content" className="relative z-10">
         <Hero />
         
+        {/* Client logos - social proof right after hero */}
+        <ClientLogos />
+        
         {/* Section divider with gradient fade */}
         <div className="relative">
           <div className="absolute inset-x-0 -top-20 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-20" />
@@ -96,9 +104,21 @@ export function Home() {
         </div>
         
         <Industries />
+        
+        {/* Employer CTA - B2B conversion */}
+        <EmployerCTA />
+        
         <JobListings />
+        
+        {/* Job Alerts subscription */}
+        <JobAlerts />
+        
         <WhyChooseUs />
         <EnhancedApplyForm onSuccess={handleApplicationSuccess} />
+        
+        {/* FAQ Section */}
+        <FAQ />
+        
         <Testimonials />
         <Contact />
       </main>
@@ -108,6 +128,9 @@ export function Home() {
       
       {/* Talent Network Modal */}
       <TalentNetworkModal />
+      
+      {/* Live Chat Widget */}
+      <LiveChat />
     </div>
   )
 }
