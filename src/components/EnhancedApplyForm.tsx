@@ -72,9 +72,22 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
     landing_page: string
   } | null>(null)
 
-  useEffect(() => {
+  // Capture UTM parameters and referrer once when the component initializes
+  const [trackingData] = useState<{
+    utm_source: string | null
+    utm_medium: string | null
+    utm_campaign: string | null
+    utm_term: string | null
+    utm_content: string | null
+    referrer: string
+    landing_page: string
+  } | null>(() => {
+    if (typeof window === 'undefined') {
+      return null
+    }
+
     const params = new URLSearchParams(window.location.search)
-    setTrackingData({
+    return {
       utm_source: params.get('utm_source'),
       utm_medium: params.get('utm_medium'),
       utm_campaign: params.get('utm_campaign'),
@@ -82,8 +95,8 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
       utm_content: params.get('utm_content'),
       referrer: document.referrer || '',
       landing_page: window.location.pathname
-    })
-  }, [])
+    }
+  })
 
   const [resume, setResume] = useState<File | null>(null)
   const [additionalDocs, setAdditionalDocs] = useState<Array<{
