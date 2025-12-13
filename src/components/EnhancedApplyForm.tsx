@@ -270,6 +270,8 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         resumeFilename = uploadResult.filename
       }
 
+      const hasNavigator = typeof navigator !== 'undefined'
+
       // Build tracking metadata
       const trackingMetadata = trackingData ? {
         utm_source: trackingData.utm_source,
@@ -280,12 +282,14 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         referrer: trackingData.referrer,
         landing_page: trackingData.landing_page,
         submitted_at: new Date().toISOString(),
-        user_agent: navigator.userAgent,
+        user_agent: hasNavigator ? navigator.userAgent : '',
         submission_language: language
       } : null
-      
+
       // Get browser language for analytics
-      const browserLanguage = navigator.language || navigator.languages?.[0] || 'en'
+      const browserLanguage = hasNavigator
+        ? (navigator.language || navigator.languages?.[0] || 'en')
+        : 'en'
 
       // Create initial applicant record (unverified)
       const applicantData: ApplicantInsert & {
