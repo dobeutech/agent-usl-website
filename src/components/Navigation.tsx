@@ -19,7 +19,8 @@ export function Navigation() {
       setHasScrolled(window.scrollY > 50)
     }
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    // Ensure initial state reflects the current scroll position
+    handleScroll()
   }, [])
 
   const scrollToSection = (id: string) => {
