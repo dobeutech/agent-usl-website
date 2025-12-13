@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { MagnifyingGlass, MapPin, Briefcase, Clock, CurrencyDollar } from "@phosphor-icons/react"
 import { supabase, Job } from "@/lib/supabase"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { motion, useInView } from "framer-motion"
+import { motion } from "framer-motion"
 import { useRef } from "react"
 
 export function JobListings() {
@@ -17,7 +17,6 @@ export function JobListings() {
   const [searchZip, setSearchZip] = useState("")
   const [loading, setLoading] = useState(true)
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
 
   useEffect(() => {
     fetchJobs()
@@ -25,7 +24,7 @@ export function JobListings() {
 
   useEffect(() => {
     filterJobs()
-  }, [searchTitle, searchZip, jobs])
+  }, [filterJobs])
 
   const fetchJobs = async () => {
     try {
@@ -46,7 +45,7 @@ export function JobListings() {
     }
   }
 
-  const filterJobs = () => {
+  const filterJobs = useCallback(() => {
     let filtered = jobs
 
     if (searchTitle.trim()) {
@@ -63,7 +62,7 @@ export function JobListings() {
     }
 
     setFilteredJobs(filtered)
-  }
+  }, [jobs, searchTitle, searchZip])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

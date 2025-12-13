@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Card } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
@@ -30,9 +30,9 @@ export function AnalyticsDashboard() {
 
   useEffect(() => {
     fetchApplicants()
-  }, [dateRange])
+  }, [fetchApplicants])
 
-  const fetchApplicants = async () => {
+  const fetchApplicants = useCallback(async () => {
     try {
       setLoading(true)
 
@@ -55,7 +55,7 @@ export function AnalyticsDashboard() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [dateRange])
 
   const getPositionDistribution = () => {
     const positionCounts: Record<string, number> = {}

@@ -30,7 +30,7 @@ export function AdminLogin() {
         toast.success("Login successful!")
         navigate("/admin/dashboard")
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred. Please try again.")
     } finally {
       setIsLoading(false)

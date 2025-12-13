@@ -22,10 +22,6 @@ export function NAPDisplay({
 }: NAPDisplayProps) {
   const { name, location, contact } = businessInfo
 
-  const fullAddress = location.suite
-    ? `${location.street}, ${location.suite}, ${location.city}, ${location.state} ${location.zipCode}`
-    : `${location.street}, ${location.city}, ${location.state} ${location.zipCode}`
-
   if (variant === "minimal") {
     return (
       <div className={className} itemScope itemType="https://schema.org/LocalBusiness">
@@ -209,7 +205,7 @@ interface BusinessPhoneProps {
 export function BusinessPhone({
   businessInfo,
   type = "phone",
-  showIcon = false,
+  showIcon: _showIcon = false,
   className = ""
 }: BusinessPhoneProps) {
   const { contact } = businessInfo

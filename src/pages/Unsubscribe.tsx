@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useSearchParams, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
@@ -26,9 +26,9 @@ export function Unsubscribe() {
     if (email) {
       loadPreferences()
     }
-  }, [email])
+  }, [email, loadPreferences])
 
-  const loadPreferences = async () => {
+  const loadPreferences = useCallback(async () => {
     if (!email) return
 
     try {
@@ -48,7 +48,7 @@ export function Unsubscribe() {
     } catch (error) {
       console.error('Error loading preferences:', error)
     }
-  }
+  }, [email])
 
   const handleUnsubscribe = async () => {
     if (!email) {

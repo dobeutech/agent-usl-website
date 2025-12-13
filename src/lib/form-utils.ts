@@ -16,7 +16,7 @@ export function normalizePhone(phone: string): string {
  */
 export async function checkPhoneDuplicate(phone: string): Promise<{
   exists: boolean
-  applicant: any | null
+  applicant: { id: string; full_name: string; email: string; created_at: string; email_verified: boolean } | null
 }> {
   const normalized = normalizePhone(phone)
 

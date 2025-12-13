@@ -20,7 +20,7 @@ export function GoogleMapsEmbed({
   const mapRef = useRef<HTMLIFrameElement>(null)
   const [mapError, setMapError] = useState(false)
 
-  const { location, geo, name } = businessInfo
+  const { location, name } = businessInfo
 
   const fullAddress = location.suite
     ? `${location.street}, ${location.suite}, ${location.city}, ${location.state} ${location.zipCode}`

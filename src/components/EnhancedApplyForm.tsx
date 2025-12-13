@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Upload, CheckCircle, X, AlertCircle, FileText } from "lucide-react"
 import { toast } from "sonner"
-import { supabase, ApplicantInsert, ApplicantDocument } from "@/lib/supabase"
+import { supabase, ApplicantInsert } from "@/lib/supabase"
 import { useLanguage } from "@/contexts/LanguageContext"
 import {
   normalizePhone,
@@ -41,13 +41,7 @@ const POSITIONS = [
   'Other'
 ]
 
-const DOCUMENT_TYPES = [
-  { value: 'cover_letter', label: 'Cover Letter' },
-  { value: 'reference', label: 'Reference Letter' },
-  { value: 'certificate', label: 'Certificate' },
-  { value: 'portfolio', label: 'Portfolio' },
-  { value: 'other', label: 'Other' }
-]
+// DOCUMENT_TYPES removed - not currently used in the form
 
 export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
   const { t } = useLanguage()
@@ -71,14 +65,14 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
   }>>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showDuplicateDialog, setShowDuplicateDialog] = useState(false)
-  const [duplicateInfo, setDuplicateInfo] = useState<any>(null)
+  const [duplicateInfo, setDuplicateInfo] = useState<{ id: string; full_name: string; email: string; created_at: string; email_verified: boolean } | null>(null)
 
   const resumeInputRef = useRef<HTMLInputElement>(null)
   const docInputRef = useRef<HTMLInputElement>(null)
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const validateField = (name: string, value: any): string => {
+  const validateField = (name: string, value: string | string[]): string => {
     switch (name) {
       case 'full_name':
         return value.trim().length < 2 ? 'Name must be at least 2 characters' : ''
@@ -103,7 +97,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
     }
   }
 
-  const handleInputChange = (name: string, value: any) => {
+  const handleInputChange = (name: string, value: string | string[]) => {
     setFormData(prev => ({ ...prev, [name]: value }))
     const error = validateField(name, value)
     setErrors(prev => ({ ...prev, [name]: error }))
