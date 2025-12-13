@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -44,7 +44,7 @@ const POSITIONS = [
 // DOCUMENT_TYPES removed - not currently used in the form
 
 export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -55,7 +55,47 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
     cover_letter_text: "",
     job_posting_url: "",
     linkedin_url: "",
-    portfolio_url: ""
+    portfolio_url: "",
+    newsletter_subscribed: false,
+    job_notifications_enabled: true,
+    sms_notifications_enabled: false
+  })
+
+  // Capture UTM parameters and referrer on mount
+  const [trackingData, setTrackingData] = useState<{
+    utm_source: string | null
+    utm_medium: string | null
+    utm_campaign: string | null
+    utm_term: string | null
+    utm_content: string | null
+    referrer: string
+    landing_page: string
+  } | null>(null)
+
+  // Capture UTM parameters and referrer once when the component initializes
+  const [trackingData] = useState<{
+    utm_source: string | null
+    utm_medium: string | null
+    utm_campaign: string | null
+    utm_term: string | null
+    utm_content: string | null
+    referrer: string
+    landing_page: string
+  } | null>(() => {
+    if (typeof window === 'undefined') {
+      return null
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    return {
+      utm_source: params.get('utm_source'),
+      utm_medium: params.get('utm_medium'),
+      utm_campaign: params.get('utm_campaign'),
+      utm_term: params.get('utm_term'),
+      utm_content: params.get('utm_content'),
+      referrer: document.referrer || '',
+      landing_page: window.location.pathname
+    }
   })
 
   const [resume, setResume] = useState<File | null>(null)
@@ -243,8 +283,48 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         resumeFilename = uploadResult.filename
       }
 
+      const hasNavigator = typeof navigator !== 'undefined'
+
+      // Build tracking metadata
+      const trackingMetadata = trackingData ? {
+        utm_source: trackingData.utm_source,
+        utm_medium: trackingData.utm_medium,
+        utm_campaign: trackingData.utm_campaign,
+        utm_term: trackingData.utm_term,
+        utm_content: trackingData.utm_content,
+        referrer: trackingData.referrer,
+        landing_page: trackingData.landing_page,
+        submitted_at: new Date().toISOString(),
+        user_agent: hasNavigator ? navigator.userAgent : '',
+        submission_language: language
+      } : null
+
+      // Get browser language for analytics
+      const browserLanguage = hasNavigator
+        ? (navigator.language || navigator.languages?.[0] || 'en')
+        : 'en'
+
       // Create initial applicant record (unverified)
-      const applicantData: ApplicantInsert = {
+      type CommunicationPreferences = {
+        utm_source: string | null
+        utm_medium: string | null
+        utm_campaign: string | null
+        utm_term: string | null
+        utm_content: string | null
+        referrer: string
+        landing_page: string
+        submitted_at: string
+        user_agent: string
+        submission_language: string
+      }
+
+      const applicantData: ApplicantInsert & {
+        newsletter_subscribed?: boolean
+        job_notifications_enabled?: boolean
+        sms_notifications_enabled?: boolean
+        communication_preferences?: CommunicationPreferences | null
+        subscription_source?: string
+      } = {
         full_name: formData.full_name,
         email: formData.email,
         email_confirmed: formData.email_confirmed,
@@ -261,7 +341,17 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         job_posting_url: formData.job_posting_url || null,
         linkedin_url: formData.linkedin_url || null,
         portfolio_url: formData.portfolio_url || null,
-        status: 'new'
+        status: 'new',
+        // Marketing preferences
+        newsletter_subscribed: formData.newsletter_subscribed,
+        job_notifications_enabled: formData.job_notifications_enabled,
+        sms_notifications_enabled: formData.sms_notifications_enabled,
+        // Tracking data
+        communication_preferences: trackingMetadata,
+        subscription_source: trackingData?.utm_source || trackingData?.referrer || 'direct',
+        // Language tracking
+        preferred_language: language,
+        browser_language: browserLanguage
       }
 
       const { data: applicant, error: applicantError } = await supabase
@@ -314,7 +404,10 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         cover_letter_text: "",
         job_posting_url: "",
         linkedin_url: "",
-        portfolio_url: ""
+        portfolio_url: "",
+        newsletter_subscribed: false,
+        job_notifications_enabled: true,
+        sms_notifications_enabled: false
       })
       setResume(null)
       setAdditionalDocs([])
@@ -659,6 +752,76 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                     <p className="text-sm text-muted-foreground">
                       Link to CareerBuilder, Indeed, or personal portfolio
                     </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Communication Preferences */}
+              <div className="space-y-6">
+                <h3 className="font-heading font-semibold text-xl text-foreground">
+                  Communication Preferences
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Choose how you'd like us to contact you about job opportunities
+                </p>
+
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors">
+                    <Checkbox
+                      id="job_notifications"
+                      checked={formData.job_notifications_enabled}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, job_notifications_enabled: !!checked })
+                      }
+                    />
+                    <div className="flex-1">
+                      <Label htmlFor="job_notifications" className="text-base font-medium text-foreground cursor-pointer">
+                        Job Opportunity Notifications
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Receive email notifications about job openings that match your profile
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors">
+                    <Checkbox
+                      id="newsletter"
+                      checked={formData.newsletter_subscribed}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, newsletter_subscribed: !!checked })
+                      }
+                    />
+                    <div className="flex-1">
+                      <Label htmlFor="newsletter" className="text-base font-medium text-foreground cursor-pointer">
+                        Newsletter & Company Updates
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Receive our newsletter with career tips, industry news, and company updates
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3 p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors">
+                    <Checkbox
+                      id="sms_notifications"
+                      checked={formData.sms_notifications_enabled}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, sms_notifications_enabled: !!checked })
+                      }
+                    />
+                    <div className="flex-1">
+                      <Label htmlFor="sms_notifications" className="text-base font-medium text-foreground cursor-pointer">
+                        SMS/Text Message Notifications
+                      </Label>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Receive text messages about urgent job opportunities and application updates.
+                        Message and data rates may apply.{' '}
+                        <a href="/privacy/sms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                          View SMS Privacy Policy
+                        </a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

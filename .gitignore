@@ -24,11 +24,39 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment
 .env
+.env.local
+.env.*.local
+
+# AI Builder Config Files
+CLAUDE.md
+claude.md
+GEMINI.md
+gemini.md
+.cursor/
+.aider*
+.continue/
+copilot-instructions.md
+.github/copilot-instructions.md
+.bolt/
+.lovable/
+.windsurf/
+.codeium/
+.tabnine/
+
+# Build tool artifacts
 **/agent-eval-report*
 packages
 pids
 .file-manifest
 .devcontainer/
-
 .spark-workbench-id
+.spark-initial-sha
+
+# Netlify local
+.netlify/state.json
+
+# Testing
+coverage/
+.nyc_output/

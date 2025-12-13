@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Homepage -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/terms</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/privacy</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- SMS Privacy Policy -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/privacy/sms</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Application Confirmation -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/application-confirmation</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Email Verification -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/verify-email</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Unsubscribe -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/unsubscribe</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- API Documentation -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/developers/api/docs</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Admin Login (for indexing purposes) -->
+  <url>
+    <loc>https://uniquestaffingprofessionals.com/admin/login</loc>
+    <lastmod>2025-12-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+</urlset>

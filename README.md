@@ -1,15 +1,18 @@
 # Unique Staffing Professionals - Website & Applicant System
 
-A modern, professional staffing agency website with integrated applicant tracking system and admin dashboard.
+A modern, professional staffing agency website with integrated applicant tracking system, admin dashboard, and comprehensive API for HR integrations.
 
 ## 🎯 Project Overview
 
-This project delivers a complete website revamp for Unique Staffing Professionals Inc., including:
+This project delivers a complete website for Unique Staffing Professionals Inc., including:
 
-- **Modernized Website**: Professional UI with responsive design
+- **Modernized Website**: Professional UI with responsive design (mobile, tablet, desktop)
 - **Applicant System**: Public-facing application form with resume upload
-- **Admin Dashboard**: Secure portal to manage applicants
+- **Admin Dashboard**: Secure portal to manage applicants with filtering, sorting, and export
 - **Supabase Backend**: Scalable database, authentication, and file storage
+- **API Documentation**: OpenAPI 3.0 spec for HR system integrations
+- **Accessibility Features**: Built-in accessibility controls for users
+- **Multi-language Support**: English, Spanish, and French
 
 ## ✨ Features
 
@@ -19,29 +22,47 @@ This project delivers a complete website revamp for Unique Staffing Professional
 - Industries served
 - Why choose us section
 - Client testimonials
-- Contact form
-- **NEW**: Job applicant submission form with resume upload
+- Contact form with SMS/Text capability
+- **Job applicant submission form** with resume upload
+- **Cookie consent** with GDPR/CCPA compliance
+- **Accessibility controls** (font size, contrast, reduced motion, etc.)
 
 ### Applicant Submission
 - Personal information capture (name, email, phone)
-- Position and experience details
+- Email confirmation with verification
+- Position and experience details (multi-select)
 - Resume/CV upload (PDF, DOC, DOCX up to 5MB)
-- Optional cover letter
+- Optional cover letter and additional documents
+- LinkedIn and portfolio URL support
+- **Marketing preferences** (newsletter, job alerts, SMS opt-in)
+- **UTM tracking** for referral source attribution
 - Form validation and error handling
-- Success notifications
+- Duplicate phone number detection
 
 ### Admin Portal
-- Secure authentication system
+- Secure authentication system (Supabase Auth)
 - Dashboard with real-time statistics
 - View all applicants in sortable table
 - Advanced filtering and search:
   - Search by name, email, or position
   - Filter by application status
+  - Filter by position
   - Sort by date or name
 - Applicant status management (New, Reviewing, Shortlisted, Rejected, Hired)
 - Internal notes system
 - Resume download functionality
-- Detailed applicant view
+- Detailed applicant view with all documents
+- **CSV Export** for generating candidate lists
+- **Analytics Dashboard** with visitor tracking
+- **Business Info Manager** for SEO settings
+
+### API & Integrations
+- **OpenAPI 3.0 documentation** at `/developers/api/docs`
+- Full CRUD for applicants
+- Analytics endpoints for visitor data
+- Communication preferences management
+- Export functionality (CSV/JSON)
+- Designed for integration with HR/ATS systems
 
 ## 🚀 Quick Start
 
@@ -65,7 +86,8 @@ This project delivers a complete website revamp for Unique Staffing Professional
 
 3. **Set up Supabase**
    - Create a Supabase project at [supabase.com](https://supabase.com)
-   - Follow the complete setup guide in `SUPABASE_SETUP.md`
+   - Run all migrations from `supabase/migrations/` in order
+   - See detailed setup in `supabase/MIGRATION_DOCUMENTATION.md`
 
 4. **Configure environment variables**
    ```bash
@@ -73,7 +95,7 @@ This project delivers a complete website revamp for Unique Staffing Professional
    ```
    Edit `.env` with your Supabase credentials:
    ```
-   VITE_SUPABASE_URL=your-project-url.supabase.co
+   VITE_SUPABASE_URL=https://your-project.supabase.co
    VITE_SUPABASE_ANON_KEY=your-anon-key
    ```
 
@@ -88,65 +110,201 @@ This project delivers a complete website revamp for Unique Staffing Professional
    npm run build
    ```
 
-## 📚 Documentation
+## 🔐 Admin Access Setup
 
-- **[SUPABASE_SETUP.md](./SUPABASE_SETUP.md)** - Complete Supabase configuration guide
-- **[PROJECT_DOCUMENTATION.md](./PROJECT_DOCUMENTATION.md)** - Detailed project documentation
-- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Step-by-step deployment instructions
+### Creating Admin Users
+
+1. Go to your Supabase project dashboard
+2. Navigate to **Authentication > Users**
+3. Click **Add User** → **Create New User**
+4. Enter:
+   - Email: `admin@yourdomain.com` (or any valid email)
+   - Password: Create a strong password (min 8 characters)
+5. Click **Create User**
+6. *(Optional)* Confirm the email if email verification is enabled
+7. Navigate to `/admin/login` on your deployed site
+8. Log in with the credentials you created
+
+### Admin Dashboard Features
+
+Once logged in at `/admin/dashboard`, you can:
+
+- **View Applicants**: See all submitted applications in a table
+- **Filter & Search**: Filter by status, position; search by name/email
+- **Sort**: Sort by date, name (ascending/descending)
+- **Update Status**: Change status from New → Reviewing → Shortlisted → Hired/Rejected
+- **Add Notes**: Add internal notes visible only to admins
+- **Download Resumes**: Download applicant resumes directly
+- **Export to CSV**: Generate candidate lists for new contracts
+- **View Analytics**: See visitor traffic and conversion data
+- **Manage Business Info**: Update SEO and business information
+
+## 🌐 Routes
+
+| Route | Description |
+|-------|-------------|
+| `/` | Public homepage with application form |
+| `/privacy` | Privacy policy |
+| `/privacy/sms` | SMS privacy policy |
+| `/terms` | Terms of service |
+| `/tos` | Redirects to `/terms` |
+| `/unsubscribe` | Manage communication preferences |
+| `/verify-email` | Email verification handler |
+| `/application-confirmation` | Post-submission confirmation |
+| `/developers/api/docs` | OpenAPI documentation (Swagger UI) |
+| `/openapi/docs` | Alternate API docs route |
+| `/admin/login` | Admin login page |
+| `/admin/dashboard` | Admin dashboard (protected) |
 
 ## 🏗️ Tech Stack
 
-- **Frontend**: React 19 + TypeScript
-- **Build Tool**: Vite
-- **UI Framework**: Tailwind CSS 4
-- **Components**: shadcn/ui (Radix UI)
+- **Frontend**: React 19 + TypeScript + Vite
+- **Styling**: Tailwind CSS 4 + shadcn/ui (Radix UI)
 - **Icons**: Phosphor Icons
 - **Routing**: React Router DOM
-- **Backend**: Supabase
-  - PostgreSQL Database
-  - Authentication
-  - Storage
+- **Backend**: Supabase (PostgreSQL, Auth, Storage, Edge Functions)
 - **Notifications**: Sonner
 - **Form Validation**: React Hook Form + Zod
+- **API Docs**: Swagger UI
 
 ## 📁 Project Structure
 
 ```
 src/
 ├── components/
-│   ├── ui/              # UI component library
-│   ├── ApplyForm.tsx    # Applicant submission form
-│   ├── Navigation.tsx   # Site navigation
-│   ├── Hero.tsx         # Hero section
+│   ├── ui/                    # shadcn/ui component library
+│   ├── admin/                 # Admin dashboard components
+│   │   ├── AnalyticsDashboard.tsx
+│   │   ├── ApplicantTable.tsx
+│   │   ├── ApplicantFilters.tsx
+│   │   ├── ApplicantStats.tsx
+│   │   └── ApplicantDetailDialog.tsx
+│   ├── seo/                   # SEO components
+│   ├── AccessibilityControls.tsx  # Accessibility widget
+│   ├── CookieConsent.tsx      # GDPR cookie banner
+│   ├── EnhancedApplyForm.tsx  # Application form
 │   └── ...
 ├── contexts/
-│   └── AuthContext.tsx  # Authentication provider
-├── lib/
-│   ├── supabase.ts      # Supabase client
-│   └── utils.ts         # Utilities
+│   ├── AuthContext.tsx        # Supabase auth state
+│   ├── LanguageContext.tsx    # i18n (en/es/fr)
+│   ├── ThemeProvider.tsx      # Dark/light mode
+│   └── BusinessInfoContext.tsx
 ├── pages/
-│   ├── Home.tsx         # Public homepage
-│   ├── AdminLogin.tsx   # Admin authentication
-│   └── AdminDashboard.tsx # Admin panel
-└── App.tsx              # Main app with routing
+│   ├── Home.tsx               # Public homepage
+│   ├── AdminLogin.tsx         # Admin authentication
+│   ├── AdminDashboard.tsx     # Admin panel
+│   ├── PrivacyPolicy.tsx      # Privacy policy
+│   ├── SMSPrivacyPolicy.tsx   # SMS privacy policy
+│   ├── TermsOfService.tsx     # Terms of service
+│   ├── OpenAPIDocs.tsx        # API documentation
+│   └── Unsubscribe.tsx        # Preference management
+├── lib/
+│   ├── supabase.ts            # Supabase client + types
+│   ├── analytics.ts           # Analytics tracking
+│   └── utils.ts               # Utilities
+├── locales/
+│   └── translations.ts        # i18n translations
+└── App.tsx                    # Main app + routing
+
+public/
+├── sitemap.xml                # SEO sitemap
+├── robots.txt                 # Crawler rules
+├── openapi.yaml               # OpenAPI specification
+└── logo.webp                  # Company logo
+
+supabase/
+├── migrations/                # Database migrations
+└── functions/                 # Edge functions
+    ├── api/                   # REST API
+    ├── send-verification-email/
+    └── send-admin-notification/
 ```
 
-## 🔐 Admin Access
+## 📊 Database Schema
 
-### Creating Admin Users
+### Applicants Table
+| Column | Type | Description |
+|--------|------|-------------|
+| id | UUID | Primary key |
+| created_at | timestamp | Application date |
+| updated_at | timestamp | Last update |
+| full_name | text | Applicant name |
+| email | text | Email address |
+| email_verified | boolean | Verification status |
+| phone | text | Phone number |
+| phone_normalized | text | E.164 format |
+| positions_interested | text[] | Positions array |
+| experience_years | integer | Years of experience |
+| resume_url | text | Resume file URL |
+| resume_filename | text | Original filename |
+| cover_letter | text | Cover letter text |
+| linkedin_url | text | LinkedIn profile |
+| portfolio_url | text | Portfolio link |
+| status | enum | new/reviewing/shortlisted/rejected/hired |
+| notes | text | Internal notes |
+| newsletter_subscribed | boolean | Newsletter opt-in |
+| job_notifications_enabled | boolean | Job alerts opt-in |
+| sms_notifications_enabled | boolean | SMS consent |
+| communication_preferences | jsonb | UTM/tracking data |
+| subscription_source | text | Referral source |
+| preferred_language | text | User's selected language (en/es/fr) |
+| browser_language | text | Browser detected language |
 
-1. Go to your Supabase project dashboard
-2. Navigate to Authentication > Users
-3. Click "Add User"
-4. Enter email and password
-5. Confirm the email address
-6. Use these credentials to log in at `/admin/login`
+### Additional Tables
+- `visitor_analytics` - Page views and tracking
+- `cookie_consent_log` - GDPR consent records
+- `newsletter_subscriptions` - Email list management
+- `unsubscribe_log` - Unsubscribe audit trail
+- `jobs` - Job listings
 
-## 🌐 Routes
+## 🚢 Deployment (Netlify)
 
-- `/` - Public homepage with application form
-- `/admin/login` - Admin login page
-- `/admin/dashboard` - Admin dashboard (protected)
+### Automatic Deployment
+This project is configured for Netlify deployment. Push to main branch triggers automatic deployment.
+
+### Manual Deployment
+```bash
+# Install Netlify CLI
+npm install -g netlify-cli
+
+# Login to Netlify
+netlify login
+
+# Deploy to production
+netlify deploy --prod
+
+# Deploy preview
+netlify deploy
+```
+
+### Environment Variables
+Set these in Netlify dashboard (Site Settings > Environment Variables):
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+## 📝 Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+| `npx tsc --noEmit` | Type check (not in build) |
+
+## ♿ Accessibility Features
+
+The site includes a built-in accessibility control panel accessible via the accessibility icon (floating button). Users can:
+
+- **Adjust text size** (75% - 200%)
+- **Enable high contrast mode**
+- **Reduce motion/animations**
+- **Use dyslexia-friendly font**
+- **Underline all links**
+- **Increase click target sizes**
+- **Enhance focus highlights**
+
+Settings persist across sessions via localStorage.
 
 ## 🔒 Security Features
 
@@ -156,68 +314,23 @@ src/
 - Private storage for resumes
 - Protected admin routes
 - Secure session management
+- CORS configuration for Edge Functions
+- Input validation and sanitization
 
-## 📊 Database Schema
+## 📧 Communication Features
 
-### Applicants Table
-```
-- id (UUID, primary key)
-- created_at (timestamp)
-- updated_at (timestamp)
-- full_name (text)
-- email (text)
-- phone (text)
-- position_interested (text)
-- experience_years (integer)
-- resume_url (text, nullable)
-- resume_filename (text, nullable)
-- cover_letter (text, nullable)
-- status (enum: new, reviewing, shortlisted, rejected, hired)
-- notes (text, nullable)
-```
+### Email
+- Email verification for applications
+- Newsletter subscription
+- Job opportunity notifications
+- Unsubscribe functionality
 
-## 🧪 Testing Locally
+### SMS
+- Opt-in SMS notifications
+- SMS privacy policy compliance
+- TCPA compliant opt-out
 
-1. Start the dev server: `npm run dev`
-2. Open [http://localhost:5173](http://localhost:5173)
-3. Submit a test application
-4. Log in to admin at [http://localhost:5173/admin/login](http://localhost:5173/admin/login)
-5. Verify the application appears in the dashboard
-
-## 🚢 Deployment
-
-See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed deployment instructions.
-
-**Recommended hosting**: Vercel, Netlify, or AWS Amplify
-
-Quick deploy to Vercel:
-```bash
-npm install -g vercel
-vercel
-```
-
-## 📝 Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 🎨 Customization
-
-### Colors
-Colors are defined in `tailwind.config.js` using the project's brand colors:
-- Primary: Deep professional blue
-- Secondary: Light blue backgrounds
-- Accent: Warm orange
-
-### Content
-Update content in the respective component files:
-- Hero text: `src/components/Hero.tsx`
-- Services: `src/components/Services.tsx`
-- Contact info: `src/components/Contact.tsx`
-
-## 🐛 Troubleshooting
+## 🔧 Troubleshooting
 
 ### Build Issues
 ```bash
@@ -233,32 +346,21 @@ npm run build
 - Ensure RLS policies are configured
 
 ### Admin Login Issues
-- Verify admin user is created in Supabase
+- Verify admin user is created in Supabase Authentication
 - Check email is confirmed
 - Clear browser cache/cookies
 
-## 📦 Optional Add-ons
+## 📄 Legal Pages
 
-These features can be added for additional development:
-- Email notifications
-- SMS alerts
-- CSV export
-- Multiple admin roles
-- Employer portal
-- Advanced search/filtering
-- Interview scheduling
-- Automated responses
+- **Privacy Policy** (`/privacy`) - Data collection and usage
+- **SMS Privacy Policy** (`/privacy/sms`) - Text message specific policy
+- **Terms of Service** (`/terms` or `/tos`) - Service terms
 
-## 📄 License
+## 📚 Additional Documentation
 
-Proprietary - All rights reserved by Unique Staffing Professionals Inc.
-
-## 🤝 Support
-
-For technical support or questions:
-- Review documentation files
-- Check [Supabase docs](https://supabase.com/docs)
-- Review component code comments
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System architecture
+- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Deployment instructions
+- **[supabase/MIGRATION_DOCUMENTATION.md](./supabase/MIGRATION_DOCUMENTATION.md)** - Database setup
 
 ## ✅ Project Deliverables
 
@@ -268,13 +370,21 @@ For technical support or questions:
 - [x] Admin login system (Supabase Auth)
 - [x] Admin dashboard with sorting, filtering, and status updates
 - [x] Resume download functionality
+- [x] CSV export for candidate lists
+- [x] Marketing opt-in/opt-out (Email, SMS)
+- [x] UTM and referral tracking
+- [x] OpenAPI documentation
+- [x] Accessibility controls
+- [x] Mobile-responsive design
+- [x] Multi-language support (EN/ES/FR)
+- [x] GDPR/CCPA compliant cookie consent
+- [x] Sitemap and robots.txt for SEO
 - [x] Comprehensive documentation
 - [x] Production-ready build
-- [x] Mobile-responsive design
 - [x] Security best practices
 
-**Project Status**: ✅ Complete and ready for deployment
+**Project Status**: ✅ Production Ready
 
 ---
 
-Built with ❤️ for Unique Staffing Professionals Inc.
+Built for Unique Staffing Professionals Inc.

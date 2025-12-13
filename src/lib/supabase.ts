@@ -35,6 +35,8 @@ export interface Applicant {
   status: 'new' | 'reviewing' | 'shortlisted' | 'rejected' | 'hired'
   notes: string | null
   admin_notified_at: string | null
+  preferred_language: string | null
+  browser_language: string | null
 }
 
 export interface ApplicantInsert {
@@ -58,6 +60,8 @@ export interface ApplicantInsert {
   submission_location?: string | null
   status?: 'new' | 'reviewing' | 'shortlisted' | 'rejected' | 'hired'
   notes?: string | null
+  preferred_language?: string | null
+  browser_language?: string | null
 }
 
 export interface ApplicantDocument {

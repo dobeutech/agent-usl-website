@@ -2,13 +2,27 @@ openapi: 3.0.3
 info:
   title: Unique Staffing Professionals API
   description: |
-    API for accessing applicant and job data from Unique Staffing Professionals Inc.
-    This API is designed for integration with findd.ai and other authorized partners.
-  version: 1.0.0
+    REST API for accessing applicant, job, and analytics data from Unique Staffing Professionals Inc.
+    
+    This API is designed for integration with HR solutions, ATS systems, and authorized partners.
+    
+    ## Authentication
+    All API requests require an API key passed in the `x-api-key` header.
+    Contact admin@uniquestaffingprofessionals.com to request API access.
+    
+    ## Rate Limiting
+    API requests are limited to 100 requests per minute per API key.
+    
+    ## Data Freshness
+    Data is updated in real-time as applicants submit applications.
+  version: 1.1.0
   contact:
-    name: Unique Staffing Professionals
+    name: Unique Staffing Professionals Technical Support
     email: admin@uniquestaffingprofessionals.com
     url: https://uniquestaffingprofessionals.com
+  license:
+    name: Proprietary
+    url: https://uniquestaffingprofessionals.com/terms
 
 servers:
   - url: https://your-project.supabase.co/functions/v1/api
@@ -16,6 +30,16 @@ servers:
 
 security:
   - ApiKeyAuth: []
+
+tags:
+  - name: Applicants
+    description: Applicant management endpoints
+  - name: Jobs
+    description: Job listing endpoints
+  - name: Analytics
+    description: Visitor and application analytics
+  - name: Communications
+    description: Communication preference management
 
 components:
   securitySchemes:
@@ -56,7 +80,7 @@ components:
           description: Phone number
         phone_normalized:
           type: string
-          description: Normalized phone number
+          description: Normalized phone number (E.164 format)
         position_interested:
           type: string
           description: Primary position of interest
@@ -92,18 +116,123 @@ components:
           description: Portfolio URL
         submission_location:
           type: string
-          description: Location where application was submitted
+          description: Geographic location where application was submitted
         status:
           type: string
           enum: [new, reviewing, shortlisted, rejected, hired]
           description: Application status
         notes:
           type: string
-          description: Internal notes
+          description: Internal notes (admin only)
         admin_notified_at:
           type: string
           format: date-time
           description: When admin was notified
+        newsletter_subscribed:
+          type: boolean
+          description: Whether applicant opted into newsletter
+        job_notifications_enabled:
+          type: boolean
+          description: Whether applicant wants job notifications
+        sms_notifications_enabled:
+          type: boolean
+          description: Whether applicant consented to SMS
+        preferred_language:
+          type: string
+          enum: [en, es, fr]
+          description: Language the user selected when submitting application
+        browser_language:
+          type: string
+          description: Browser-detected language from Accept-Language header
+        communication_preferences:
+          type: object
+          description: Detailed communication preferences and tracking data
+          properties:
+            utm_source:
+              type: string
+              description: UTM source parameter
+            utm_medium:
+              type: string
+              description: UTM medium parameter
+            utm_campaign:
+              type: string
+              description: UTM campaign parameter
+            utm_term:
+              type: string
+              description: UTM term parameter
+            utm_content:
+              type: string
+              description: UTM content parameter
+            referrer:
+              type: string
+              description: Referring URL
+            landing_page:
+              type: string
+              description: Landing page path
+            submitted_at:
+              type: string
+              format: date-time
+              description: Exact submission timestamp
+            user_agent:
+              type: string
+              description: Browser user agent string
+        subscription_source:
+          type: string
+          description: Source of the subscription (utm_source, referrer, or 'direct')
+        last_communication_at:
+          type: string
+          format: date-time
+          description: Last time applicant was contacted
+
+    ApplicantCreate:
+      type: object
+      required:
+        - full_name
+        - email
+        - phone
+        - positions_interested
+        - experience_years
+      properties:
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        positions_interested:
+          type: array
+          items:
+            type: string
+        experience_years:
+          type: integer
+        cover_letter:
+          type: string
+        linkedin_url:
+          type: string
+        portfolio_url:
+          type: string
+        newsletter_subscribed:
+          type: boolean
+        job_notifications_enabled:
+          type: boolean
+        sms_notifications_enabled:
+          type: boolean
+
+    ApplicantUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [new, reviewing, shortlisted, rejected, hired]
+        notes:
+          type: string
+        newsletter_subscribed:
+          type: boolean
+        job_notifications_enabled:
+          type: boolean
+        sms_notifications_enabled:
+          type: boolean
 
     Job:
       type: object
@@ -152,18 +281,151 @@ components:
           type: string
           format: date-time
 
+    VisitorAnalytics:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        session_id:
+          type: string
+        visitor_id:
+          type: string
+        ip_address:
+          type: string
+          format: ipv4
+        user_agent:
+          type: string
+        device_type:
+          type: string
+          enum: [desktop, mobile, tablet]
+        browser:
+          type: string
+        os:
+          type: string
+        country:
+          type: string
+        region:
+          type: string
+        city:
+          type: string
+        referrer:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_term:
+          type: string
+        utm_content:
+          type: string
+        page_url:
+          type: string
+        page_title:
+          type: string
+        time_on_page:
+          type: integer
+          description: Time spent on page in seconds
+        scroll_depth:
+          type: integer
+          description: Maximum scroll depth percentage
+
+    AnalyticsSummary:
+      type: object
+      properties:
+        total_visitors:
+          type: integer
+        unique_visitors:
+          type: integer
+        total_applications:
+          type: integer
+        conversion_rate:
+          type: number
+          format: float
+        top_sources:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                type: string
+              count:
+                type: integer
+        top_pages:
+          type: array
+          items:
+            type: object
+            properties:
+              page:
+                type: string
+              views:
+                type: integer
+        device_breakdown:
+          type: object
+          properties:
+            desktop:
+              type: integer
+            mobile:
+              type: integer
+            tablet:
+              type: integer
+
+    CommunicationPreference:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        newsletter_subscribed:
+          type: boolean
+        job_notifications_enabled:
+          type: boolean
+        sms_notifications_enabled:
+          type: boolean
+        updated_at:
+          type: string
+          format: date-time
+
+    PaginatedResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: {}
+        count:
+          type: integer
+          description: Total count of records
+        limit:
+          type: integer
+          description: Number of records returned
+        offset:
+          type: integer
+          description: Starting offset
+
     Error:
       type: object
       properties:
         error:
           type: string
           description: Error message
+        code:
+          type: string
+          description: Error code
 
 paths:
   /applicants:
     get:
+      tags:
+        - Applicants
       summary: List all applicants
-      description: Retrieve a paginated list of applicants with optional filtering
+      description: |
+        Retrieve a paginated list of applicants with optional filtering.
+        Use this endpoint to build candidate lists for new contracts.
       parameters:
         - name: status
           in: query
@@ -171,12 +433,59 @@ paths:
           schema:
             type: string
             enum: [new, reviewing, shortlisted, rejected, hired]
+        - name: position
+          in: query
+          description: Filter by position interested
+          schema:
+            type: string
+        - name: min_experience
+          in: query
+          description: Minimum years of experience
+          schema:
+            type: integer
+        - name: max_experience
+          in: query
+          description: Maximum years of experience
+          schema:
+            type: integer
+        - name: email_verified
+          in: query
+          description: Filter by email verification status
+          schema:
+            type: boolean
+        - name: newsletter_subscribed
+          in: query
+          description: Filter by newsletter subscription
+          schema:
+            type: boolean
+        - name: sms_enabled
+          in: query
+          description: Filter by SMS consent
+          schema:
+            type: boolean
+        - name: created_after
+          in: query
+          description: Filter applications created after date
+          schema:
+            type: string
+            format: date-time
+        - name: created_before
+          in: query
+          description: Filter applications created before date
+          schema:
+            type: string
+            format: date-time
+        - name: utm_source
+          in: query
+          description: Filter by UTM source
+          schema:
+            type: string
         - name: limit
           in: query
           description: Number of results to return (max 100)
           schema:
             type: integer
-            default: 100
+            default: 50
             maximum: 100
         - name: offset
           in: query
@@ -184,24 +493,34 @@ paths:
           schema:
             type: integer
             default: 0
+        - name: sort
+          in: query
+          description: Sort field
+          schema:
+            type: string
+            enum: [created_at, updated_at, full_name, experience_years]
+            default: created_at
+        - name: order
+          in: query
+          description: Sort order
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
       responses:
         '200':
           description: List of applicants
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Applicant'
-                  count:
-                    type: integer
-                  limit:
-                    type: integer
-                  offset:
-                    type: integer
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Applicant'
         '401':
           description: Invalid or missing API key
           content:
@@ -209,9 +528,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+    post:
+      tags:
+        - Applicants
+      summary: Create new applicant
+      description: Submit a new applicant application via API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicantCreate'
+      responses:
+        '201':
+          description: Applicant created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Applicant'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /applicants/{id}:
     get:
+      tags:
+        - Applicants
       summary: Get applicant by ID
+      description: Retrieve full details for a specific applicant
       parameters:
         - name: id
           in: path
@@ -237,7 +587,10 @@ paths:
                 $ref: '#/components/schemas/Error'
 
     put:
+      tags:
+        - Applicants
       summary: Update applicant
+      description: Update applicant status, notes, or communication preferences
       parameters:
         - name: id
           in: path
@@ -250,13 +603,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                  enum: [new, reviewing, shortlisted, rejected, hired]
-                notes:
-                  type: string
+              $ref: '#/components/schemas/ApplicantUpdate'
       responses:
         '200':
           description: Updated applicant
@@ -267,11 +614,189 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Applicant'
+        '404':
+          description: Applicant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Applicants
+      summary: Delete applicant
+      description: Permanently delete an applicant record (GDPR compliance)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Applicant deleted successfully
+        '404':
+          description: Applicant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /applicants/{id}/documents:
+    get:
+      tags:
+        - Applicants
+      summary: Get applicant documents
+      description: Retrieve all documents (resume, cover letters, certificates) for an applicant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        document_type:
+                          type: string
+                          enum: [resume, cover_letter, reference, certificate, portfolio, other]
+                        document_url:
+                          type: string
+                          format: uri
+                        document_filename:
+                          type: string
+                        file_size:
+                          type: integer
+                        mime_type:
+                          type: string
+                        uploaded_at:
+                          type: string
+                          format: date-time
+
+  /applicants/{id}/resume:
+    get:
+      tags:
+        - Applicants
+      summary: Download resume
+      description: Get a signed URL to download the applicant's resume
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Resume download URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    description: Signed URL valid for 1 hour
+                  filename:
+                    type: string
+                  expires_at:
+                    type: string
+                    format: date-time
+        '404':
+          description: Resume not found
+
+  /applicants/export:
+    get:
+      tags:
+        - Applicants
+      summary: Export applicants
+      description: Export applicants matching filter criteria as CSV or JSON
+      parameters:
+        - name: format
+          in: query
+          description: Export format
+          schema:
+            type: string
+            enum: [csv, json]
+            default: csv
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [new, reviewing, shortlisted, rejected, hired]
+        - name: position
+          in: query
+          schema:
+            type: string
+        - name: created_after
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: created_before
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Export file
+          content:
+            text/csv:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Applicant'
 
   /jobs:
     get:
-      summary: List all active jobs
-      description: Retrieve all currently active job listings
+      tags:
+        - Jobs
+      summary: List all jobs
+      description: Retrieve all job listings with optional filtering
+      parameters:
+        - name: is_active
+          in: query
+          description: Filter by active status
+          schema:
+            type: boolean
+            default: true
+        - name: job_type
+          in: query
+          schema:
+            type: string
+            enum: [full-time, part-time, contract, temporary]
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: location_state
+          in: query
+          schema:
+            type: string
+        - name: featured
+          in: query
+          schema:
+            type: boolean
       responses:
         '200':
           description: List of jobs
@@ -284,3 +809,251 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Job'
+
+  /jobs/{id}:
+    get:
+      tags:
+        - Jobs
+      summary: Get job by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Job details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Job'
+
+  /analytics/visitors:
+    get:
+      tags:
+        - Analytics
+      summary: Get visitor analytics
+      description: Retrieve raw visitor analytics data
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+      responses:
+        '200':
+          description: Visitor analytics data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/VisitorAnalytics'
+
+  /analytics/summary:
+    get:
+      tags:
+        - Analytics
+      summary: Get analytics summary
+      description: Get aggregated analytics summary for dashboards
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Analytics summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsSummary'
+
+  /analytics/sources:
+    get:
+      tags:
+        - Analytics
+      summary: Get traffic sources
+      description: Breakdown of traffic sources (UTM, referrers, direct)
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Traffic source breakdown
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        source:
+                          type: string
+                        medium:
+                          type: string
+                        campaign:
+                          type: string
+                        visitors:
+                          type: integer
+                        applications:
+                          type: integer
+                        conversion_rate:
+                          type: number
+
+  /communications/preferences:
+    get:
+      tags:
+        - Communications
+      summary: Get communication preferences
+      description: Get communication preferences for an email address
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+            format: email
+      responses:
+        '200':
+          description: Communication preferences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationPreference'
+        '404':
+          description: Email not found
+
+    put:
+      tags:
+        - Communications
+      summary: Update communication preferences
+      description: Update communication preferences for an email address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                newsletter_subscribed:
+                  type: boolean
+                job_notifications_enabled:
+                  type: boolean
+                sms_notifications_enabled:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated preferences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationPreference'
+
+  /communications/unsubscribe:
+    post:
+      tags:
+        - Communications
+      summary: Unsubscribe from communications
+      description: Process unsubscribe request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - type
+              properties:
+                email:
+                  type: string
+                  format: email
+                type:
+                  type: string
+                  enum: [newsletter, job_notifications, sms, all]
+                reason:
+                  type: string
+      responses:
+        '200':
+          description: Unsubscribed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+
+  /health:
+    get:
+      tags:
+        - System
+      summary: Health check
+      description: Check API availability
+      security: []
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  timestamp:
+                    type: string
+                    format: date-time

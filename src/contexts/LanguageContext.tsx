@@ -82,3 +82,6 @@ export function useLanguage() {
   }
   return context
 }
+
+// Re-export Language type for convenience
+export type { Language } from '@/types/i18n'
