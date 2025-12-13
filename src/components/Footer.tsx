@@ -187,13 +187,31 @@ export function Footer() {
                   <Phone size={18} className="text-accent" />
                   <BusinessPhone businessInfo={businessInfo} type="phone" className="hover:text-primary-foreground transition-colors" />
                 </li>
-                <li className="flex items-center gap-3 group">
-                  <MessageSquare size={18} className="text-accent" />
-                  <span>Text: <BusinessPhone businessInfo={businessInfo} type="text" className="hover:text-primary-foreground transition-colors" /></span>
-                </li>
-                <li className="flex items-center gap-3 group">
-                  <Printer size={18} className="text-accent" />
-                  <span>Fax: <BusinessPhone businessInfo={businessInfo} type="fax" /></span>
+                {businessInfo.contact.textLine && (
+                  <li className="flex items-center gap-3 group">
+                    <MessageSquare size={18} className="text-accent" />
+                    <span>
+                      Text:{' '}
+                      <BusinessPhone
+                        businessInfo={businessInfo}
+                        type="text"
+                        className="hover:text-primary-foreground transition-colors"
+                      />
+                    </span>
+                  </li>
+                )}
+                {businessInfo.contact.fax && (
+                  <li className="flex items-center gap-3 group">
+                    <Printer size={18} className="text-accent" />
+                    <span>
+                      Fax:{' '}
+                      <BusinessPhone
+                        businessInfo={businessInfo}
+                        type="fax"
+                      />
+                    </span>
+                  </li>
+                )}
                 </li>
                 <li className="flex items-center gap-3 group">
                   <Mail size={18} className="text-accent" />
