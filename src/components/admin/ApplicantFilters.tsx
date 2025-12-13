@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MagnifyingGlass, Funnel, SortAscending, Briefcase, Export } from "@phosphor-icons/react"
-import { Applicant } from "@/lib/supabase"
 
 interface ApplicantFiltersProps {
   searchQuery: string

@@ -30,7 +30,8 @@ export function AnalyticsDashboard() {
 
   useEffect(() => {
     fetchApplicants()
-  }, [fetchApplicants])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateRange])
 
   const fetchApplicants = useCallback(async () => {
     try {

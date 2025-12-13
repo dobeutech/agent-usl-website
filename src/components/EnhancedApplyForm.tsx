@@ -73,25 +73,38 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const validateField = (name: string, value: string | string[]): string => {
+    // Handle array values (for positions)
+    if (name === 'positions') {
+      if (Array.isArray(value)) {
+        return value.length === 0 ? 'Select at least one position' : ''
+      }
+      return 'Invalid value type for positions'
+    }
+
+    // All other fields expect string values
+    if (Array.isArray(value)) {
+      return 'Invalid value type'
+    }
+
+    const stringValue = value as string
+
     switch (name) {
       case 'full_name':
-        return value.trim().length < 2 ? 'Name must be at least 2 characters' : ''
+        return stringValue.trim().length < 2 ? 'Name must be at least 2 characters' : ''
       case 'email':
-        return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Invalid email address' : ''
+        return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(stringValue) ? 'Invalid email address' : ''
       case 'email_confirmed':
-        return value !== formData.email ? 'Emails do not match' : ''
+        return stringValue !== formData.email ? 'Emails do not match' : ''
       case 'phone':
-        return value.replace(/[^0-9]/g, '').length < 10 ? 'Phone must be at least 10 digits' : ''
-      case 'positions':
-        return value.length === 0 ? 'Select at least one position' : ''
+        return stringValue.replace(/[^0-9]/g, '').length < 10 ? 'Phone must be at least 10 digits' : ''
       case 'experience_years':
-        return value === '' ? 'Please select experience level' : ''
+        return stringValue === '' ? 'Please select experience level' : ''
       case 'job_posting_url':
-        return value && !validateUrl(value) ? 'Invalid URL format' : ''
+        return stringValue && !validateUrl(stringValue) ? 'Invalid URL format' : ''
       case 'linkedin_url':
-        return value && !validateLinkedInUrl(value) ? 'Invalid LinkedIn URL' : ''
+        return stringValue && !validateLinkedInUrl(stringValue) ? 'Invalid LinkedIn URL' : ''
       case 'portfolio_url':
-        return value && !validateUrl(value) ? 'Invalid URL format' : ''
+        return stringValue && !validateUrl(stringValue) ? 'Invalid URL format' : ''
       default:
         return ''
     }

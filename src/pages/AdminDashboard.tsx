@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -41,7 +41,8 @@ export function AdminDashboard() {
 
   useEffect(() => {
     filterAndSortApplicants()
-  }, [filterAndSortApplicants])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [applicants, searchQuery, statusFilter, positionFilter, sortBy])
 
   // Get unique positions for filter
   const uniquePositions = Array.from(new Set(
@@ -101,7 +102,7 @@ export function AdminDashboard() {
     }
   }
 
-  const filterAndSortApplicants = useCallback(() => {
+  const filterAndSortApplicants = () => {
     let filtered = [...applicants]
 
     // Apply status filter
@@ -146,7 +147,7 @@ export function AdminDashboard() {
     })
 
     setFilteredApplicants(filtered)
-  }, [applicants, searchQuery, statusFilter, positionFilter, sortBy])
+  }
 
   const handleStatusUpdate = async (applicantId: string, newStatus: Applicant['status']) => {
     setUpdatingStatus(true)

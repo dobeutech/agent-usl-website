@@ -26,7 +26,8 @@ export function Unsubscribe() {
     if (email) {
       loadPreferences()
     }
-  }, [email, loadPreferences])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email])
 
   const loadPreferences = useCallback(async () => {
     if (!email) return
