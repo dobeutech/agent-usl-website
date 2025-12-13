@@ -1,0 +1,11 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://uniquestaffingprofessionals.com/sitemap.xml
+
+# Disallow admin pages from indexing
+Disallow: /admin/dashboard
+Disallow: /verify-email
+Disallow: /unsubscribe
