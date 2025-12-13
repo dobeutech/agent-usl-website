@@ -54,10 +54,11 @@ export function AnimatedBackground({
   ) => {
     ctx.clearRect(0, 0, width, height)
 
-    // Get primary color from CSS variable
-    const primaryColor = getComputedStyle(document.documentElement)
-      .getPropertyValue('--primary')
-      .trim()
+    // Get primary color from CSS variable, with a safe fallback
+    const primaryColor =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue('--primary')
+        .trim() || '#ffffff'
 
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
@@ -68,12 +69,15 @@ export function AnimatedBackground({
 
         if (distance < connectionDistance) {
           const opacity = (1 - distance / connectionDistance) * 0.3
+          ctx.save()
           ctx.beginPath()
-          ctx.strokeStyle = `oklch(from ${primaryColor} l c h / ${opacity})`
+          ctx.globalAlpha = opacity
+          ctx.strokeStyle = primaryColor
           ctx.lineWidth = 1
           ctx.moveTo(particles[i].x, particles[i].y)
           ctx.lineTo(particles[j].x, particles[j].y)
           ctx.stroke()
+          ctx.restore()
         }
       }
 
@@ -84,21 +88,27 @@ export function AnimatedBackground({
 
       if (mouseDistance < connectionDistance * 1.5) {
         const opacity = (1 - mouseDistance / (connectionDistance * 1.5)) * 0.5
+        ctx.save()
         ctx.beginPath()
-        ctx.strokeStyle = `oklch(from ${primaryColor} l c h / ${opacity})`
+        ctx.globalAlpha = opacity
+        ctx.strokeStyle = primaryColor
         ctx.lineWidth = 1.5
         ctx.moveTo(particles[i].x, particles[i].y)
         ctx.lineTo(mouseRef.current.x, mouseRef.current.y)
         ctx.stroke()
+        ctx.restore()
       }
     }
 
     // Draw particles
     for (const particle of particles) {
+      ctx.save()
       ctx.beginPath()
+      ctx.globalAlpha = particle.opacity
       ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-      ctx.fillStyle = `oklch(from ${primaryColor} l c h / ${particle.opacity})`
+      ctx.fillStyle = primaryColor
       ctx.fill()
+      ctx.restore()
     }
   }, [connectionDistance])
 
