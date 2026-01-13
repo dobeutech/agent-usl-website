@@ -463,9 +463,9 @@
         "Test data retrieval from database"
       ],
       "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "last_tested": "2026-01-14T03:00:00.000Z",
+      "tested_by": "agent",
+      "notes": "Supabase connection established. Applicants table exists. RLS policies not fully configured - anonymous inserts blocked. Requires running migration 20251119020909_create_applicants_table.sql to set up RLS policy 'Anyone can submit applications'. App falls back to demo mode gracefully."
     },
     {
       "id": "feat-025",
@@ -481,9 +481,9 @@
         "Test file download from storage"
       ],
       "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "last_tested": "2026-01-14T03:00:00.000Z",
+      "tested_by": "agent",
+      "notes": "Supabase Storage endpoint accessible. No storage buckets exist - 'resumes' bucket not created. Requires running migration 20251119020940_create_resumes_storage_bucket.sql in Supabase. File upload UI correctly configured with accept='.pdf,.doc,.docx'. App handles storage unavailability gracefully."
     },
     {
       "id": "feat-026",
@@ -499,9 +499,9 @@
         "Verify logout clears session"
       ],
       "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "last_tested": "2026-01-14T03:00:00.000Z",
+      "tested_by": "agent",
+      "notes": "Supabase Auth endpoint responding correctly. Invalid credentials return 'Invalid login credentials' error as expected. No admin users configured in Supabase Auth - requires creating admin user via Supabase dashboard or CLI. Demo mode provides working authentication (demo@uniquestaffing.com / demo123)."
     },
     {
       "id": "feat-027",
