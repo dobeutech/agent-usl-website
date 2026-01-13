@@ -212,7 +212,6 @@ export function Footer() {
                     </span>
                   </li>
                 )}
-                </li>
                 <li className="flex items-center gap-3 group">
                   <Mail size={18} className="text-accent" />
                   <BusinessEmail businessInfo={businessInfo} className="hover:text-primary-foreground transition-colors break-all" />

@@ -61,17 +61,6 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
     sms_notifications_enabled: false
   })
 
-  // Capture UTM parameters and referrer on mount
-  const [trackingData, setTrackingData] = useState<{
-    utm_source: string | null
-    utm_medium: string | null
-    utm_campaign: string | null
-    utm_term: string | null
-    utm_content: string | null
-    referrer: string
-    landing_page: string
-  } | null>(null)
-
   // Capture UTM parameters and referrer once when the component initializes
   const [trackingData] = useState<{
     utm_source: string | null

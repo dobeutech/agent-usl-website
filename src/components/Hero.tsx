@@ -209,7 +209,7 @@ export function Hero() {
           }}
         >
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto">
-            {statsData.map((stat) => (
+            {statsData.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 className="relative group"
