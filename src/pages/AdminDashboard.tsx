@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SignOut, Buildings, ChartBar } from "@phosphor-icons/react"
+import { SignOut, Buildings, ChartBar, Info } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { useAuth } from "@/contexts/AuthContext"
 import { supabase, Applicant } from "@/lib/supabase"
+import { isDemoMode, getDemoApplicants, updateDemoApplicant } from "@/lib/mockData"
 import { BusinessInfoManager } from "@/components/admin/BusinessInfoManager"
 import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard"
 import { ApplicantStats } from "@/components/admin/ApplicantStats"
@@ -15,7 +16,7 @@ import { ApplicantDetailDialog } from "@/components/admin/ApplicantDetailDialog"
 
 export function AdminDashboard() {
   const navigate = useNavigate()
-  const { user, signOut, loading } = useAuth()
+  const { user, signOut, loading, isDemo } = useAuth()
   const [applicants, setApplicants] = useState<Applicant[]>([])
   const [filteredApplicants, setFilteredApplicants] = useState<Applicant[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -85,6 +86,13 @@ export function AdminDashboard() {
   }
 
   const fetchApplicants = async () => {
+    // Use mock data in demo mode
+    if (isDemo || isDemoMode()) {
+      setApplicants(getDemoApplicants())
+      setIsLoading(false)
+      return
+    }
+
     try {
       const { data, error } = await supabase
         .from('applicants')
@@ -151,6 +159,21 @@ export function AdminDashboard() {
 
   const handleStatusUpdate = async (applicantId: string, newStatus: Applicant['status']) => {
     setUpdatingStatus(true)
+
+    // Demo mode: update mock data
+    if (isDemo || isDemoMode()) {
+      const updated = updateDemoApplicant(applicantId, { status: newStatus })
+      if (updated) {
+        toast.success("Status updated successfully")
+        setApplicants(getDemoApplicants())
+        if (selectedApplicant && selectedApplicant.id === applicantId) {
+          setSelectedApplicant({ ...selectedApplicant, status: newStatus })
+        }
+      }
+      setUpdatingStatus(false)
+      return
+    }
+
     try {
       const { error } = await supabase
         .from('applicants')
@@ -174,6 +197,19 @@ export function AdminDashboard() {
   }
 
   const handleNotesUpdate = async (applicantId: string, notes: string) => {
+    // Demo mode: update mock data
+    if (isDemo || isDemoMode()) {
+      const updated = updateDemoApplicant(applicantId, { notes })
+      if (updated) {
+        toast.success("Notes updated successfully")
+        setApplicants(getDemoApplicants())
+        if (selectedApplicant && selectedApplicant.id === applicantId) {
+          setSelectedApplicant({ ...selectedApplicant, notes })
+        }
+      }
+      return
+    }
+
     try {
       const { error } = await supabase
         .from('applicants')
@@ -195,6 +231,14 @@ export function AdminDashboard() {
   }
 
   const downloadResume = async (resumeUrl: string, filename: string) => {
+    // In demo mode, show a message about demo limitations
+    if (isDemo || isDemoMode()) {
+      toast.info("Demo mode: Resume download simulated", {
+        description: `Would download: ${filename}`
+      })
+      return
+    }
+
     try {
       const response = await fetch(resumeUrl)
       const blob = await response.blob()
@@ -233,6 +277,18 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Demo Mode Banner */}
+      {(isDemo || isDemoMode()) && (
+        <div className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2">
+          <div className="max-w-7xl mx-auto flex items-center gap-2 text-amber-600 dark:text-amber-400">
+            <Info size={18} />
+            <span className="text-sm font-medium">
+              Demo Mode: Using sample data. Connect Supabase for production use.
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

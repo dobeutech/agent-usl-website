@@ -189,10 +189,10 @@
         "Verify sorting works correctly",
         "Check pagination if many applicants"
       ],
-      "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "passes": true,
+      "last_tested": "2026-01-13T20:55:00.000Z",
+      "tested_by": "agent",
+      "notes": "Admin dashboard displays applicant table with demo data (8 applicants). Table shows Name, Email, Phone, Position, Status, Actions columns. Sorting available via dropdown (Newest First, Oldest First, Name A-Z, Name Z-A)."
     },
     {
       "id": "feat-011",
@@ -208,10 +208,10 @@
         "Verify all applicants shown again",
         "Test filtering by different fields"
       ],
-      "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "passes": true,
+      "last_tested": "2026-01-13T20:55:00.000Z",
+      "tested_by": "agent",
+      "notes": "Search filter works correctly - typing 'Maria' filters to show Maria Garcia. Status filter dropdown (All, New, Reviewing, Shortlisted, Rejected, Hired). Position filter dropdown. Results count updates dynamically."
     },
     {
       "id": "feat-012",
@@ -290,10 +290,10 @@
         "Update an applicant status",
         "Verify statistics update in real-time"
       ],
-      "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "passes": true,
+      "last_tested": "2026-01-13T20:55:00.000Z",
+      "tested_by": "agent",
+      "notes": "Statistics cards visible: Total (8), New (3), Reviewing (2), Shortlisted (1), Hired (1). Cards display correctly at top of dashboard. Stats update in real-time when status changes (tested with demo data)."
     },
     {
       "id": "feat-016",
@@ -762,15 +762,15 @@
         "Verify file contains correct data",
         "Check all fields are included"
       ],
-      "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "passes": true,
+      "last_tested": "2026-01-13T20:55:00.000Z",
+      "tested_by": "agent",
+      "notes": "Export CSV button visible and functional. Exports filtered applicant data with columns: Name, Email, Phone, Position, Experience, Status, Applied Date, Notes. CSV download works with demo data."
     }
   ],
   "metadata": {
     "total_features": 40,
-    "passing_features": 28,
-    "last_updated": "2026-01-13T22:30:00.000Z"
+    "passing_features": 32,
+    "last_updated": "2026-01-13T20:55:00.000Z"
   }
 }

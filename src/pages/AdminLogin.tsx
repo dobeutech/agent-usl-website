@@ -4,16 +4,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
-import { LockKey } from "@phosphor-icons/react"
+import { LockKey, Info } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { useAuth } from "@/contexts/AuthContext"
+import { isDemoMode } from "@/lib/mockData"
 
 export function AdminLogin() {
   const navigate = useNavigate()
-  const { signIn } = useAuth()
+  const { signIn, isDemo } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const showDemoMode = isDemo || isDemoMode()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,7 +26,9 @@ export function AdminLogin() {
 
       if (error) {
         toast.error("Login failed", {
-          description: "Invalid email or password. Please try again."
+          description: showDemoMode
+            ? "Use demo@uniquestaffing.com / demo123"
+            : "Invalid email or password. Please try again."
         })
       } else {
         toast.success("Login successful!")
@@ -35,6 +39,11 @@ export function AdminLogin() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const fillDemoCredentials = () => {
+    setEmail("demo@uniquestaffing.com")
+    setPassword("demo123")
   }
 
   return (
@@ -52,6 +61,29 @@ export function AdminLogin() {
           </p>
         </div>
 
+        {showDemoMode && (
+          <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Info size={20} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+              <div className="text-sm">
+                <p className="font-medium text-amber-600 dark:text-amber-400 mb-1">Demo Mode</p>
+                <p className="text-muted-foreground mb-2">
+                  Supabase is not configured. Use demo credentials to test the dashboard.
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={fillDemoCredentials}
+                  className="text-xs"
+                >
+                  Fill Demo Credentials
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="email">Email Address</Label>
@@ -61,7 +93,7 @@ export function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="admin@uniquestaffing.com"
+              placeholder={showDemoMode ? "demo@uniquestaffing.com" : "admin@uniquestaffing.com"}
               autoComplete="email"
             />
           </div>
@@ -74,7 +106,7 @@ export function AdminLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="••••••••"
+              placeholder={showDemoMode ? "demo123" : "••••••••"}
               autoComplete="current-password"
             />
           </div>
