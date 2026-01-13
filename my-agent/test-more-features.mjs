@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 
-const BASE_URL = 'http://localhost:5001';
+const BASE_URL = 'http://localhost:5000';
 
 // Helper function to wait
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -69,7 +69,7 @@ async function testMoreFeatures() {
       }
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-005-contact.png' });
+    await page.screenshot({ path: 'screenshots/feat-005-contact.png' });
   } catch (error) {
     results.errors.push(`feat-005: ${error.message}`);
     console.error('Error testing feat-005:', error.message);
@@ -107,7 +107,7 @@ async function testMoreFeatures() {
       results.failed.push('feat-018: Desktop layout issues detected');
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-018-desktop.png' });
+    await page.screenshot({ path: 'screenshots/feat-018-desktop.png' });
   } catch (error) {
     results.errors.push(`feat-018: ${error.message}`);
     console.error('Error testing feat-018:', error.message);
@@ -143,7 +143,7 @@ async function testMoreFeatures() {
       results.failed.push(`feat-016: Mobile layout issues - horizontal scroll: ${mobileData.hasHorizontalScroll}`);
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-016-mobile.png' });
+    await page.screenshot({ path: 'screenshots/feat-016-mobile.png' });
   } catch (error) {
     results.errors.push(`feat-016: ${error.message}`);
     console.error('Error testing feat-016:', error.message);
@@ -176,7 +176,7 @@ async function testMoreFeatures() {
       results.failed.push('feat-017: Tablet layout issues detected');
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-017-tablet.png' });
+    await page.screenshot({ path: 'screenshots/feat-017-tablet.png' });
   } catch (error) {
     results.errors.push(`feat-017: ${error.message}`);
     console.error('Error testing feat-017:', error.message);
@@ -232,7 +232,7 @@ async function testMoreFeatures() {
       results.failed.push(`feat-023: Cookie banner - visible: ${cookieData.hasCookieBanner}, accept: ${cookieData.hasAcceptButton}`);
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-023-cookie.png' });
+    await page.screenshot({ path: 'screenshots/feat-023-cookie.png' });
   } catch (error) {
     results.errors.push(`feat-023: ${error.message}`);
     console.error('Error testing feat-023:', error.message);
@@ -295,7 +295,7 @@ async function testMoreFeatures() {
       results.failed.push('feat-019: Language toggle not found');
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-019-language.png' });
+    await page.screenshot({ path: 'screenshots/feat-019-language.png' });
   } catch (error) {
     results.errors.push(`feat-019: ${error.message}`);
     console.error('Error testing feat-019:', error.message);
@@ -336,7 +336,7 @@ async function testMoreFeatures() {
       results.failed.push('feat-028: Form structure incomplete');
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-028-form.png' });
+    await page.screenshot({ path: 'screenshots/feat-028-form.png' });
   } catch (error) {
     results.errors.push(`feat-028: ${error.message}`);
     console.error('Error testing feat-028:', error.message);
@@ -366,7 +366,7 @@ async function testMoreFeatures() {
   await browser.close();
 
   // Write results to file
-  fs.writeFileSync('my-agent/test-results-more.json', JSON.stringify(results, null, 2));
+  fs.writeFileSync('test-results-more.json', JSON.stringify(results, null, 2));
 
   return results;
 }

@@ -16,7 +16,7 @@ async function testOpenAPI() {
   try {
     // Navigate to OpenAPI docs page
     console.log('1. Navigating to /openapi/docs...');
-    await page.goto('http://localhost:5001/openapi/docs', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000/openapi/docs', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 3000)); // Wait for Swagger UI to load
 
     // Check for Swagger UI elements
@@ -40,7 +40,7 @@ async function testOpenAPI() {
 
     // Also check if the openapi.yaml file is accessible
     console.log('3. Checking /openapi.yaml...');
-    const yamlResponse = await page.goto('http://localhost:5001/openapi.yaml', { waitUntil: 'networkidle0', timeout: 10000 });
+    const yamlResponse = await page.goto('http://localhost:5000/openapi.yaml', { waitUntil: 'networkidle0', timeout: 10000 });
     const yamlStatus = yamlResponse.status();
     const yamlContent = await page.content();
 

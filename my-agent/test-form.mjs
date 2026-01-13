@@ -22,7 +22,7 @@ async function testApplicantForm() {
   try {
     // Navigate to homepage
     console.log('1. Navigating to homepage...');
-    await page.goto('http://localhost:5001', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 2000));
 
     // Scroll to apply form section

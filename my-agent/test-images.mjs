@@ -15,7 +15,7 @@ async function testImages() {
 
   try {
     console.log('1. Navigating to homepage...');
-    await page.goto('http://localhost:5001', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 1000));
 
     console.log('2. Checking image loading strategy...');

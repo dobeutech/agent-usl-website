@@ -19,7 +19,7 @@ async function testProtectedRoutes() {
   try {
     // Test 1: Try to access admin dashboard without login
     console.log('1. Accessing /admin/dashboard without login...');
-    await page.goto('http://localhost:5001/admin/dashboard', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000/admin/dashboard', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 1000));
 
     const currentUrl = page.url();
@@ -46,7 +46,7 @@ async function testProtectedRoutes() {
 
     // Test 2: Check admin login page
     console.log('\n2. Navigating to /admin/login...');
-    await page.goto('http://localhost:5001/admin/login', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000/admin/login', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 500));
 
     const loginPage = await page.evaluate(() => {

@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 
-const BASE_URL = 'http://localhost:5001';
+const BASE_URL = 'http://localhost:5000';
 
 // Helper function to wait
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -80,7 +80,7 @@ async function testFeatures() {
     }
 
     // Take screenshot
-    await page.screenshot({ path: 'my-agent/screenshots/feat-001-hero.png', fullPage: false });
+    await page.screenshot({ path: 'screenshots/feat-001-hero.png', fullPage: false });
   } catch (error) {
     results.errors.push(`feat-001: ${error.message}`);
     console.error('Error testing feat-001:', error.message);
@@ -127,7 +127,7 @@ async function testFeatures() {
       }
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-002-services.png' });
+    await page.screenshot({ path: 'screenshots/feat-002-services.png' });
   } catch (error) {
     results.errors.push(`feat-002: ${error.message}`);
     console.error('Error testing feat-002:', error.message);
@@ -167,7 +167,7 @@ async function testFeatures() {
       }
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-003-industries.png' });
+    await page.screenshot({ path: 'screenshots/feat-003-industries.png' });
   } catch (error) {
     results.errors.push(`feat-003: ${error.message}`);
     console.error('Error testing feat-003:', error.message);
@@ -219,7 +219,7 @@ async function testFeatures() {
       results.failed.push(`feat-004: testimonials - section: ${testimonialData.hasTestimonialSection}, quotes: ${testimonialData.italicCount}`);
     }
 
-    await page.screenshot({ path: 'my-agent/screenshots/feat-004-testimonials.png' });
+    await page.screenshot({ path: 'screenshots/feat-004-testimonials.png' });
   } catch (error) {
     results.errors.push(`feat-004: ${error.message}`);
     console.error('Error testing feat-004:', error.message);
@@ -249,7 +249,7 @@ async function testFeatures() {
   await browser.close();
 
   // Write results to file
-  fs.writeFileSync('my-agent/test-results.json', JSON.stringify(results, null, 2));
+  fs.writeFileSync('test-results.json', JSON.stringify(results, null, 2));
 
   return results;
 }

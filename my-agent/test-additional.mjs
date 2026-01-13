@@ -20,7 +20,7 @@ async function testAdditionalFeatures() {
     // Test feat-032: Contact form with SMS capability
     console.log('--- FEAT-032: Contact Form SMS Capability ---');
 
-    await page.goto('http://localhost:5001', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 1000));
 
     // Scroll to contact section

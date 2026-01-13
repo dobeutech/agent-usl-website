@@ -20,7 +20,7 @@ async function testResumeAndUTM() {
     // Test feat-007: Resume upload
     console.log('--- FEAT-007: Resume Upload Validation ---');
 
-    await page.goto('http://localhost:5001', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000', { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 1000));
 
     // Scroll to form
@@ -80,7 +80,7 @@ async function testResumeAndUTM() {
     console.log('\n--- FEAT-031: UTM Tracking ---');
 
     // Navigate with UTM parameters
-    await page.goto('http://localhost:5001?utm_source=test&utm_medium=browser&utm_campaign=automation', {
+    await page.goto('http://localhost:5000?utm_source=test&utm_medium=browser&utm_campaign=automation', {
       waitUntil: 'networkidle0',
       timeout: 30000
     });

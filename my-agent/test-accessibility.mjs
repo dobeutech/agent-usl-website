@@ -20,7 +20,7 @@ async function testAccessibilityFeatures() {
   try {
     // Navigate to homepage
     console.log('1. Navigating to homepage...');
-    await page.goto('http://localhost:5001', { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto('http://localhost:5000', { waitUntil: 'networkidle0', timeout: 30000 });
 
     // Wait for the page to fully load
     await new Promise(r => setTimeout(r, 2000));
