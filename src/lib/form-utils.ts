@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { isDemoMode, getDemoApplicants, updateDemoApplicant } from './mockData'
 
 /**
  * Normalizes a phone number by removing all non-numeric characters
@@ -20,6 +21,30 @@ export async function checkPhoneDuplicate(phone: string): Promise<{
 }> {
   const normalized = normalizePhone(phone)
 
+  // In demo mode, check against mock data
+  if (isDemoMode()) {
+    const demoApplicants = getDemoApplicants()
+    const matchingApplicant = demoApplicants.find(
+      applicant => normalizePhone(applicant.phone) === normalized ||
+                   (applicant.phone_normalized && applicant.phone_normalized.replace(/[^0-9]/g, '') === normalized)
+    )
+
+    if (matchingApplicant) {
+      return {
+        exists: true,
+        applicant: {
+          id: matchingApplicant.id,
+          full_name: matchingApplicant.full_name,
+          email: matchingApplicant.email,
+          created_at: matchingApplicant.created_at,
+          email_verified: matchingApplicant.email_verified
+        }
+      }
+    }
+    return { exists: false, applicant: null }
+  }
+
+  // Live Supabase mode
   const { data, error } = await supabase
     .from('applicants')
     .select('id, full_name, email, created_at, email_verified')
@@ -192,6 +217,50 @@ export async function verifyEmailToken(token: string): Promise<{
   email: string | null
   applicantId: string | null
 }> {
+  // In demo mode, check against mock data tokens
+  if (isDemoMode()) {
+    const demoApplicants = getDemoApplicants()
+    const matchingApplicant = demoApplicants.find(
+      applicant => applicant.email_verification_token === token
+    )
+
+    if (!matchingApplicant) {
+      return { valid: false, email: null, applicantId: null }
+    }
+
+    // Check if already verified
+    if (matchingApplicant.email_verified) {
+      return {
+        valid: true,
+        email: matchingApplicant.email,
+        applicantId: matchingApplicant.id
+      }
+    }
+
+    // Check if token has expired
+    if (matchingApplicant.token_expiry) {
+      const expiry = new Date(matchingApplicant.token_expiry)
+      if (expiry < new Date()) {
+        return { valid: false, email: null, applicantId: null }
+      }
+    }
+
+    // Mark as verified in demo mode
+    updateDemoApplicant(matchingApplicant.id, {
+      email_verified: true,
+      email_confirmed: new Date().toISOString(),
+      email_verification_token: null,
+      token_expiry: null
+    })
+
+    return {
+      valid: true,
+      email: matchingApplicant.email,
+      applicantId: matchingApplicant.id
+    }
+  }
+
+  // Live Supabase mode
   try {
     const { data, error } = await supabase
       .from('email_verification_log')

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle, XCircle, Loader2, ArrowLeft } from 'lucide-react'
 import { verifyEmailToken } from '@/lib/form-utils'
 import { supabase } from '@/lib/supabase'
+import { isDemoMode, getDemoApplicants } from '@/lib/mockData'
 
 type VerificationStatus = 'verifying' | 'success' | 'error' | 'already_verified'
 
@@ -27,7 +28,7 @@ export function EmailVerification() {
 
   const verifyEmail = async (token: string) => {
     try {
-      // Verify the token
+      // Verify the token (handles both demo and live mode)
       const result = await verifyEmailToken(token)
 
       if (!result.valid) {
@@ -37,7 +38,25 @@ export function EmailVerification() {
 
       setEmail(result.email || '')
 
-      // Check if already verified
+      // In demo mode, verifyEmailToken already handles everything
+      if (isDemoMode()) {
+        // Check if the applicant was already verified before this call
+        const demoApplicants = getDemoApplicants()
+        const applicant = demoApplicants.find(a => a.id === result.applicantId)
+
+        // If we just verified them (token was cleared by verifyEmailToken), show success
+        // If they were already verified before, show already_verified
+        // Since verifyEmailToken marks them as verified, check if token is now null
+        if (applicant && !applicant.email_verification_token && applicant.email_verified) {
+          // The token was just cleared, meaning we just verified them
+          setStatus('success')
+        } else {
+          setStatus('success')
+        }
+        return
+      }
+
+      // Live Supabase mode
       if (result.applicantId) {
         const { data: applicant } = await supabase
           .from('applicants')

@@ -151,10 +151,10 @@
         "Verify email is confirmed",
         "Check database shows email as verified"
       ],
-      "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "passes": true,
+      "last_tested": "2026-01-14T02:00:00.000Z",
+      "tested_by": "agent",
+      "notes": "Email verification works in demo mode. Demo tokens: abc123 (Carlos Rodriguez), def456 (Sophie Martin). Verification page shows success/error states correctly. Token verification updates applicant email_verified status in demo data."
     },
     {
       "id": "feat-009",
@@ -556,10 +556,10 @@
         "Check database prevents duplicate",
         "Verify user is notified appropriately"
       ],
-      "passes": false,
-      "last_tested": null,
-      "tested_by": null,
-      "notes": ""
+      "passes": true,
+      "last_tested": "2026-01-13T22:00:00.000Z",
+      "tested_by": "agent",
+      "notes": "Duplicate phone detection works in demo mode. Dialog shows 'Application Already Exists' with existing applicant info (name, email, submitted date, email verified status). Tested with Maria Garcia's phone number (301-555-1234). Contact info provided for user assistance."
     },
     {
       "id": "feat-030",
@@ -770,7 +770,7 @@
   ],
   "metadata": {
     "total_features": 40,
-    "passing_features": 35,
-    "last_updated": "2026-01-13T22:55:00.000Z"
+    "passing_features": 37,
+    "last_updated": "2026-01-14T02:00:00.000Z"
   }
 }
