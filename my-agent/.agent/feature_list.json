@@ -1,0 +1,776 @@
+{
+  "project": {
+    "name": "Unique Staffing Professionals - Website & Applicant System",
+    "description": "A modern, professional staffing agency website with integrated applicant tracking system, admin dashboard, and comprehensive API for HR integrations. Includes public website, applicant submission system, admin portal, Supabase backend, multi-language support (English, Spanish, French), accessibility features, and responsive design.",
+    "created_at": "2026-01-13T00:00:00.000Z",
+    "stack": "fullstack-web"
+  },
+  "features": [
+    {
+      "id": "feat-001",
+      "category": "functional",
+      "priority": 1,
+      "description": "Hero section displays with compelling headline, subheading, and primary CTA buttons",
+      "steps": [
+        "Navigate to homepage",
+        "Verify hero section is visible",
+        "Check headline text is displayed",
+        "Verify subheading text is present",
+        "Check 'Find Talent' CTA button exists",
+        "Check 'Find Jobs' CTA button exists",
+        "Verify buttons are clickable"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-002",
+      "category": "functional",
+      "priority": 1,
+      "description": "Services showcase section displays all staffing services offered",
+      "steps": [
+        "Navigate to homepage",
+        "Scroll to services section",
+        "Verify service cards are displayed",
+        "Check each service has title and description",
+        "Verify services are clickable",
+        "Click a service card",
+        "Verify detailed service description appears"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-003",
+      "category": "functional",
+      "priority": 1,
+      "description": "Industries served section showcases key industries",
+      "steps": [
+        "Navigate to homepage",
+        "Scroll to industries section",
+        "Verify industry icons/cards are displayed",
+        "Check 6-8 industries are shown",
+        "Verify industries are visually represented",
+        "Check responsive grid layout"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-004",
+      "category": "functional",
+      "priority": 1,
+      "description": "Testimonials section displays client testimonials",
+      "steps": [
+        "Navigate to homepage",
+        "Scroll to testimonials section",
+        "Verify testimonials are displayed",
+        "Check 3-4 testimonials are shown",
+        "Verify each testimonial has author name/company",
+        "Check testimonial content is readable"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-005",
+      "category": "functional",
+      "priority": 1,
+      "description": "Contact form allows users to submit inquiries",
+      "steps": [
+        "Navigate to homepage",
+        "Scroll to contact section",
+        "Fill in contact form fields",
+        "Submit the form",
+        "Verify form validation works",
+        "Check success confirmation message appears",
+        "Verify form submission is stored"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-006",
+      "category": "functional",
+      "priority": 1,
+      "description": "Applicant submission form allows job seekers to apply",
+      "steps": [
+        "Navigate to application page",
+        "Fill in personal information (name, email, phone)",
+        "Select position preferences",
+        "Enter experience details",
+        "Upload resume file (PDF/DOC/DOCX)",
+        "Submit the form",
+        "Verify form validation",
+        "Check application is stored in database"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-007",
+      "category": "functional",
+      "priority": 1,
+      "description": "Resume upload accepts PDF, DOC, DOCX files up to 5MB",
+      "steps": [
+        "Navigate to application form",
+        "Click resume upload field",
+        "Select a PDF file under 5MB",
+        "Verify file is accepted",
+        "Try uploading a file over 5MB",
+        "Verify error message appears",
+        "Try uploading invalid file type",
+        "Verify error message appears"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-008",
+      "category": "functional",
+      "priority": 1,
+      "description": "Email verification system confirms applicant email addresses",
+      "steps": [
+        "Submit application form with email",
+        "Check email inbox for verification email",
+        "Click verification link",
+        "Verify email is confirmed",
+        "Check database shows email as verified"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-009",
+      "category": "functional",
+      "priority": 1,
+      "description": "Admin login page allows secure authentication",
+      "steps": [
+        "Navigate to admin login page",
+        "Enter valid credentials",
+        "Submit login form",
+        "Verify authentication succeeds",
+        "Check redirect to dashboard",
+        "Try invalid credentials",
+        "Verify error message appears"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-010",
+      "category": "functional",
+      "priority": 1,
+      "description": "Admin dashboard displays all applicants in sortable table",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Verify applicant table is displayed",
+        "Check all applicant data is visible",
+        "Click column header to sort",
+        "Verify sorting works correctly",
+        "Check pagination if many applicants"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-011",
+      "category": "functional",
+      "priority": 1,
+      "description": "Admin dashboard filtering allows search by name, email, or position",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Enter search term in filter field",
+        "Verify results filter correctly",
+        "Clear search",
+        "Verify all applicants shown again",
+        "Test filtering by different fields"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-012",
+      "category": "functional",
+      "priority": 1,
+      "description": "Admin can update applicant status (New, Reviewing, Shortlisted, Rejected, Hired)",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Select an applicant",
+        "Change status dropdown",
+        "Select new status",
+        "Save changes",
+        "Verify status updates in database",
+        "Check status displays correctly in table"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-013",
+      "category": "functional",
+      "priority": 1,
+      "description": "Admin can add and edit internal notes for applicants",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Select an applicant",
+        "Open notes section",
+        "Add a new note",
+        "Save the note",
+        "Verify note is stored",
+        "Edit existing note",
+        "Verify changes are saved"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-014",
+      "category": "functional",
+      "priority": 1,
+      "description": "Admin can download applicant resumes",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Select an applicant with resume",
+        "Click download resume button",
+        "Verify file downloads",
+        "Check downloaded file is correct format",
+        "Verify file content matches uploaded resume"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-015",
+      "category": "functional",
+      "priority": 1,
+      "description": "Dashboard shows real-time statistics (Total, New, Reviewing, Shortlisted, Hired)",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Verify statistics cards are displayed",
+        "Check total applicants count is correct",
+        "Check new applicants count",
+        "Check reviewing count",
+        "Check shortlisted count",
+        "Check hired count",
+        "Update an applicant status",
+        "Verify statistics update in real-time"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-016",
+      "category": "ui",
+      "priority": 2,
+      "description": "Website is responsive on mobile viewport (375x667)",
+      "steps": [
+        "Set browser viewport to 375x667 (iPhone SE)",
+        "Navigate to homepage",
+        "Verify all sections are visible",
+        "Check no horizontal scroll",
+        "Verify navigation menu works",
+        "Check touch targets are adequate size",
+        "Test form inputs on mobile"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-017",
+      "category": "ui",
+      "priority": 2,
+      "description": "Website is responsive on tablet viewport (768x1024)",
+      "steps": [
+        "Set browser viewport to 768x1024 (iPad)",
+        "Navigate to homepage",
+        "Verify layout adapts correctly",
+        "Check grid layouts adjust",
+        "Verify navigation works",
+        "Test all interactive elements"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-018",
+      "category": "ui",
+      "priority": 2,
+      "description": "Website is responsive on desktop viewport (1280x720+)",
+      "steps": [
+        "Set browser viewport to 1280x720",
+        "Navigate to homepage",
+        "Verify full layout is displayed",
+        "Check all sections are properly spaced",
+        "Verify navigation bar is full width",
+        "Test hover states on interactive elements"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-019",
+      "category": "functional",
+      "priority": 1,
+      "description": "Multi-language support switches between English, Spanish, and French",
+      "steps": [
+        "Navigate to homepage",
+        "Click language toggle",
+        "Select Spanish",
+        "Verify page content changes to Spanish",
+        "Select French",
+        "Verify page content changes to French",
+        "Select English",
+        "Verify page content returns to English",
+        "Check language preference persists on reload"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-020",
+      "category": "accessibility",
+      "priority": 2,
+      "description": "Accessibility controls allow font size adjustment",
+      "steps": [
+        "Navigate to homepage",
+        "Open accessibility controls",
+        "Increase font size",
+        "Verify text size increases",
+        "Decrease font size",
+        "Verify text size decreases",
+        "Check preference persists"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-021",
+      "category": "accessibility",
+      "priority": 2,
+      "description": "Accessibility controls allow contrast mode adjustment",
+      "steps": [
+        "Navigate to homepage",
+        "Open accessibility controls",
+        "Enable high contrast mode",
+        "Verify contrast increases",
+        "Disable high contrast",
+        "Verify contrast returns to normal",
+        "Check preference persists"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-022",
+      "category": "accessibility",
+      "priority": 2,
+      "description": "Accessibility controls allow reduced motion preference",
+      "steps": [
+        "Navigate to homepage",
+        "Open accessibility controls",
+        "Enable reduced motion",
+        "Verify animations are reduced",
+        "Disable reduced motion",
+        "Verify animations return",
+        "Check preference persists"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-023",
+      "category": "functional",
+      "priority": 1,
+      "description": "Cookie consent banner appears with GDPR/CCPA compliance",
+      "steps": [
+        "Navigate to homepage",
+        "Verify cookie consent banner appears",
+        "Check accept button is visible",
+        "Check decline button is visible",
+        "Click accept",
+        "Verify banner disappears",
+        "Check preference is stored",
+        "Reload page",
+        "Verify banner does not reappear"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-024",
+      "category": "integration",
+      "priority": 1,
+      "description": "Supabase database stores applicant data correctly",
+      "steps": [
+        "Submit an application form",
+        "Check Supabase database",
+        "Verify applicant record is created",
+        "Check all fields are stored correctly",
+        "Verify file reference is stored",
+        "Test data retrieval from database"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-025",
+      "category": "integration",
+      "priority": 1,
+      "description": "Supabase Storage stores resume files securely",
+      "steps": [
+        "Submit application with resume",
+        "Check Supabase Storage",
+        "Verify file is uploaded",
+        "Check file is in correct bucket",
+        "Verify file permissions are correct",
+        "Test file download from storage"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-026",
+      "category": "integration",
+      "priority": 1,
+      "description": "Supabase Auth handles admin authentication securely",
+      "steps": [
+        "Attempt to log in as admin",
+        "Verify authentication request to Supabase",
+        "Check session is created",
+        "Verify session token is stored",
+        "Test session expiration",
+        "Verify logout clears session"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-027",
+      "category": "functional",
+      "priority": 1,
+      "description": "Protected routes require authentication",
+      "steps": [
+        "Navigate to admin dashboard without login",
+        "Verify redirect to login page",
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Verify access is granted",
+        "Log out",
+        "Try to access dashboard again",
+        "Verify redirect to login"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-028",
+      "category": "functional",
+      "priority": 1,
+      "description": "Form validation provides real-time feedback",
+      "steps": [
+        "Navigate to application form",
+        "Try to submit empty form",
+        "Verify validation errors appear",
+        "Fill in required fields",
+        "Verify errors disappear",
+        "Enter invalid email",
+        "Verify email validation error",
+        "Enter invalid phone",
+        "Verify phone validation error"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-029",
+      "category": "functional",
+      "priority": 1,
+      "description": "Duplicate phone number detection prevents duplicate applications",
+      "steps": [
+        "Submit application with phone number",
+        "Try to submit another application with same phone",
+        "Verify duplicate detection message appears",
+        "Check database prevents duplicate",
+        "Verify user is notified appropriately"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-030",
+      "category": "functional",
+      "priority": 1,
+      "description": "Marketing preferences allow newsletter, job alerts, and SMS opt-in",
+      "steps": [
+        "Navigate to application form",
+        "Scroll to marketing preferences",
+        "Check newsletter checkbox",
+        "Check job alerts checkbox",
+        "Check SMS opt-in checkbox",
+        "Submit form",
+        "Verify preferences are stored",
+        "Check database has correct opt-in values"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-031",
+      "category": "functional",
+      "priority": 2,
+      "description": "UTM tracking captures referral source for applications",
+      "steps": [
+        "Navigate to application page with UTM parameters",
+        "Submit application form",
+        "Check database for UTM parameters",
+        "Verify source is captured",
+        "Verify medium is captured",
+        "Verify campaign is captured",
+        "Test with different UTM combinations"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-032",
+      "category": "functional",
+      "priority": 1,
+      "description": "Contact form supports SMS/Text capability",
+      "steps": [
+        "Navigate to contact section",
+        "Fill in contact form",
+        "Check SMS/Text option",
+        "Submit form",
+        "Verify SMS preference is stored",
+        "Check notification is sent if configured"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-033",
+      "category": "functional",
+      "priority": 2,
+      "description": "OpenAPI documentation is available for HR integrations",
+      "steps": [
+        "Navigate to /openapi.yaml or API docs endpoint",
+        "Verify OpenAPI 3.0 spec is accessible",
+        "Check all endpoints are documented",
+        "Verify request/response schemas",
+        "Test API endpoint from documentation"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-034",
+      "category": "performance",
+      "priority": 3,
+      "description": "Page load time is under 3 seconds on 3G connection",
+      "steps": [
+        "Set network throttling to 3G",
+        "Navigate to homepage",
+        "Measure page load time",
+        "Verify load time is under 3 seconds",
+        "Check all critical resources load",
+        "Verify no blocking resources"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-035",
+      "category": "performance",
+      "priority": 3,
+      "description": "Images are optimized and lazy-loaded",
+      "steps": [
+        "Navigate to homepage",
+        "Open browser DevTools",
+        "Check image loading strategy",
+        "Verify images use lazy loading",
+        "Check image formats are optimized",
+        "Verify WebP/AVIF formats where supported"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-036",
+      "category": "accessibility",
+      "priority": 2,
+      "description": "Website is keyboard navigable",
+      "steps": [
+        "Navigate to homepage",
+        "Use Tab key to navigate",
+        "Verify all interactive elements are focusable",
+        "Check focus indicators are visible",
+        "Test form navigation with keyboard",
+        "Verify Enter key submits forms",
+        "Check Escape key closes modals"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-037",
+      "category": "accessibility",
+      "priority": 2,
+      "description": "Screen reader announces content changes correctly",
+      "steps": [
+        "Enable screen reader",
+        "Navigate to homepage",
+        "Verify content is announced",
+        "Change language",
+        "Verify language change is announced",
+        "Submit form",
+        "Verify success message is announced"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-038",
+      "category": "functional",
+      "priority": 1,
+      "description": "Error handling displays user-friendly messages",
+      "steps": [
+        "Navigate to application form",
+        "Disconnect network",
+        "Try to submit form",
+        "Verify error message appears",
+        "Check message is user-friendly",
+        "Reconnect network",
+        "Verify form can be resubmitted"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-039",
+      "category": "functional",
+      "priority": 1,
+      "description": "Loading states show during async operations",
+      "steps": [
+        "Navigate to application form",
+        "Submit form",
+        "Verify loading indicator appears",
+        "Check button is disabled during submission",
+        "Wait for response",
+        "Verify loading indicator disappears",
+        "Check success/error message appears"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    },
+    {
+      "id": "feat-040",
+      "category": "functional",
+      "priority": 2,
+      "description": "Admin can export applicant data",
+      "steps": [
+        "Log in as admin",
+        "Navigate to dashboard",
+        "Click export button",
+        "Verify export options appear",
+        "Select export format (CSV/Excel)",
+        "Download export file",
+        "Verify file contains correct data",
+        "Check all fields are included"
+      ],
+      "passes": false,
+      "last_tested": null,
+      "tested_by": null,
+      "notes": ""
+    }
+  ],
+  "metadata": {
+    "total_features": 40,
+    "passing_features": 0,
+    "last_updated": "2026-01-13T00:00:00.000Z"
+  }
+}
