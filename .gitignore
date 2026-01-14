@@ -60,3 +60,4 @@ pids
 # Testing
 coverage/
 .nyc_output/
+nul

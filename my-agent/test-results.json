@@ -1,0 +1,10 @@
+{
+  "passed": [
+    "feat-001: Hero section displays correctly",
+    "feat-002: Services section displays correctly",
+    "feat-003: Industries section displays correctly",
+    "feat-004: Testimonials section displays correctly"
+  ],
+  "failed": [],
+  "errors": []
+}

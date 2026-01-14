@@ -11,6 +11,7 @@ import { Upload, CheckCircle, X, AlertCircle, FileText } from "lucide-react"
 import { toast } from "sonner"
 import { supabase, ApplicantInsert } from "@/lib/supabase"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { isDemoMode } from "@/lib/mockData"
 import {
   normalizePhone,
   checkPhoneDuplicate,
@@ -249,6 +250,41 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
       if (duplicateCheck.exists) {
         setDuplicateInfo(duplicateCheck.applicant)
         setShowDuplicateDialog(true)
+        setIsSubmitting(false)
+        return
+      }
+
+      // In demo mode, show success message without actual database submission
+      if (isDemoMode()) {
+        toast.success("Demo Mode: Application submitted successfully!", {
+          description: "In production mode, your application would be stored and a verification email would be sent.",
+          duration: 5000
+        })
+
+        // Reset form in demo mode
+        setFormData({
+          full_name: "",
+          email: "",
+          email_confirmed: "",
+          phone: "",
+          positions: [],
+          experience_years: "",
+          cover_letter_text: "",
+          job_posting_url: "",
+          linkedin_url: "",
+          portfolio_url: "",
+          newsletter_subscribed: false,
+          job_notifications_enabled: true,
+          sms_notifications_enabled: false
+        })
+        setResume(null)
+        setAdditionalDocs([])
+        setErrors({})
+
+        if (resumeInputRef.current) resumeInputRef.current.value = ""
+        if (docInputRef.current) docInputRef.current.value = ""
+
+        if (onSuccess) onSuccess()
         setIsSubmitting(false)
         return
       }
