@@ -58,7 +58,7 @@ export function checkSupabaseConfig(): SupabaseConfig {
   return {
     url,
     anonKey,
-    configured: !!(url && anonKey && url !== "placeholder" && anonKey !== "placeholder"),
+    configured: !!(url && anonKey && url !== "https://placeholder.supabase.co" && anonKey !== "placeholder-anon-key"),
   };
 }
 
@@ -102,7 +102,7 @@ export function findMigrationFiles(): MigrationFile[] {
 function extractTimestamp(filename: string): string {
   // Match patterns like: 20251119020909_*.sql or 20251119020909.sql
   const match = filename.match(/^(\d{14})/);
-  return match ? match[1] : filename;
+  return match && match[1] ? match[1] : filename;
 }
 
 /**

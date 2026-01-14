@@ -163,7 +163,7 @@ For now, please describe what you want to build:
         mkdirSync(agentConfig.paths.agentDir, { recursive: true });
       }
       
-      await runWithRetry(() => runInitializerAgent(args.spec));
+      await runWithRetry(() => runInitializerAgent(args.spec || "Please ask the user for their project specification."));
     }
   } else {
     // Coding mode
