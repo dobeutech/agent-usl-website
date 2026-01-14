@@ -4,8 +4,14 @@ const path = require('path');
 const mockDataContent = `// Mock data for demo mode when Supabase is not configured
 import type { Applicant } from './supabase'
 
-// Check if we're in demo mode (no Supabase configured)
+// Check if we're in demo mode (no Supabase configured or force demo mode)
 export function isDemoMode(): boolean {
+  // Allow forcing demo mode via environment variable
+  const forceDemoMode = import.meta.env.VITE_FORCE_DEMO_MODE === 'true'
+  if (forceDemoMode) {
+    return true
+  }
+
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
   const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
   return !supabaseUrl || !supabaseKey ||

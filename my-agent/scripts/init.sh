@@ -22,6 +22,13 @@ echo -e "${BLUE}═════════════════════�
 echo -e "${BLUE}         Development Environment Initialization                  ${NC}"
 echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
 
+# Navigate to project root (two levels up from scripts/ to reach unique-staffing-prof/)
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Go up two levels: scripts/ -> my-agent/ -> unique-staffing-prof/
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+cd "$PROJECT_ROOT"
+
 # Parse arguments
 INSTALL=false
 BUILD=false

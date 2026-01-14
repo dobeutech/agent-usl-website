@@ -4,25 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Unique Staffing Professionals Inc.** - A professional staffing agency website with integrated applicant tracking system. The company specializes in temporary, permanent, and contract staffing solutions for janitorial, HR, retail, call center, and industrial positions across Maryland, Washington D.C., and Northern Virginia (DMV region).
-
-### Business Context
-- **Company**: Unique Staffing Professionals Inc.
-- **Location**: 6001 66th Ave, Riverdale, MD 20737
-- **Phone**: (301) 277-2141
-- **Email**: omorilla@uniquestaffingprofessionals.com
-- **Services**: Temporary staffing, permanent placement, temp-to-perm, payroll services
+**Unique Staffing Professionals Inc.** - A staffing agency website with integrated applicant tracking system serving Maryland, Washington D.C., and Northern Virginia (DMV region). Specializes in temporary, permanent, and contract staffing for janitorial, HR, retail, call center, and industrial positions.
 
 ## Commands
 
 ```bash
 # Development
-npm run dev          # Start dev server (port 5173)
-npm run build        # Production build
-npm run preview      # Preview production build locally
-npm run lint         # Run ESLint
+npm run dev              # Start dev server (port 5173)
+npm run build            # Production build (TypeScript check + Vite)
+npm run preview          # Preview production build locally
+npm run lint             # Run ESLint
 
-# Deployment (Netlify)
+# Deployment
 npx netlify deploy --prod    # Deploy to production
 npx netlify deploy           # Deploy preview
 
@@ -30,78 +23,69 @@ npx netlify deploy           # Deploy preview
 npx tsc --noEmit             # Full type check
 ```
 
+Note: Use `--legacy-peer-deps` flag when running npm install due to React 19 peer dependency requirements.
+
 ## Architecture
 
 ### Tech Stack
-- **Frontend**: React 19 + TypeScript + Vite
+- **Frontend**: React 19 + TypeScript 5.7 + Vite 6
 - **Styling**: Tailwind CSS 4 + shadcn/ui (Radix primitives)
 - **Backend**: Supabase (PostgreSQL, Auth, Storage, Edge Functions)
-- **Animations**: Framer Motion
 - **Forms**: React Hook Form + Zod validation
-- **Routing**: React Router DOM
-- **Icons**: Phosphor Icons + Lucide
-- **Deployment**: Netlify
+- **i18n**: Custom LanguageContext (en/es/fr)
+- **Deployment**: Netlify with GitHub Actions CI/CD
 
-### Project Structure
+### Provider Hierarchy
+
+```
+ThemeProvider (next-themes)
+  └── LanguageProvider (custom i18n)
+      └── AuthProvider (Supabase)
+          └── BusinessInfoProvider
+              └── Router
+```
+
+### Key Directories
 
 ```
 src/
-├── components/
-│   ├── ui/                    # shadcn/ui primitives (DO NOT MODIFY)
-│   ├── admin/                 # Admin dashboard components
-│   ├── seo/                   # SEO components
-│   ├── AccessibilityControls.tsx  # A11y widget
-│   ├── AnimatedBackground.tsx     # Particle network
-│   ├── LiveChat.tsx               # Chat widget
-│   ├── FAQ.tsx                    # FAQ section
-│   ├── ClientLogos.tsx            # Trust carousel
-│   ├── JobAlerts.tsx              # Subscription form
-│   ├── EmployerCTA.tsx            # B2B section
-│   └── ...
-├── contexts/
-│   ├── AuthContext.tsx        # Supabase auth
-│   ├── LanguageContext.tsx    # i18n (en/es/fr)
-│   ├── ThemeProvider.tsx      # Dark/light mode
-│   └── BusinessInfoContext.tsx
-├── pages/                     # Route pages
-├── lib/
-│   ├── supabase.ts           # Supabase client + types
-│   ├── analytics.ts          # Tracking
-│   └── form-utils.ts         # Validation helpers
-├── locales/
-│   └── translations.ts       # i18n dictionaries
-└── types/                    # TypeScript definitions
-
-public/
-├── sitemap.xml              # SEO sitemap
-├── robots.txt               # Crawler rules
-├── openapi.yaml             # API specification
-└── logo.webp                # Company logo
+├── components/ui/       # shadcn/ui primitives - DO NOT MODIFY
+├── components/admin/    # Admin dashboard (ApplicantTable, AnalyticsDashboard)
+├── contexts/            # ThemeProvider, LanguageContext, AuthContext
+├── pages/               # Route components
+├── lib/supabase.ts      # Supabase client + database types
+└── locales/translations.ts  # i18n dictionaries
 
 supabase/
-├── migrations/              # Database migrations
-└── functions/               # Edge functions
-    ├── api/                 # REST API
-    ├── send-verification-email/
-    └── send-admin-notification/
+├── migrations/          # 16 database migration files
+└── functions/           # Edge functions (api/, send-verification-email/)
+
+.github/
+├── workflows/           # CI/CD pipelines (see CI/CD section)
+└── CODEOWNERS           # Code review assignments
 ```
 
-### Key Patterns
+### Path Aliases
 
-**Path Aliases**: Use `@/` for imports from `src/`
+Import from `src/` using `@/`:
 ```typescript
 import { Button } from '@/components/ui/button'
+import { supabase } from '@/lib/supabase'
 ```
 
-**i18n**: Access via `useLanguage()` hook
+## Key Patterns
+
+### Internationalization
 ```typescript
-const { t, language } = useLanguage()
-const text = t('hero.title')
+const { t, language, setLanguage } = useLanguage()
+const text = t('hero.title')  // Nested key lookup
 ```
 
-**Theme**: CSS variables toggle via `.dark` class. Uses OKLCH color space.
+### Theming
+CSS variables toggle via `[data-appearance="dark"]` selector. Uses OKLCH color space for better interpolation.
 
-**Animations**: Use Framer Motion for scroll-triggered animations
+### Animations
+Use Framer Motion for scroll-triggered animations:
 ```typescript
 <motion.div
   initial={{ opacity: 0, y: 20 }}
@@ -110,55 +94,62 @@ const text = t('hero.title')
 />
 ```
 
+### Form Validation
+```typescript
+const { register, handleSubmit, formState: { errors } } = useForm({
+  resolver: zodResolver(applicantSchema)
+})
+```
+
 ## Database Schema
 
 ### Core Tables
-- `applicants` - Job applications with language tracking
-- `jobs` - Job listings
-- `visitor_analytics` - Page views and tracking
-- `newsletter_subscriptions` - Email list
-- `cookie_consent_log` - GDPR compliance
+| Table | Purpose |
+|-------|---------|
+| `applicants` | Job applications with language tracking, verification status |
+| `jobs` | Job listings |
+| `visitor_analytics` | Page views and UTM tracking |
+| `newsletter_subscriptions` | Email list management |
+| `cookie_consent_log` | GDPR/CCPA compliance |
 
-### Key Fields (applicants)
-- Language: `preferred_language`, `browser_language`
-- Marketing: `newsletter_subscribed`, `job_notifications_enabled`, `sms_notifications_enabled`
-- Tracking: `communication_preferences` (JSON with UTM data)
-- Status: `new`, `reviewing`, `shortlisted`, `rejected`, `hired`
+### Applicant Status Flow
+`new` → `reviewing` → `shortlisted` → `hired` (or `rejected`)
 
 ## Routes
 
-| Route | Description |
-|-------|-------------|
-| `/` | Homepage with application form |
-| `/privacy` | Privacy policy |
-| `/privacy/sms` | SMS privacy policy |
-| `/terms`, `/tos` | Terms of service |
-| `/unsubscribe` | Manage preferences |
-| `/developers/api/docs` | OpenAPI documentation |
-| `/admin/login` | Admin authentication |
-| `/admin/dashboard` | Protected admin panel |
+| Route | Auth | Description |
+|-------|------|-------------|
+| `/` | Public | Homepage with application form |
+| `/privacy`, `/privacy/sms` | Public | Privacy policies |
+| `/terms`, `/tos` | Public | Terms of service |
+| `/developers/api/docs` | Public | OpenAPI/Swagger UI |
+| `/admin/login` | Public | Admin authentication |
+| `/admin/dashboard` | Protected | Admin panel (ProtectedRoute) |
 
 ## Environment Variables
 
-Required in `.env`:
-```
+```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-## Important Notes
+## CI/CD Pipeline
 
-- **shadcn/ui**: Components in `src/components/ui/` should NOT be modified directly
-- **Tailwind v4**: Uses `@tailwindcss/vite` plugin
-- **OKLCH colors**: Theme uses OKLCH for better color interpolation
-- **Language tracking**: All forms capture `preferred_language` for analytics
-- **Accessibility**: Built-in controls for font size, contrast, motion
-- **No test suite**: Currently no testing framework
+GitHub Actions workflows in `.github/workflows/`:
 
-## Brand Guidelines
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| CI Pipeline | PR, push to main | Build, lint, type check |
+| Security Audit | Daily 2 AM | npm audit, dependency scan |
+| AI Code Review | PR | Claude/SonarCloud review |
 
-- **Primary Color**: Green (#73B77D / oklch(0.731 0.150 130))
-- **Font Headings**: Plus Jakarta Sans
-- **Font Body**: Inter
+Required GitHub Secrets:
+- `NETLIFY_AUTH_TOKEN` - From Netlify User Settings → Applications
+- `NETLIFY_SITE_ID` - From Netlify Site Settings → API ID
+- `ANTHROPIC_API_KEY` (optional) - For AI code review
+
+## Brand
+
+- **Primary**: Green (#73B77D)
+- **Fonts**: Plus Jakarta Sans (headings), Inter (body)
 - **Tagline**: "Where Opportunity Starts"
-- **Tone**: Professional, welcoming, community-focused
