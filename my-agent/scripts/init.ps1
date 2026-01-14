@@ -15,8 +15,8 @@ Write-Host "══════════════════════�
 Write-Host "   Unique Staffing Professionals - Dev Environment Setup        " -ForegroundColor Blue
 Write-Host "════════════════════════════════════════════════════════════════" -ForegroundColor Blue
 
-# Navigate to project root (one level up from my-agent)
-$projectRoot = Split-Path -Parent $PSScriptRoot
+# Navigate to project root (two levels up from scripts/ to reach unique-staffing-prof/)
+$projectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 Set-Location $projectRoot
 
 # Check if we're in the right directory
