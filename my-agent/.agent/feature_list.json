@@ -483,7 +483,7 @@
       "passes": false,
       "last_tested": "2026-01-14T03:00:00.000Z",
       "tested_by": "agent",
-      "notes": "Supabase Storage endpoint accessible. No storage buckets exist - 'resumes' bucket not created. Requires running migration 20251119020940_create_resumes_storage_bucket.sql in Supabase. File upload UI correctly configured with accept='.pdf,.doc,.docx'. App handles storage unavailability gracefully."
+      "notes": "Supabase Storage feature. Demo mode support added to uploadFile() function - simulates file uploads with mock URLs when VITE_FORCE_DEMO_MODE=true. Production requires: (1) Create 'resumes' bucket in Supabase Storage, (2) Run migration 20251119020940_create_resumes_storage_bucket.sql for RLS policies. File upload UI correctly configured with accept='.pdf,.doc,.docx'. Code ready for production - just needs Supabase Storage bucket configuration."
     },
     {
       "id": "feat-026",
