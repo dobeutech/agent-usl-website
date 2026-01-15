@@ -50,13 +50,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
   const isDemo = isDemoMode()
 
-  console.log('[AuthProvider] isDemo:', isDemo)
-
   useEffect(() => {
     if (isDemo) {
       // In demo mode, check localStorage for demo session
       const demoLoggedIn = localStorage.getItem('demo_logged_in')
-      console.log('[AuthProvider] Demo mode - localStorage demo_logged_in:', demoLoggedIn)
       if (demoLoggedIn === 'true') {
         setSession(DEMO_SESSION)
         setUser(DEMO_USER)
@@ -85,23 +82,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [isDemo])
 
   const signIn = async (email: string, password: string) => {
-    console.log('[signIn] Called with email:', email)
-    console.log('[signIn] isDemo:', isDemo)
-    console.log('[signIn] DEMO_EMAIL:', DEMO_EMAIL)
-    console.log('[signIn] DEMO_PASSWORD:', DEMO_PASSWORD)
-    console.log('[signIn] email matches:', email === DEMO_EMAIL)
-    console.log('[signIn] password matches:', password === DEMO_PASSWORD)
-
     if (isDemo) {
       // Demo mode login
       if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
-        console.log('[signIn] Demo login successful!')
         localStorage.setItem('demo_logged_in', 'true')
         setSession(DEMO_SESSION)
         setUser(DEMO_USER)
         return { error: null }
       } else {
-        console.log('[signIn] Demo login failed - invalid credentials')
         return { error: new Error('Invalid demo credentials. Use demo@uniquestaffing.com / demo123') }
       }
     }
