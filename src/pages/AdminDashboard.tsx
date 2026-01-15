@@ -232,7 +232,7 @@ export function AdminDashboard() {
 
   const downloadResume = async (resumeUrl: string, filename: string) => {
     // In demo mode, show a message about demo limitations
-    if (isDemo || isDemoMode()) {
+    if (isDemo || isDemoMode() || resumeUrl.startsWith('demo://')) {
       toast.info("Demo mode: Resume download simulated", {
         description: `Would download: ${filename}`
       })
@@ -240,7 +240,34 @@ export function AdminDashboard() {
     }
 
     try {
-      const response = await fetch(resumeUrl)
+      // Check if it's a legacy/public URL
+      if (resumeUrl.startsWith('http')) {
+        const response = await fetch(resumeUrl)
+        const blob = await response.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+        toast.success("Resume downloaded")
+        return
+      }
+
+      // It's a storage path - generate signed URL
+      // Assume 'resumes' bucket for now as that's where resumes go
+      const { data, error } = await supabase.storage
+        .from('resumes')
+        .createSignedUrl(resumeUrl, 60) // 60 seconds expiry
+
+      if (error) throw error
+      if (!data?.signedUrl) throw new Error('Failed to generate signed URL')
+
+      // Open signed URL in new tab (triggers download due to content-disposition usually, or view)
+      // Or fetch it to force download name
+      const response = await fetch(data.signedUrl)
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -251,6 +278,7 @@ export function AdminDashboard() {
       document.body.removeChild(a)
       window.URL.revokeObjectURL(url)
       toast.success("Resume downloaded")
+
     } catch (error) {
       console.error('Error downloading resume:', error)
       toast.error("Failed to download resume")

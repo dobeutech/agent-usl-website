@@ -63,11 +63,8 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
         throw uploadError
       }
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('resumes')
-        .getPublicUrl(filePath)
-
-      return { url: publicUrl, filename: file.name }
+      // Return path instead of public URL
+      return { url: filePath, filename: file.name }
     } catch (error) {
       console.error('Error uploading resume:', error)
       return null
