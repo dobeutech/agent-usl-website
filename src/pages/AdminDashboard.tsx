@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -34,58 +34,7 @@ export function AdminDashboard() {
     }
   }, [user, loading, navigate])
 
-  useEffect(() => {
-    if (user) {
-      fetchApplicants()
-    }
-  }, [user])
-
-  useEffect(() => {
-    filterAndSortApplicants()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applicants, searchQuery, statusFilter, positionFilter, sortBy])
-
-  // Get unique positions for filter
-  const uniquePositions = Array.from(new Set(
-    applicants.flatMap(app =>
-      app.positions_interested && app.positions_interested.length > 0
-        ? app.positions_interested
-        : [app.position_interested]
-    ).filter(Boolean)
-  )).sort()
-
-  // Export to CSV function
-  const exportToCSV = () => {
-    const headers = ['Name', 'Email', 'Phone', 'Position', 'Experience (Years)', 'Status', 'Applied Date', 'Notes']
-    const rows = filteredApplicants.map(app => [
-      app.full_name,
-      app.email,
-      app.phone,
-      app.positions_interested?.join('; ') || app.position_interested,
-      app.experience_years,
-      app.status,
-      new Date(app.created_at).toLocaleDateString(),
-      app.notes || ''
-    ])
-
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-    ].join('\n')
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `applicants_${new Date().toISOString().split('T')[0]}.csv`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
-    toast.success('Exported to CSV')
-  }
-
-  const fetchApplicants = async () => {
+  const fetchApplicants = useCallback(async () => {
     // Use mock data in demo mode
     if (isDemo || isDemoMode()) {
       setApplicants(getDemoApplicants())
@@ -108,9 +57,15 @@ export function AdminDashboard() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [isDemo])
 
-  const filterAndSortApplicants = () => {
+  useEffect(() => {
+    if (user) {
+      fetchApplicants()
+    }
+  }, [user, fetchApplicants])
+
+  const filterAndSortApplicants = useCallback(() => {
     let filtered = [...applicants]
 
     // Apply status filter
@@ -155,7 +110,52 @@ export function AdminDashboard() {
     })
 
     setFilteredApplicants(filtered)
-  }
+  }, [applicants, searchQuery, statusFilter, positionFilter, sortBy])
+
+  useEffect(() => {
+    filterAndSortApplicants()
+  }, [filterAndSortApplicants])
+
+  // Get unique positions for filter - memoized to avoid recalculation
+  const uniquePositions = useMemo(() => Array.from(new Set(
+    applicants.flatMap(app =>
+      app.positions_interested && app.positions_interested.length > 0
+        ? app.positions_interested
+        : [app.position_interested]
+    ).filter(Boolean)
+  )).sort(), [applicants])
+
+  // Export to CSV function - memoized with useCallback
+  const exportToCSV = useCallback(() => {
+    const headers = ['Name', 'Email', 'Phone', 'Position', 'Experience (Years)', 'Status', 'Applied Date', 'Notes']
+    const rows = filteredApplicants.map(app => [
+      app.full_name,
+      app.email,
+      app.phone,
+      app.positions_interested?.join('; ') || app.position_interested,
+      app.experience_years,
+      app.status,
+      new Date(app.created_at).toLocaleDateString(),
+      app.notes || ''
+    ])
+
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `applicants_${new Date().toISOString().split('T')[0]}.csv`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+    toast.success('Exported to CSV')
+  }, [filteredApplicants])
+
 
   const handleStatusUpdate = async (applicantId: string, newStatus: Applicant['status']) => {
     setUpdatingStatus(true)

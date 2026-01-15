@@ -156,9 +156,9 @@ export async function uploadFile(
 
     // In demo mode, simulate file upload with a mock URL
     if (isDemoMode()) {
-      console.log('[uploadFile] Demo mode - simulating file upload for:', file.name)
       // Create a blob URL for demo purposes (file is stored in browser memory)
-      const blobUrl = URL.createObjectURL(file)
+      // Note: blob URL is created but not stored as it's not needed in demo mode
+      URL.createObjectURL(file)
       return {
         url: `demo://storage/${bucket}/${filePath}`,
         filename: file.name
