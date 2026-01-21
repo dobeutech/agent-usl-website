@@ -26,7 +26,7 @@ const quickResponses = [
   { id: 'employer', text: "I need to hire staff", response: "Excellent! We specialize in providing qualified temporary and permanent staff. Our team can help with janitorial, HR, retail, call center, and industrial staffing needs. Would you like us to call you to discuss your requirements?" },
   { id: 'status', text: "Check application status", response: "To check your application status, please contact us at (301) 277-2141 or email omorilla@uniquestaffingprofessionals.com with your name and the date you applied. We typically review applications within 2-3 business days." },
   { id: 'hours', text: "What are your hours?", response: "Our office is open Monday through Friday, 9:00 AM to 5:00 PM EST. You can reach us at (301) 277-2141. For urgent matters outside business hours, please leave a message and we'll return your call the next business day." },
-  { id: 'location', text: "Where are you located?", response: "We're located at 6001 66th Ave, Riverdale, MD 20737. We primarily serve the Maryland, Washington D.C., and Northern Virginia areas (DMV region). Feel free to visit us during business hours!" }
+  { id: 'location', text: "Where are you located?", response: "We're located at 6001 66th Ave, Suite R22, Riverdale, MD 20737. We primarily serve the Maryland, Washington D.C., and Northern Virginia areas (DMV region). Feel free to visit us during business hours!" }
 ]
 
 export function LiveChat() {

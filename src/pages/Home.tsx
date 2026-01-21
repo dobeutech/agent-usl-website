@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/Navigation"
 import { Hero } from "@/components/Hero"
@@ -6,7 +7,7 @@ import { ClientLogos } from "@/components/ClientLogos"
 import { Services } from "@/components/Services"
 import { Industries } from "@/components/Industries"
 import { WhyChooseUs } from "@/components/WhyChooseUs"
-import { EmployerCTA } from "@/components/EmployerCTA"
+import { TalentSplitSection } from "@/components/TalentSplitSection"
 import { JobListings } from "@/components/JobListings"
 import { JobAlerts } from "@/components/JobAlerts"
 import { EnhancedApplyForm } from "@/components/EnhancedApplyForm"
@@ -24,12 +25,24 @@ import { useLanguage } from "@/contexts/LanguageContext"
 
 export function Home() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { businessInfo } = useBusinessInfo()
   const { t } = useLanguage()
 
   const handleApplicationSuccess = () => {
     navigate('/application-confirmation')
   }
+
+  useEffect(() => {
+    if (!location.hash) return
+    const targetId = location.hash.replace("#", "")
+    const element = document.getElementById(targetId)
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "smooth" })
+      }, 0)
+    }
+  }, [location.hash])
 
   if (!businessInfo) {
     return (
@@ -105,8 +118,7 @@ export function Home() {
         
         <Industries />
         
-        {/* Employer CTA - B2B conversion */}
-        <EmployerCTA />
+        <TalentSplitSection />
         
         <JobListings />
         

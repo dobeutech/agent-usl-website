@@ -5,11 +5,14 @@ import { List, X } from "@phosphor-icons/react"
 import { ThemeToggle, SystemToggle } from "@/components/ThemeToggle"
 import { LanguageToggle } from "@/components/LanguageToggle"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
   const { t } = useLanguage()
+  const location = useLocation()
+  const navigate = useNavigate()
   
   // Scroll-based effects reserved for future enhancement
   // const { scrollY } = useScroll()
@@ -24,6 +27,11 @@ export function Navigation() {
   }, [])
 
   const scrollToSection = (id: string) => {
+    if (location.pathname !== "/") {
+      navigate(`/#${id}`)
+      setMobileMenuOpen(false)
+      return
+    }
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
@@ -31,12 +39,18 @@ export function Navigation() {
     }
   }
 
+  const navigateTo = (path: string) => {
+    navigate(path)
+    setMobileMenuOpen(false)
+  }
+
   const navItems = [
-    { label: t('nav.services'), id: "services" },
-    { label: t('nav.industries'), id: "industries" },
-    { label: t('nav.about'), id: "about" },
-    { label: t('nav.apply'), id: "apply" },
-    { label: t('nav.contact'), id: "contact" },
+    { label: t('nav.services'), id: "services", type: "section" },
+    { label: t('nav.industries'), id: "industries", type: "section" },
+    { label: t('nav.about'), id: "about", type: "section" },
+    { label: t('nav.apply'), id: "apply", type: "section" },
+    { label: t('nav.contact'), id: "contact", type: "section" },
+    { label: t('nav.employers'), path: "/employers", type: "route" },
   ]
 
   const navItemVariants = {
@@ -123,8 +137,12 @@ export function Navigation() {
             <div className="hidden md:flex items-center gap-8">
               {navItems.map((item, i) => (
                 <motion.button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  key={item.label}
+                  onClick={() => (
+                    item.type === "route" && item.path
+                      ? navigateTo(item.path)
+                      : scrollToSection(item.id as string)
+                  )}
                   className="relative text-foreground/70 hover:text-foreground font-medium transition-all duration-300 py-2 group"
                   custom={i}
                   initial="hidden"
@@ -221,8 +239,12 @@ export function Navigation() {
               <div className="px-4 py-6 space-y-2">
                 {navItems.map((item, i) => (
                   <motion.button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
+                    key={item.label}
+                    onClick={() => (
+                      item.type === "route" && item.path
+                        ? navigateTo(item.path)
+                        : scrollToSection(item.id as string)
+                    )}
                     className="block w-full text-left text-foreground/80 hover:text-foreground hover:bg-secondary/50 font-medium py-3 px-4 rounded-lg transition-all duration-300"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}

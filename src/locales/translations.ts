@@ -8,6 +8,7 @@ export interface Translations {
     about: string
     contact: string
     apply: string
+    employers: string
     privacy: string
     terms: string
   }
@@ -374,6 +375,7 @@ export const translations: Record<Language, Translations> = {
       about: 'About',
       contact: 'Contact',
       apply: 'Apply Now',
+      employers: 'Employers',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
     },
@@ -576,7 +578,7 @@ export const translations: Record<Language, Translations> = {
       error: 'Failed to send message. Please try again.',
       phoneLabel: 'Phone',
       textLabel: 'Text for Work',
-      faxLabel: 'Fax',
+      faxLabel: 'eFax',
       emailLabel: 'Email',
       officeAddress: 'Office Address',
       phoneHours: 'Mon-Fri 8am-6pm',
@@ -738,6 +740,7 @@ export const translations: Record<Language, Translations> = {
       about: 'Acerca de',
       contact: 'Contacto',
       apply: 'Aplicar Ahora',
+      employers: 'Empleadores',
       privacy: 'Política de Privacidad',
       terms: 'Términos de Servicio',
     },
@@ -922,7 +925,7 @@ export const translations: Record<Language, Translations> = {
       error: 'Error al enviar el mensaje. Por favor, inténtelo de nuevo.',
       phoneLabel: 'Teléfono',
       textLabel: 'Texto para Trabajo',
-      faxLabel: 'Fax',
+      faxLabel: 'eFax',
       emailLabel: 'Correo Electrónico',
       officeAddress: 'Dirección de la Oficina',
       phoneHours: 'Lun-Vie 8am-6pm',
@@ -1102,6 +1105,7 @@ export const translations: Record<Language, Translations> = {
       about: 'À Propos',
       contact: 'Contact',
       apply: 'Postuler',
+      employers: 'Employeurs',
       privacy: 'Politique de Confidentialité',
       terms: 'Conditions d\'Utilisation',
     },
@@ -1286,7 +1290,7 @@ export const translations: Record<Language, Translations> = {
       error: 'Échec de l\'envoi du message. Veuillez réessayer.',
       phoneLabel: 'Téléphone',
       textLabel: 'Texte pour le Travail',
-      faxLabel: 'Fax',
+      faxLabel: 'eFax',
       emailLabel: 'Email',
       officeAddress: 'Adresse du Bureau',
       phoneHours: 'Lun-Ven 8h-18h',

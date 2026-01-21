@@ -2,8 +2,10 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { X, Users, ArrowRight } from "lucide-react"
+import { WhatsappLogo } from "@phosphor-icons/react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { motion, AnimatePresence } from "framer-motion"
+import { WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
 
 const MODAL_DISMISSED_KEY = "talent_network_dismissed"
 const MODAL_DELAY = 15000 // 15 seconds
@@ -86,9 +88,18 @@ export function TalentNetworkModal() {
                   {t('talentModal.subtitle')}
                 </p>
 
-                <p className="text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-4 leading-relaxed">
                   {t('talentModal.description')}
                 </p>
+                <a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 text-sm text-primary hover:underline mb-6"
+                >
+                  <WhatsappLogo size={18} weight="fill" />
+                  {WHATSAPP_CTA}
+                </a>
 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button

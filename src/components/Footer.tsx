@@ -1,18 +1,27 @@
 import { useRef } from "react"
 import { Phone, Mail, MapPin, MessageSquare, Printer, Facebook } from "lucide-react"
+import { WhatsappLogo } from "@phosphor-icons/react"
 import { motion, useInView } from "framer-motion"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { BusinessAddress, BusinessPhone, BusinessEmail } from "@/components/seo/NAPDisplay"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { EFAX_NUMBER, WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
 
 export function Footer() {
   const { businessInfo } = useBusinessInfo()
   const { t } = useLanguage()
   const footerRef = useRef<HTMLElement>(null)
   const isInView = useInView(footerRef, { once: true, amount: 0.2 })
+  const location = useLocation()
+  const navigate = useNavigate()
+  const faxNumber = businessInfo?.contact.fax || EFAX_NUMBER
 
   const scrollToSection = (id: string) => {
+    if (location.pathname !== "/") {
+      navigate(`/#${id}`)
+      return
+    }
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
@@ -200,18 +209,31 @@ export function Footer() {
                     </span>
                   </li>
                 )}
-                {businessInfo.contact.fax && (
+                {faxNumber && (
                   <li className="flex items-center gap-3 group">
                     <Printer size={18} className="text-accent" />
                     <span>
-                      Fax:{' '}
-                      <BusinessPhone
-                        businessInfo={businessInfo}
-                        type="fax"
-                      />
+                      eFax:{' '}
+                      <a href={`tel:${faxNumber}`} className="hover:text-primary-foreground transition-colors">
+                        {faxNumber}
+                      </a>
                     </span>
                   </li>
                 )}
+                <li className="flex items-start gap-3 group">
+                  <WhatsappLogo size={18} weight="fill" className="text-accent mt-0.5" />
+                  <a
+                    href={WHATSAPP_LINK}
+                    className="text-sm hover:text-primary-foreground transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {WHATSAPP_CTA}
+                  </a>
+                </li>
+                <li className="text-xs text-primary-foreground/70 pl-7">
+                  Employers: send us an eFax at {faxNumber}.
+                </li>
                 <li className="flex items-center gap-3 group">
                   <Mail size={18} className="text-accent" />
                   <BusinessEmail businessInfo={businessInfo} className="hover:text-primary-foreground transition-colors break-all" />

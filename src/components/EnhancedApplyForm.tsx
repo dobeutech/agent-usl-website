@@ -7,11 +7,14 @@ import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Upload, CheckCircle, X, AlertCircle, FileText } from "lucide-react"
+import { Upload, CheckCircle, X, AlertCircle, FileText, Clock, ShieldCheck, Users } from "lucide-react"
+import { WhatsappLogo } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { supabase, ApplicantInsert } from "@/lib/supabase"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { isDemoMode } from "@/lib/mockData"
+import { Link } from "react-router-dom"
+import { WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
 import {
   normalizePhone,
   checkPhoneDuplicate,
@@ -43,6 +46,28 @@ const POSITIONS = [
 ]
 
 // DOCUMENT_TYPES removed - not currently used in the form
+const BENEFITS = [
+  {
+    icon: Clock,
+    title: "Vacation paid-time",
+    description: "Paid time off to recharge."
+  },
+  {
+    icon: CheckCircle,
+    title: "Paid holiday",
+    description: "Enjoy paid holidays each year."
+  },
+  {
+    icon: ShieldCheck,
+    title: "Full onboard training",
+    description: "Get prepared with guided onboarding."
+  },
+  {
+    icon: Users,
+    title: "Robust employer network",
+    description: "Access growth opportunities across industries."
+  }
+]
 
 export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
   const { t, language } = useLanguage()
@@ -462,6 +487,29 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Submit your application and let us match you with the perfect opportunity
             </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+            {BENEFITS.map((benefit) => (
+              <Card key={benefit.title} className="p-4 border-border bg-card/80">
+                <benefit.icon className="h-6 w-6 text-primary mb-3" />
+                <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
+                <p className="text-sm text-muted-foreground">{benefit.description}</p>
+              </Card>
+            ))}
+          </div>
+          <div className="flex flex-col items-center gap-3 mb-10 text-sm text-muted-foreground">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+            >
+              <WhatsappLogo size={18} weight="fill" />
+              {WHATSAPP_CTA}
+            </a>
+            <Link to="/forms" className="text-primary hover:underline">
+              Looking for employee forms? Visit our Forms page.
+            </Link>
           </div>
 
           <Card className="p-6 lg:p-8 border-border bg-card">
