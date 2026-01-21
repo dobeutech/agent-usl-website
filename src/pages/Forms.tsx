@@ -6,34 +6,35 @@ import { Link } from "react-router-dom"
 import { FileText, Briefcase, CheckCircle, Users, Phone, HelpCircle } from "lucide-react"
 import { WhatsappLogo } from "@phosphor-icons/react"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
-import { WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
-
-const forms = [
-  {
-    icon: FileText,
-    title: "Current employee",
-    description: "W-2 or W-4 changes"
-  },
-  {
-    icon: Users,
-    title: "New employee forms",
-    description: "Employee application packet"
-  },
-  {
-    icon: Briefcase,
-    title: "Contractor application",
-    description: "Independent contractor application"
-  },
-  {
-    icon: CheckCircle,
-    title: "W-2 employee application",
-    description: "W-2 employee application packet"
-  }
-]
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "@/lib/contact-info"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function Forms() {
   const { businessInfo } = useBusinessInfo()
+  const { t } = useLanguage()
   const phone = businessInfo?.contact.phone || "+13012772141"
+  const forms = [
+    {
+      icon: FileText,
+      title: t('formsPage.currentEmployeeTitle'),
+      description: t('formsPage.currentEmployeeDescription')
+    },
+    {
+      icon: Users,
+      title: t('formsPage.newEmployeeTitle'),
+      description: t('formsPage.newEmployeeDescription')
+    },
+    {
+      icon: Briefcase,
+      title: t('formsPage.contractorTitle'),
+      description: t('formsPage.contractorDescription')
+    },
+    {
+      icon: CheckCircle,
+      title: t('formsPage.w2Title'),
+      description: t('formsPage.w2Description')
+    }
+  ]
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -43,10 +44,10 @@ export function Forms() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <h1 className="font-heading font-bold text-3xl lg:text-4xl text-foreground mb-3">
-                Forms and resources
+                {t('formsPage.title')}
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Downloadable forms will be added here soon. For now, review the sections below.
+                {t('formsPage.subtitle')}
               </p>
             </div>
 
@@ -63,7 +64,7 @@ export function Forms() {
                       </h2>
                       <p className="text-muted-foreground">{form.description}</p>
                       <p className="text-xs text-muted-foreground mt-2">
-                        Documents coming soon.
+                        {t('formsPage.documentsSoon')}
                       </p>
                     </div>
                   </div>
@@ -82,28 +83,28 @@ export function Forms() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-heading font-semibold text-2xl text-foreground mb-2">
-                    Questions or need assistance?
+                    {t('formsPage.assistanceTitle')}
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    {WHATSAPP_CTA}
+                    {t('common.whatsappCta').replace('{number}', WHATSAPP_NUMBER)}
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <Button asChild>
                       <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
                         <span className="inline-flex items-center gap-2">
                           <WhatsappLogo size={18} weight="fill" />
-                          Message on WhatsApp
+                          {t('common.whatsappButton')}
                         </span>
                       </a>
                     </Button>
                     <Button asChild variant="outline">
-                      <Link to="/#apply">Join our network</Link>
+                      <Link to="/#apply">{t('common.joinNetwork')}</Link>
                     </Button>
                     <Button asChild variant="outline">
                       <a href={`tel:${phone}`}>
                         <span className="inline-flex items-center gap-2">
                           <Phone className="h-4 w-4" />
-                          Call us
+                          {t('common.callUs')}
                         </span>
                       </a>
                     </Button>
@@ -114,13 +115,13 @@ export function Forms() {
 
             <Card className="p-6 lg:p-8 border-border bg-secondary/30">
               <h3 className="font-heading font-semibold text-2xl text-foreground mb-2">
-                Employer looking for more info on our onboarding process?
+                {t('formsPage.employerPromptTitle')}
               </h3>
               <p className="text-muted-foreground mb-4">
-                Visit our employer section to learn how we staff, onboard, and support your team.
+                {t('formsPage.employerPromptDescription')}
               </p>
               <Button asChild>
-                <Link to="/employers">Go to employer services</Link>
+                <Link to="/employers">{t('formsPage.employerPromptCta')}</Link>
               </Button>
             </Card>
           </div>

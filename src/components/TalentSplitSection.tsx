@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight, Buildings, Users } from "@phosphor-icons/react"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export function TalentSplitSection() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -33,12 +35,14 @@ export function TalentSplitSection() {
                     <Users size={24} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-primary mb-2">For Job Seekers</p>
+                    <p className="text-sm font-medium text-primary mb-2">
+                      {t('common.forJobSeekers')}
+                    </p>
                     <h3 className="font-heading font-semibold text-2xl text-foreground mb-2">
-                      Join our talent pool
+                      {t('talentSplit.jobSeekersTitle')}
                     </h3>
                     <p className="text-muted-foreground">
-                      Submit your application and get matched with opportunities that fit your skills.
+                      {t('talentSplit.jobSeekersDescription')}
                     </p>
                   </div>
                 </div>
@@ -47,7 +51,7 @@ export function TalentSplitSection() {
                   className="w-full lg:w-auto"
                   onClick={() => scrollToSection("apply")}
                 >
-                  Join our network
+                  {t('talentSplit.jobSeekersCta')}
                   <ArrowRight className="ml-2" weight="bold" />
                 </Button>
               </div>
@@ -66,12 +70,14 @@ export function TalentSplitSection() {
                     <Buildings size={24} className="text-white" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white/80 mb-2">For Employers</p>
+                    <p className="text-sm font-medium text-white/80 mb-2">
+                      {t('common.forEmployers')}
+                    </p>
                     <h3 className="font-heading font-semibold text-2xl text-white mb-2">
-                      Partner with Unique Staffing Professionals
+                      {t('talentSplit.employersTitle')}
                     </h3>
                     <p className="text-white/80">
-                      Learn how we onboard and deliver dependable staff for your business.
+                      {t('talentSplit.employersDescription')}
                     </p>
                   </div>
                 </div>
@@ -81,7 +87,7 @@ export function TalentSplitSection() {
                   className="w-full lg:w-auto bg-white text-primary hover:bg-white/90"
                   onClick={() => navigate("/employers")}
                 >
-                  Explore employer services
+                  {t('talentSplit.employersCta')}
                   <ArrowRight className="ml-2" weight="bold" />
                 </Button>
               </div>

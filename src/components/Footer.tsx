@@ -6,7 +6,7 @@ import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { BusinessAddress, BusinessPhone, BusinessEmail } from "@/components/seo/NAPDisplay"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { EFAX_NUMBER, WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
+import { EFAX_NUMBER, WHATSAPP_LINK, WHATSAPP_NUMBER } from "@/lib/contact-info"
 
 export function Footer() {
   const { businessInfo } = useBusinessInfo()
@@ -16,6 +16,8 @@ export function Footer() {
   const location = useLocation()
   const navigate = useNavigate()
   const faxNumber = businessInfo?.contact.fax || EFAX_NUMBER
+  const whatsappCta = t('common.whatsappCta').replace('{number}', WHATSAPP_NUMBER)
+  const employerEfaxNote = t('footer.employerEfaxNote').replace('{number}', faxNumber)
 
   const scrollToSection = (id: string) => {
     if (location.pathname !== "/") {
@@ -213,7 +215,7 @@ export function Footer() {
                   <li className="flex items-center gap-3 group">
                     <Printer size={18} className="text-accent" />
                     <span>
-                      eFax:{' '}
+                      {t('contact.faxLabel')}:{' '}
                       <a href={`tel:${faxNumber}`} className="hover:text-primary-foreground transition-colors">
                         {faxNumber}
                       </a>
@@ -228,11 +230,11 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {WHATSAPP_CTA}
+                    {whatsappCta}
                   </a>
                 </li>
                 <li className="text-xs text-primary-foreground/70 pl-7">
-                  Employers: send us an eFax at {faxNumber}.
+                  {employerEfaxNote}
                 </li>
                 <li className="flex items-center gap-3 group">
                   <Mail size={18} className="text-accent" />

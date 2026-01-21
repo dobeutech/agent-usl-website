@@ -14,7 +14,7 @@ import { supabase, ApplicantInsert } from "@/lib/supabase"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { isDemoMode } from "@/lib/mockData"
 import { Link } from "react-router-dom"
-import { WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "@/lib/contact-info"
 import {
   normalizePhone,
   checkPhoneDuplicate,
@@ -46,31 +46,31 @@ const POSITIONS = [
 ]
 
 // DOCUMENT_TYPES removed - not currently used in the form
-const BENEFITS = [
-  {
-    icon: Clock,
-    title: "Vacation paid-time",
-    description: "Paid time off to recharge."
-  },
-  {
-    icon: CheckCircle,
-    title: "Paid holiday",
-    description: "Enjoy paid holidays each year."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Full onboard training",
-    description: "Get prepared with guided onboarding."
-  },
-  {
-    icon: Users,
-    title: "Robust employer network",
-    description: "Access growth opportunities across industries."
-  }
-]
 
 export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
   const { t, language } = useLanguage()
+  const benefits = [
+    {
+      icon: Clock,
+      title: t('benefits.vacationTitle'),
+      description: t('benefits.vacationDescription')
+    },
+    {
+      icon: CheckCircle,
+      title: t('benefits.holidayTitle'),
+      description: t('benefits.holidayDescription')
+    },
+    {
+      icon: ShieldCheck,
+      title: t('benefits.trainingTitle'),
+      description: t('benefits.trainingDescription')
+    },
+    {
+      icon: Users,
+      title: t('benefits.networkTitle'),
+      description: t('benefits.networkDescription')
+    }
+  ]
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -482,14 +482,14 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading font-bold text-3xl lg:text-4xl text-foreground mb-4">
-              Join Our Talent Network
+              {t('applyForm.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Submit your application and let us match you with the perfect opportunity
+              {t('applyForm.subtitle')}
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
-            {BENEFITS.map((benefit) => (
+            {benefits.map((benefit) => (
               <Card key={benefit.title} className="p-4 border-border bg-card/80">
                 <benefit.icon className="h-6 w-6 text-primary mb-3" />
                 <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
@@ -505,10 +505,10 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
               className="inline-flex items-center gap-2 text-primary hover:underline"
             >
               <WhatsappLogo size={18} weight="fill" />
-              {WHATSAPP_CTA}
+              {t('common.whatsappCta').replace('{number}', WHATSAPP_NUMBER)}
             </a>
             <Link to="/forms" className="text-primary hover:underline">
-              Looking for employee forms? Visit our Forms page.
+              {t('applyForm.formsLink')}
             </Link>
           </div>
 

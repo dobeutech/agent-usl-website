@@ -5,7 +5,7 @@ import { X, Users, ArrowRight } from "lucide-react"
 import { WhatsappLogo } from "@phosphor-icons/react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { motion, AnimatePresence } from "framer-motion"
-import { WHATSAPP_CTA, WHATSAPP_LINK } from "@/lib/contact-info"
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "@/lib/contact-info"
 
 const MODAL_DISMISSED_KEY = "talent_network_dismissed"
 const MODAL_DELAY = 15000 // 15 seconds
@@ -98,7 +98,7 @@ export function TalentNetworkModal() {
                   className="inline-flex items-center justify-center gap-2 text-sm text-primary hover:underline mb-6"
                 >
                   <WhatsappLogo size={18} weight="fill" />
-                  {WHATSAPP_CTA}
+                  {t('common.whatsappCta').replace('{number}', WHATSAPP_NUMBER)}
                 </a>
 
                 <div className="flex flex-col sm:flex-row gap-3">
