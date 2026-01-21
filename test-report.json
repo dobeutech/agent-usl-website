@@ -1,0 +1,618 @@
+{
+  "summary": {
+    "passed": 66,
+    "failed": 23,
+    "skipped": 12,
+    "total": 101,
+    "timestamp": "2026-01-21T22:42:36.704Z",
+    "baseUrl": "https://unique-staffing-professionals.netlify.app"
+  },
+  "tests": [
+    {
+      "name": "NAV-1: Home route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:50.744Z"
+    },
+    {
+      "name": "NAV-2: Employers route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:51.935Z"
+    },
+    {
+      "name": "NAV-3: Forms route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:53.104Z"
+    },
+    {
+      "name": "NAV-4: Privacy Policy route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:54.288Z"
+    },
+    {
+      "name": "NAV-5: SMS Privacy route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:55.472Z"
+    },
+    {
+      "name": "NAV-6: Terms of Service route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:56.672Z"
+    },
+    {
+      "name": "NAV-7: Admin Login route",
+      "status": "failed",
+      "details": "Missing main",
+      "timestamp": "2026-01-21T22:39:58.152Z"
+    },
+    {
+      "name": "NAV-8: API Docs route",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:39:59.862Z"
+    },
+    {
+      "name": "NAV-REDIRECT: /tos → /terms",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:00.531Z"
+    },
+    {
+      "name": "LANG-1: English selection",
+      "status": "failed",
+      "details": "Node is either not clickable or not an Element",
+      "timestamp": "2026-01-21T22:40:03.354Z"
+    },
+    {
+      "name": "LANG-2: Spanish selection",
+      "status": "failed",
+      "details": "Node is either not clickable or not an Element",
+      "timestamp": "2026-01-21T22:40:03.402Z"
+    },
+    {
+      "name": "LANG-3: French selection",
+      "status": "failed",
+      "details": "Node is either not clickable or not an Element",
+      "timestamp": "2026-01-21T22:40:03.492Z"
+    },
+    {
+      "name": "THEME-1: light mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:06.428Z"
+    },
+    {
+      "name": "THEME-2: dark mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:06.432Z"
+    },
+    {
+      "name": "THEME-3: system mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:06.472Z"
+    },
+    {
+      "name": "A11Y-001: Skip to content link",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:09.393Z"
+    },
+    {
+      "name": "A11Y-002: Accessibility panel opens",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:09.395Z"
+    },
+    {
+      "name": "A11Y-003: ARIA labels on buttons",
+      "status": "failed",
+      "details": "24 buttons missing labels",
+      "timestamp": "2026-01-21T22:40:09.607Z"
+    },
+    {
+      "name": "A11Y-004: Keyboard navigation",
+      "status": "passed",
+      "details": "First focus: A",
+      "timestamp": "2026-01-21T22:40:09.735Z"
+    },
+    {
+      "name": "FORM-1: Full Name field",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:10.875Z"
+    },
+    {
+      "name": "FORM-2: Email field",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:10.877Z"
+    },
+    {
+      "name": "FORM-3: Phone field",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:10.879Z"
+    },
+    {
+      "name": "FORM-4: Experience field",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:10.884Z"
+    },
+    {
+      "name": "FORM-5: Resume Upload field",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:10.887Z"
+    },
+    {
+      "name": "FORM-POSITIONS: Position checkboxes",
+      "status": "failed",
+      "details": "No checkboxes found",
+      "timestamp": "2026-01-21T22:40:10.890Z"
+    },
+    {
+      "name": "FORM-SUBMIT: Submit button",
+      "status": "passed",
+      "details": "Enabled",
+      "timestamp": "2026-01-21T22:40:10.894Z"
+    },
+    {
+      "name": "UI-001: Navigation bar",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:14.193Z"
+    },
+    {
+      "name": "UI-002: Hero section",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:14.195Z"
+    },
+    {
+      "name": "UI-003: Footer",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:14.791Z"
+    },
+    {
+      "name": "UI-004: Mobile menu toggle",
+      "status": "failed",
+      "details": "Menu not visible",
+      "timestamp": "2026-01-21T22:40:15.152Z"
+    },
+    {
+      "name": "UI-005: Cookie consent banner",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:15.154Z"
+    },
+    {
+      "name": "LINKS: Internal links verification",
+      "status": "failed",
+      "details": "5/10 broken",
+      "timestamp": "2026-01-21T22:40:22.930Z"
+    },
+    {
+      "name": "ADMIN-001: Login form fields",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:24.499Z"
+    },
+    {
+      "name": "ADMIN-002: Protected route handling",
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T22:40:25.542Z"
+    },
+    {
+      "name": "NAV-1: Home route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:37.741Z"
+    },
+    {
+      "name": "NAV-2: Employers route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:39.140Z"
+    },
+    {
+      "name": "NAV-3: Forms route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:40.368Z"
+    },
+    {
+      "name": "NAV-4: Privacy Policy route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:41.569Z"
+    },
+    {
+      "name": "NAV-5: SMS Privacy route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:42.789Z"
+    },
+    {
+      "name": "NAV-6: Terms of Service route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:43.989Z"
+    },
+    {
+      "name": "NAV-7: Admin Login route",
+      "status": "failed",
+      "details": "Missing main",
+      "timestamp": "2026-01-21T22:40:45.209Z"
+    },
+    {
+      "name": "NAV-8: API Docs route",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:46.864Z"
+    },
+    {
+      "name": "NAV-REDIRECT: /tos → /terms",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:40:47.546Z"
+    },
+    {
+      "name": "LANG-1: English selection",
+      "status": "failed",
+      "details": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"English\"), [data-lang=\"en\"], button[value=\"en\"]' is not a valid selector.",
+      "timestamp": "2026-01-21T22:40:52.779Z"
+    },
+    {
+      "name": "LANG-2: Spanish selection",
+      "status": "failed",
+      "details": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"Spanish\"), [data-lang=\"es\"], button[value=\"es\"]' is not a valid selector.",
+      "timestamp": "2026-01-21T22:40:53.413Z"
+    },
+    {
+      "name": "LANG-3: French selection",
+      "status": "failed",
+      "details": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"French\"), [data-lang=\"fr\"], button[value=\"fr\"]' is not a valid selector.",
+      "timestamp": "2026-01-21T22:40:54.059Z"
+    },
+    {
+      "name": "THEME-1: light mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:59.784Z"
+    },
+    {
+      "name": "THEME-2: dark mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:59.786Z"
+    },
+    {
+      "name": "THEME-3: system mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:40:59.787Z"
+    },
+    {
+      "name": "A11Y-001: Skip to content link",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:05.939Z"
+    },
+    {
+      "name": "A11Y-002: Accessibility panel opens",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:41:05.940Z"
+    },
+    {
+      "name": "A11Y-003: ARIA labels on buttons",
+      "status": "failed",
+      "details": "24 buttons missing labels",
+      "timestamp": "2026-01-21T22:41:06.124Z"
+    },
+    {
+      "name": "A11Y-004: Keyboard navigation",
+      "status": "passed",
+      "details": "First focus: A",
+      "timestamp": "2026-01-21T22:41:06.346Z"
+    },
+    {
+      "name": "FORM-1: Full Name field",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:07.460Z"
+    },
+    {
+      "name": "FORM-2: Email field",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:07.497Z"
+    },
+    {
+      "name": "FORM-3: Phone field",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:07.499Z"
+    },
+    {
+      "name": "FORM-4: Experience field",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:07.503Z"
+    },
+    {
+      "name": "FORM-5: Resume Upload field",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:07.505Z"
+    },
+    {
+      "name": "FORM-POSITIONS: Position checkboxes",
+      "status": "failed",
+      "details": "No checkboxes found",
+      "timestamp": "2026-01-21T22:41:07.508Z"
+    },
+    {
+      "name": "FORM-SUBMIT: Submit button",
+      "status": "passed",
+      "details": "Enabled",
+      "timestamp": "2026-01-21T22:41:07.510Z"
+    },
+    {
+      "name": "UI-001: Navigation bar",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:13.559Z"
+    },
+    {
+      "name": "UI-002: Hero section",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:13.631Z"
+    },
+    {
+      "name": "UI-003: Footer",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:14.225Z"
+    },
+    {
+      "name": "UI-004: Mobile menu toggle",
+      "status": "failed",
+      "details": "Node is either not clickable or not an Element",
+      "timestamp": "2026-01-21T22:41:14.365Z"
+    },
+    {
+      "name": "UI-005: Cookie consent banner",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:14.371Z"
+    },
+    {
+      "name": "LINKS: Internal links verification",
+      "status": "failed",
+      "details": "4/10 broken",
+      "timestamp": "2026-01-21T22:41:27.395Z"
+    },
+    {
+      "name": "ADMIN-001: Login form fields",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:29.017Z"
+    },
+    {
+      "name": "ADMIN-002: Protected route handling",
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T22:41:30.038Z"
+    },
+    {
+      "name": "NAV-1: Home route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:42.172Z"
+    },
+    {
+      "name": "NAV-2: Employers route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:43.468Z"
+    },
+    {
+      "name": "NAV-3: Forms route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:44.712Z"
+    },
+    {
+      "name": "NAV-4: Privacy Policy route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:45.900Z"
+    },
+    {
+      "name": "NAV-5: SMS Privacy route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:47.083Z"
+    },
+    {
+      "name": "NAV-6: Terms of Service route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:48.397Z"
+    },
+    {
+      "name": "NAV-7: Admin Login route",
+      "status": "failed",
+      "details": "Missing main",
+      "timestamp": "2026-01-21T22:41:49.883Z"
+    },
+    {
+      "name": "NAV-8: API Docs route",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:51.306Z"
+    },
+    {
+      "name": "NAV-REDIRECT: /tos → /terms",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:41:52.260Z"
+    },
+    {
+      "name": "LANG-1: English selection",
+      "status": "failed",
+      "details": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"English\"), [data-lang=\"en\"], button[value=\"en\"]' is not a valid selector.",
+      "timestamp": "2026-01-21T22:41:58.807Z"
+    },
+    {
+      "name": "LANG-2: Spanish selection",
+      "status": "failed",
+      "details": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"Spanish\"), [data-lang=\"es\"], button[value=\"es\"]' is not a valid selector.",
+      "timestamp": "2026-01-21T22:41:59.299Z"
+    },
+    {
+      "name": "LANG-3: French selection",
+      "status": "failed",
+      "details": "SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"French\"), [data-lang=\"fr\"], button[value=\"fr\"]' is not a valid selector.",
+      "timestamp": "2026-01-21T22:41:59.804Z"
+    },
+    {
+      "name": "THEME-1: light mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:42:05.771Z"
+    },
+    {
+      "name": "THEME-2: dark mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:42:05.774Z"
+    },
+    {
+      "name": "THEME-3: system mode",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:42:05.775Z"
+    },
+    {
+      "name": "A11Y-001: Skip to content link",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:12.683Z"
+    },
+    {
+      "name": "A11Y-002: Accessibility panel opens",
+      "status": "skipped",
+      "details": "Button not found",
+      "timestamp": "2026-01-21T22:42:12.685Z"
+    },
+    {
+      "name": "A11Y-003: ARIA labels on buttons",
+      "status": "failed",
+      "details": "24 buttons missing labels",
+      "timestamp": "2026-01-21T22:42:12.902Z"
+    },
+    {
+      "name": "A11Y-004: Keyboard navigation",
+      "status": "passed",
+      "details": "First focus: A",
+      "timestamp": "2026-01-21T22:42:13.131Z"
+    },
+    {
+      "name": "FORM-1: Full Name field",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:14.288Z"
+    },
+    {
+      "name": "FORM-2: Email field",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:14.290Z"
+    },
+    {
+      "name": "FORM-3: Phone field",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:14.303Z"
+    },
+    {
+      "name": "FORM-4: Experience field",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:14.305Z"
+    },
+    {
+      "name": "FORM-5: Resume Upload field",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:14.306Z"
+    },
+    {
+      "name": "FORM-POSITIONS: Position checkboxes",
+      "status": "failed",
+      "details": "No checkboxes found",
+      "timestamp": "2026-01-21T22:42:14.325Z"
+    },
+    {
+      "name": "FORM-SUBMIT: Submit button",
+      "status": "passed",
+      "details": "Enabled",
+      "timestamp": "2026-01-21T22:42:14.364Z"
+    },
+    {
+      "name": "UI-001: Navigation bar",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:19.687Z"
+    },
+    {
+      "name": "UI-002: Hero section",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:19.690Z"
+    },
+    {
+      "name": "UI-003: Footer",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:20.268Z"
+    },
+    {
+      "name": "UI-005: Cookie consent banner",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:20.332Z"
+    },
+    {
+      "name": "LINKS: Internal links verification",
+      "status": "failed",
+      "details": "4/10 broken",
+      "timestamp": "2026-01-21T22:42:33.943Z"
+    },
+    {
+      "name": "ADMIN-001: Login form fields",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:35.556Z"
+    },
+    {
+      "name": "ADMIN-002: Protected route handling",
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T22:42:36.578Z"
+    }
+  ]
+}

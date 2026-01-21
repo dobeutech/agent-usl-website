@@ -138,6 +138,177 @@ export function validateFileSize(file: File, maxSizeMB: number): boolean {
 }
 
 /**
+ * Reads the first bytes of a file to get its signature (magic bytes)
+ * @param file - The file to read
+ * @param numBytes - Number of bytes to read (default 8)
+ * @returns Array of byte values
+ */
+export async function getFileSignature(file: File, numBytes: number = 8): Promise<number[]> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const arrayBuffer = reader.result as ArrayBuffer
+      const bytes = new Uint8Array(arrayBuffer)
+      resolve(Array.from(bytes))
+    }
+    reader.onerror = () => reject(reader.error)
+    reader.readAsArrayBuffer(file.slice(0, numBytes))
+  })
+}
+
+/**
+ * Server-side document verification using Netlify edge function
+ * Validates file type, size, and content integrity
+ * @param file - The file to verify
+ * @param bucket - The target storage bucket
+ * @returns Verification result with details or error
+ */
+export async function verifyDocumentServerSide(
+  file: File,
+  bucket: string = 'resumes'
+): Promise<{
+  valid: boolean
+  error?: string
+  details?: {
+    filename: string
+    extension: string
+    contentType: string
+    size: number
+    sizeFormatted: string
+    signatureValid: boolean
+  }
+}> {
+  // In demo mode, perform client-side validation only
+  if (isDemoMode()) {
+    const extension = file.name.split('.').pop()?.toLowerCase() || ''
+    const allowedExtensions = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png']
+    
+    if (!allowedExtensions.includes(extension)) {
+      return {
+        valid: false,
+        error: `File type '.${extension}' is not allowed`
+      }
+    }
+
+    const maxSize = bucket === 'resumes' ? 5 * 1024 * 1024 : 10 * 1024 * 1024
+    if (file.size > maxSize) {
+      return {
+        valid: false,
+        error: `File size exceeds maximum allowed (${bucket === 'resumes' ? '5MB' : '10MB'})`
+      }
+    }
+
+    return {
+      valid: true,
+      details: {
+        filename: file.name,
+        extension,
+        contentType: file.type,
+        size: file.size,
+        sizeFormatted: formatBytes(file.size),
+        signatureValid: true
+      }
+    }
+  }
+
+  try {
+    // Get file signature for server-side validation
+    const fileSignature = await getFileSignature(file)
+
+    // Call Netlify edge function for validation
+    const response = await fetch('/.netlify/edge-functions/document-verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        filename: file.name,
+        contentType: file.type,
+        size: file.size,
+        bucket,
+        fileSignature
+      })
+    })
+
+    const result = await response.json()
+    return result
+
+  } catch (error) {
+    console.error('Document verification error:', error)
+    
+    // Fallback to client-side validation if edge function fails
+    return performClientSideValidation(file, bucket)
+  }
+}
+
+/**
+ * Fallback client-side validation when edge function is unavailable
+ */
+function performClientSideValidation(
+  file: File,
+  bucket: string
+): {
+  valid: boolean
+  error?: string
+  details?: {
+    filename: string
+    extension: string
+    contentType: string
+    size: number
+    sizeFormatted: string
+    signatureValid: boolean
+  }
+} {
+  const extension = file.name.split('.').pop()?.toLowerCase() || ''
+  const allowedExtensions = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png']
+  
+  if (!allowedExtensions.includes(extension)) {
+    return {
+      valid: false,
+      error: `File type '.${extension}' is not allowed. Allowed: ${allowedExtensions.join(', ')}`
+    }
+  }
+
+  const maxSize = bucket === 'resumes' ? 5 * 1024 * 1024 : 10 * 1024 * 1024
+  if (file.size > maxSize) {
+    return {
+      valid: false,
+      error: `File size exceeds maximum allowed (${bucket === 'resumes' ? '5MB' : '10MB'})`
+    }
+  }
+
+  if (file.size === 0) {
+    return {
+      valid: false,
+      error: 'File is empty'
+    }
+  }
+
+  return {
+    valid: true,
+    details: {
+      filename: file.name,
+      extension,
+      contentType: file.type,
+      size: file.size,
+      sizeFormatted: formatBytes(file.size),
+      signatureValid: true // Assumed true for client-side fallback
+    }
+  }
+}
+
+/**
+ * Formats bytes to human-readable string
+ */
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+/**
  * Uploads a file to Supabase storage
  * @param file - The file to upload
  * @param bucket - The storage bucket name

@@ -47,7 +47,7 @@ export function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 px-4">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 px-4">
       <Card className="w-full max-w-md p-8 border-border bg-card shadow-lg">
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
@@ -131,6 +131,6 @@ export function AdminLogin() {
           </Button>
         </div>
       </Card>
-    </div>
+    </main>
   )
 }
