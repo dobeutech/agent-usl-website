@@ -182,7 +182,7 @@ export function BusinessInfoManager() {
                     location: { ...formData.location!, suite: e.target.value }
                   })
                 }
-                placeholder="Floor 3, Suite R35"
+                placeholder="Suite R22"
               />
             </div>
           </div>

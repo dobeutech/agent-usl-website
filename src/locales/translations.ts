@@ -8,8 +8,17 @@ export interface Translations {
     about: string
     contact: string
     apply: string
+    employers: string
     privacy: string
     terms: string
+  }
+  common: {
+    whatsappCta: string
+    whatsappButton: string
+    joinNetwork: string
+    callUs: string
+    forEmployers: string
+    forJobSeekers: string
   }
   hero: {
     title: string
@@ -161,6 +170,68 @@ export interface Translations {
     years3to5: string
     years6to10: string
     years10plus: string
+    formsLink: string
+  }
+  benefits: {
+    sectionTitle: string
+    sectionSubtitle: string
+    vacationTitle: string
+    vacationDescription: string
+    holidayTitle: string
+    holidayDescription: string
+    trainingTitle: string
+    trainingDescription: string
+    networkTitle: string
+    networkDescription: string
+  }
+  talentSplit: {
+    jobSeekersTitle: string
+    jobSeekersDescription: string
+    jobSeekersCta: string
+    employersTitle: string
+    employersDescription: string
+    employersCta: string
+  }
+  formsPage: {
+    title: string
+    subtitle: string
+    documentsSoon: string
+    currentEmployeeTitle: string
+    currentEmployeeDescription: string
+    newEmployeeTitle: string
+    newEmployeeDescription: string
+    contractorTitle: string
+    contractorDescription: string
+    w2Title: string
+    w2Description: string
+    assistanceTitle: string
+    employerPromptTitle: string
+    employerPromptDescription: string
+    employerPromptCta: string
+  }
+  employerPage: {
+    eyebrow: string
+    title: string
+    subtitle: string
+    primaryCta: string
+    secondaryCta: string
+    contactTitle: string
+    efaxLabel: string
+    efaxNote: string
+    processTitle: string
+    processSubtitle: string
+    processComplianceTitle: string
+    processComplianceDescription: string
+    processTalentTitle: string
+    processTalentDescription: string
+    processFlexibleTitle: string
+    processFlexibleDescription: string
+    processPersonalizedTitle: string
+    processPersonalizedDescription: string
+    closingTitle: string
+    closingSubtitle: string
+    closingPrimaryCta: string
+    closingSecondaryCta: string
   }
   cookieConsent: {
     title: string
@@ -228,6 +299,7 @@ export interface Translations {
     rights: string
     privacy: string
     terms: string
+    employerEfaxNote: string
   }
   theme: {
     toggle: string
@@ -374,8 +446,17 @@ export const translations: Record<Language, Translations> = {
       about: 'About',
       contact: 'Contact',
       apply: 'Apply Now',
+      employers: 'Employers',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
+    },
+    common: {
+      whatsappCta: 'Questions? Message us on WhatsApp - {number}',
+      whatsappButton: 'Message on WhatsApp',
+      joinNetwork: 'Join our network',
+      callUs: 'Call us',
+      forEmployers: 'For Employers',
+      forJobSeekers: 'For Job Seekers',
     },
     hero: {
       title: 'Where Opportunity Starts!',
@@ -527,6 +608,68 @@ export const translations: Record<Language, Translations> = {
       years3to5: '3-5 years',
       years6to10: '6-10 years',
       years10plus: '10+ years',
+      formsLink: 'Looking for employee forms? Visit our Forms page.',
+    },
+    benefits: {
+      sectionTitle: 'Employee Benefits',
+      sectionSubtitle: 'Join our talent pool and enjoy competitive benefits designed to support your growth and well-being.',
+      vacationTitle: 'Vacation paid-time',
+      vacationDescription: 'Paid time off to recharge.',
+      holidayTitle: 'Paid holiday',
+      holidayDescription: 'Enjoy paid holidays each year.',
+      trainingTitle: 'Full onboard training',
+      trainingDescription: 'Get prepared with guided onboarding.',
+      networkTitle: 'Robust employer network',
+      networkDescription: 'Access growth opportunities across industries.',
+    },
+    talentSplit: {
+      jobSeekersTitle: 'Join our talent pool',
+      jobSeekersDescription: 'Submit your application and get matched with opportunities that fit your skills.',
+      jobSeekersCta: 'Join our network',
+      employersTitle: 'Partner with Unique Staffing Professionals',
+      employersDescription: 'Learn how we onboard and deliver dependable staff for your business.',
+      employersCta: 'Explore employer services',
+    },
+    formsPage: {
+      title: 'Forms and resources',
+      subtitle: 'Downloadable forms will be added here soon. For now, review the sections below.',
+      documentsSoon: 'Documents coming soon.',
+      currentEmployeeTitle: 'Current employee',
+      currentEmployeeDescription: 'W-2 or W-4 changes',
+      newEmployeeTitle: 'New employee forms',
+      newEmployeeDescription: 'Employee application packet',
+      contractorTitle: 'Contractor application',
+      contractorDescription: 'Independent contractor application',
+      w2Title: 'W-2 employee application',
+      w2Description: 'W-2 employee application packet',
+      assistanceTitle: 'Questions or need assistance?',
+      employerPromptTitle: 'Employer looking for more info on our onboarding process?',
+      employerPromptDescription: 'Visit our employer section to learn how we staff, onboard, and support your team.',
+      employerPromptCta: 'Go to employer services',
+    },
+    employerPage: {
+      eyebrow: 'For Employers',
+      title: 'Learn the Unique Staffing Professionals difference and partner with us for your staffing needs.',
+      subtitle: 'We deliver reliable, screened talent across the DMV region with a people-first approach that scales to your business.',
+      primaryCta: 'Request staffing support',
+      secondaryCta: 'Explore the talent network',
+      contactTitle: 'Employer contact options',
+      efaxLabel: 'eFax',
+      efaxNote: 'Employers: send us an eFax to start your onboarding request.',
+      processTitle: 'Our onboarding process',
+      processSubtitle: 'A streamlined approach that keeps compliance tight and staffing flexible.',
+      processComplianceTitle: 'I-9 verification and compliance',
+      processComplianceDescription: 'Full I-9 checks with local and state compliance.',
+      processTalentTitle: 'Large, diverse talent pool',
+      processTalentDescription: 'A wide range of roles ready to deploy.',
+      processFlexibleTitle: 'Flexible ordering process',
+      processFlexibleDescription: 'From full-time hires to on-the-fly coverage.',
+      processPersonalizedTitle: 'Personalized service',
+      processPersonalizedDescription: 'US-based staff that learns your business needs.',
+      closingTitle: 'Ready to partner with Unique Staffing Professionals?',
+      closingSubtitle: 'Tell us about your hiring goals and we will respond with a tailored staffing plan.',
+      closingPrimaryCta: 'Start the conversation',
+      closingSecondaryCta: 'Call now',
     },
     cookieConsent: {
       title: 'We Value Your Privacy',
@@ -576,7 +719,7 @@ export const translations: Record<Language, Translations> = {
       error: 'Failed to send message. Please try again.',
       phoneLabel: 'Phone',
       textLabel: 'Text for Work',
-      faxLabel: 'Fax',
+      faxLabel: 'eFax',
       emailLabel: 'Email',
       officeAddress: 'Office Address',
       phoneHours: 'Mon-Fri 8am-6pm',
@@ -594,6 +737,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'All rights reserved.',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
+      employerEfaxNote: 'Employers: send us an eFax at {number}.',
     },
     theme: {
       toggle: 'Toggle theme',
@@ -738,8 +882,17 @@ export const translations: Record<Language, Translations> = {
       about: 'Acerca de',
       contact: 'Contacto',
       apply: 'Aplicar Ahora',
+      employers: 'Empleadores',
       privacy: 'Política de Privacidad',
       terms: 'Términos de Servicio',
+    },
+    common: {
+      whatsappCta: '¿Preguntas? Envíenos un mensaje por WhatsApp - {number}',
+      whatsappButton: 'Mensaje por WhatsApp',
+      joinNetwork: 'Únase a nuestra red',
+      callUs: 'Llámenos',
+      forEmployers: 'Para Empleadores',
+      forJobSeekers: 'Para Buscadores de Empleo',
     },
     hero: {
       title: '¡Donde Comienza la Oportunidad!',
@@ -891,6 +1044,68 @@ export const translations: Record<Language, Translations> = {
       years3to5: '3-5 años',
       years6to10: '6-10 años',
       years10plus: '10+ años',
+      formsLink: '¿Busca formularios de empleados? Visite nuestra página de Formularios.',
+    },
+    benefits: {
+      sectionTitle: 'Beneficios para empleados',
+      sectionSubtitle: 'Únase a nuestra bolsa de talento y disfrute de beneficios competitivos diseñados para apoyar su crecimiento y bienestar.',
+      vacationTitle: 'Tiempo libre pagado',
+      vacationDescription: 'Tiempo libre pagado para recargar energías.',
+      holidayTitle: 'Días festivos pagados',
+      holidayDescription: 'Disfrute de días festivos pagados cada año.',
+      trainingTitle: 'Capacitación completa de incorporación',
+      trainingDescription: 'Prepárese con una incorporación guiada.',
+      networkTitle: 'Red sólida de empleadores',
+      networkDescription: 'Acceda a oportunidades de crecimiento en diversas industrias.',
+    },
+    talentSplit: {
+      jobSeekersTitle: 'Únase a nuestra bolsa de talento',
+      jobSeekersDescription: 'Envíe su solicitud y reciba oportunidades acordes a sus habilidades.',
+      jobSeekersCta: 'Únase a nuestra red',
+      employersTitle: 'Asóciese con Unique Staffing Professionals',
+      employersDescription: 'Conozca cómo incorporamos y ofrecemos personal confiable para su negocio.',
+      employersCta: 'Explorar servicios para empleadores',
+    },
+    formsPage: {
+      title: 'Formularios y recursos',
+      subtitle: 'Los formularios descargables se agregarán pronto. Por ahora, revise las secciones a continuación.',
+      documentsSoon: 'Documentos disponibles pronto.',
+      currentEmployeeTitle: 'Empleado actual',
+      currentEmployeeDescription: 'Cambios de W-2 o W-4',
+      newEmployeeTitle: 'Formularios para nuevos empleados',
+      newEmployeeDescription: 'Paquete de solicitud de empleo',
+      contractorTitle: 'Solicitud de contratista',
+      contractorDescription: 'Solicitud de contratista independiente',
+      w2Title: 'Solicitud de empleado W-2',
+      w2Description: 'Paquete de solicitud para empleado W-2',
+      assistanceTitle: '¿Preguntas o necesita ayuda?',
+      employerPromptTitle: '¿Empleador buscando más información sobre nuestro proceso de incorporación?',
+      employerPromptDescription: 'Visite nuestra sección para empleadores y conozca cómo contratamos, incorporamos y apoyamos a su equipo.',
+      employerPromptCta: 'Ir a servicios para empleadores',
+    },
+    employerPage: {
+      eyebrow: 'Para Empleadores',
+      title: 'Conozca la diferencia de Unique Staffing Professionals y asóciese con nosotros para sus necesidades de personal.',
+      subtitle: 'Ofrecemos talento confiable y evaluado en la región DMV con un enfoque centrado en las personas que se adapta a su negocio.',
+      primaryCta: 'Solicitar apoyo de personal',
+      secondaryCta: 'Explorar la red de talento',
+      contactTitle: 'Opciones de contacto para empleadores',
+      efaxLabel: 'eFax',
+      efaxNote: 'Empleadores: envíenos un eFax para iniciar su solicitud de incorporación.',
+      processTitle: 'Nuestro proceso de incorporación',
+      processSubtitle: 'Un enfoque ágil que mantiene el cumplimiento y la flexibilidad.',
+      processComplianceTitle: 'Verificación I-9 y cumplimiento',
+      processComplianceDescription: 'Verificaciones I-9 completas con cumplimiento local y estatal.',
+      processTalentTitle: 'Gran y diversa bolsa de talento',
+      processTalentDescription: 'Amplia variedad de roles listos para asignar.',
+      processFlexibleTitle: 'Proceso de solicitud flexible',
+      processFlexibleDescription: 'Desde contrataciones a tiempo completo hasta cobertura inmediata.',
+      processPersonalizedTitle: 'Servicio personalizado',
+      processPersonalizedDescription: 'Personal en EE. UU. que conoce su negocio.',
+      closingTitle: '¿Listo para asociarse con Unique Staffing Professionals?',
+      closingSubtitle: 'Cuéntenos sus objetivos de contratación y responderemos con un plan de personal a medida.',
+      closingPrimaryCta: 'Iniciar la conversación',
+      closingSecondaryCta: 'Llamar ahora',
     },
     testimonials: {
       title: 'Lo Que Dicen Nuestros Clientes',
@@ -922,7 +1137,7 @@ export const translations: Record<Language, Translations> = {
       error: 'Error al enviar el mensaje. Por favor, inténtelo de nuevo.',
       phoneLabel: 'Teléfono',
       textLabel: 'Texto para Trabajo',
-      faxLabel: 'Fax',
+      faxLabel: 'eFax',
       emailLabel: 'Correo Electrónico',
       officeAddress: 'Dirección de la Oficina',
       phoneHours: 'Lun-Vie 8am-6pm',
@@ -940,6 +1155,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'Todos los derechos reservados.',
       privacy: 'Política de Privacidad',
       terms: 'Términos de Servicio',
+      employerEfaxNote: 'Empleadores: envíenos un eFax al {number}.',
     },
     theme: {
       toggle: 'Cambiar tema',
@@ -1102,8 +1318,17 @@ export const translations: Record<Language, Translations> = {
       about: 'À Propos',
       contact: 'Contact',
       apply: 'Postuler',
+      employers: 'Employeurs',
       privacy: 'Politique de Confidentialité',
       terms: 'Conditions d\'Utilisation',
+    },
+    common: {
+      whatsappCta: 'Des questions ? Écrivez-nous sur WhatsApp - {number}',
+      whatsappButton: 'Message WhatsApp',
+      joinNetwork: 'Rejoindre notre réseau',
+      callUs: 'Appelez-nous',
+      forEmployers: 'Pour les Employeurs',
+      forJobSeekers: 'Pour les Demandeurs d\'Emploi',
     },
     hero: {
       title: 'Là Où L\'Opportunité Commence!',
@@ -1255,6 +1480,68 @@ export const translations: Record<Language, Translations> = {
       years3to5: '3-5 ans',
       years6to10: '6-10 ans',
       years10plus: '10+ ans',
+      formsLink: 'Vous cherchez des formulaires d\'employés ? Visitez notre page Formulaires.',
+    },
+    benefits: {
+      sectionTitle: 'Avantages pour les employés',
+      sectionSubtitle: 'Rejoignez notre vivier de talents et bénéficiez d\'avantages compétitifs conçus pour soutenir votre croissance et votre bien-être.',
+      vacationTitle: 'Congés payés',
+      vacationDescription: 'Du temps libre payé pour se ressourcer.',
+      holidayTitle: 'Jours fériés payés',
+      holidayDescription: 'Profitez de jours fériés payés chaque année.',
+      trainingTitle: 'Formation complète d\'intégration',
+      trainingDescription: 'Préparez-vous avec une intégration guidée.',
+      networkTitle: 'Réseau solide d\'employeurs',
+      networkDescription: 'Accédez à des opportunités de croissance dans plusieurs secteurs.',
+    },
+    talentSplit: {
+      jobSeekersTitle: 'Rejoignez notre vivier de talents',
+      jobSeekersDescription: 'Soumettez votre candidature et recevez des opportunités adaptées à vos compétences.',
+      jobSeekersCta: 'Rejoindre notre réseau',
+      employersTitle: 'Associez-vous à Unique Staffing Professionals',
+      employersDescription: 'Découvrez comment nous intégrons et fournissons du personnel fiable pour votre entreprise.',
+      employersCta: 'Découvrir les services employeurs',
+    },
+    formsPage: {
+      title: 'Formulaires et ressources',
+      subtitle: 'Les formulaires téléchargeables seront ajoutés prochainement. En attendant, consultez les sections ci-dessous.',
+      documentsSoon: 'Documents bientôt disponibles.',
+      currentEmployeeTitle: 'Employé actuel',
+      currentEmployeeDescription: 'Modifications W-2 ou W-4',
+      newEmployeeTitle: 'Formulaires pour nouveaux employés',
+      newEmployeeDescription: 'Dossier de candidature',
+      contractorTitle: 'Candidature de contractuel',
+      contractorDescription: 'Candidature de contractuel indépendant',
+      w2Title: 'Candidature d\'employé W-2',
+      w2Description: 'Dossier de candidature W-2',
+      assistanceTitle: 'Des questions ou besoin d\'aide ?',
+      employerPromptTitle: 'Employeur : besoin de plus d\'infos sur notre processus d\'intégration ?',
+      employerPromptDescription: 'Visitez notre section employeurs pour découvrir comment nous recrutons, intégrons et soutenons votre équipe.',
+      employerPromptCta: 'Accéder aux services employeurs',
+    },
+    employerPage: {
+      eyebrow: 'Pour les Employeurs',
+      title: 'Découvrez la différence Unique Staffing Professionals et associez-vous à nous pour vos besoins en personnel.',
+      subtitle: 'Nous fournissons un talent fiable et présélectionné dans la région DMV avec une approche centrée sur l\'humain qui s\'adapte à votre entreprise.',
+      primaryCta: 'Demander un soutien en personnel',
+      secondaryCta: 'Explorer le réseau de talents',
+      contactTitle: 'Options de contact pour employeurs',
+      efaxLabel: 'eFax',
+      efaxNote: 'Employeurs : envoyez-nous un eFax pour démarrer votre demande d\'intégration.',
+      processTitle: 'Notre processus d\'intégration',
+      processSubtitle: 'Une approche simplifiée qui garantit la conformité et la flexibilité.',
+      processComplianceTitle: 'Vérification I-9 et conformité',
+      processComplianceDescription: 'Vérifications I-9 complètes avec conformité locale et étatique.',
+      processTalentTitle: 'Grand vivier de talents diversifiés',
+      processTalentDescription: 'Un large éventail de postes prêts à être pourvus.',
+      processFlexibleTitle: 'Processus de commande flexible',
+      processFlexibleDescription: 'Du temps plein à la couverture immédiate.',
+      processPersonalizedTitle: 'Service personnalisé',
+      processPersonalizedDescription: 'Une équipe basée aux États-Unis qui apprend à connaître votre activité.',
+      closingTitle: 'Prêt à vous associer à Unique Staffing Professionals ?',
+      closingSubtitle: 'Parlez-nous de vos besoins de recrutement et nous répondrons avec un plan adapté.',
+      closingPrimaryCta: 'Démarrer la conversation',
+      closingSecondaryCta: 'Appeler maintenant',
     },
     testimonials: {
       title: 'Ce Que Disent Nos Clients',
@@ -1286,7 +1573,7 @@ export const translations: Record<Language, Translations> = {
       error: 'Échec de l\'envoi du message. Veuillez réessayer.',
       phoneLabel: 'Téléphone',
       textLabel: 'Texte pour le Travail',
-      faxLabel: 'Fax',
+      faxLabel: 'eFax',
       emailLabel: 'Email',
       officeAddress: 'Adresse du Bureau',
       phoneHours: 'Lun-Ven 8h-18h',
@@ -1304,6 +1591,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'Tous droits réservés.',
       privacy: 'Politique de Confidentialité',
       terms: 'Conditions d\'Utilisation',
+      employerEfaxNote: 'Employeurs : envoyez-nous un eFax au {number}.',
     },
     theme: {
       toggle: 'Changer le thème',

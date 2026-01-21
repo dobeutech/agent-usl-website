@@ -11,6 +11,8 @@ import { AccessibilityControls } from "@/components/AccessibilityControls"
 
 // Lazy load pages for code splitting
 const Home = lazy(() => import("@/pages/Home").then(m => ({ default: m.Home })))
+const Employers = lazy(() => import("@/pages/Employers").then(m => ({ default: m.Employers })))
+const Forms = lazy(() => import("@/pages/Forms").then(m => ({ default: m.Forms })))
 const ServiceAreaPage = lazy(() => import("@/pages/ServiceAreaPage").then(m => ({ default: m.ServiceAreaPage })))
 const AdminLogin = lazy(() => import("@/pages/AdminLogin").then(m => ({ default: m.AdminLogin })))
 const AdminDashboard = lazy(() => import("@/pages/AdminDashboard").then(m => ({ default: m.AdminDashboard })))
@@ -47,6 +49,8 @@ function App() {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/employers" element={<Employers />} />
+                  <Route path="/forms" element={<Forms />} />
                   <Route path="/service-area/:city" element={<ServiceAreaPage />} />
                   <Route path="/application-confirmation" element={<ApplicationConfirmation />} />
                   <Route path="/verify-email" element={<EmailVerification />} />

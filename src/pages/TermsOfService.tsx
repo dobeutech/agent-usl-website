@@ -151,7 +151,7 @@ export function TermsOfService() {
               </p>
               <div className="mt-4 text-muted-foreground">
                 <p>Unique Staffing Professionals Inc.</p>
-                <p>6001 66th Ave, Riverdale, MD 20737</p>
+                <p>6001 66th Ave, Suite R22, Riverdale, MD 20737</p>
                 <p>Email: <a href="mailto:omorilla@uniquestaffingprofessionals.com" className="text-primary hover:underline">omorilla@uniquestaffingprofessionals.com</a></p>
                 <p>Phone: (301) 277-2141</p>
               </div>

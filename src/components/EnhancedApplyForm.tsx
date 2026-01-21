@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -7,11 +7,14 @@ import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Upload, CheckCircle, X, AlertCircle, FileText } from "lucide-react"
+import { Upload, CheckCircle, X, AlertCircle, FileText, Clock, ShieldCheck, Users } from "lucide-react"
+import { WhatsappLogo } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { supabase, ApplicantInsert } from "@/lib/supabase"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { isDemoMode } from "@/lib/mockData"
+import { Link } from "react-router-dom"
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "@/lib/contact-info"
 import {
   normalizePhone,
   checkPhoneDuplicate,
@@ -46,6 +49,28 @@ const POSITIONS = [
 
 export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
   const { t, language } = useLanguage()
+  const benefits = [
+    {
+      icon: Clock,
+      title: t('benefits.vacationTitle'),
+      description: t('benefits.vacationDescription')
+    },
+    {
+      icon: CheckCircle,
+      title: t('benefits.holidayTitle'),
+      description: t('benefits.holidayDescription')
+    },
+    {
+      icon: ShieldCheck,
+      title: t('benefits.trainingTitle'),
+      description: t('benefits.trainingDescription')
+    },
+    {
+      icon: Users,
+      title: t('benefits.networkTitle'),
+      description: t('benefits.networkDescription')
+    }
+  ]
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -457,11 +482,34 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading font-bold text-3xl lg:text-4xl text-foreground mb-4">
-              Join Our Talent Network
+              {t('applyForm.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Submit your application and let us match you with the perfect opportunity
+              {t('applyForm.subtitle')}
             </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+            {benefits.map((benefit) => (
+              <Card key={benefit.title} className="p-4 border-border bg-card/80">
+                <benefit.icon className="h-6 w-6 text-primary mb-3" />
+                <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
+                <p className="text-sm text-muted-foreground">{benefit.description}</p>
+              </Card>
+            ))}
+          </div>
+          <div className="flex flex-col items-center gap-3 mb-10 text-sm text-muted-foreground">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+            >
+              <WhatsappLogo size={18} weight="fill" />
+              {t('common.whatsappCta').replace('{number}', WHATSAPP_NUMBER)}
+            </a>
+            <Link to="/forms" className="text-primary hover:underline">
+              {t('applyForm.formsLink')}
+            </Link>
           </div>
 
           <Card className="p-6 lg:p-8 border-border bg-card">

@@ -22,8 +22,8 @@ const defaultBusinessInfo: BusinessInfo = {
   tagline: "Where Opportunity Starts! Expanding access to meaningful employment across the globe through innovative staffing solutions and local partnerships.",
   ceo: "Otniel Morilla",
   location: {
-    street: "6200 Baltimore Avenue",
-    suite: "Floor 3, Suite R35",
+    street: "6001 66th Ave",
+    suite: "Suite R22",
     city: "Riverdale",
     state: "MD",
     zipCode: "20737",
@@ -71,6 +71,7 @@ export function BusinessInfoProvider({ children }: BusinessInfoProviderProps) {
       }
 
       if (data) {
+        const locationData = (data.location as BusinessInfo["location"]) || defaultBusinessInfo.location
         const transformedData: BusinessInfo = {
           id: data.id,
           name: data.name,
@@ -78,7 +79,7 @@ export function BusinessInfoProvider({ children }: BusinessInfoProviderProps) {
           description: data.description,
           tagline: data.tagline,
           ceo: data.ceo,
-          location: data.location as BusinessInfo["location"],
+          location: locationData,
           contact: data.contact as BusinessInfo["contact"],
           hours: data.hours as BusinessInfo["hours"],
           geo: data.geo as BusinessInfo["geo"],

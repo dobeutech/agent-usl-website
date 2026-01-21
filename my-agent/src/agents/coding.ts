@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Coding Agent
  * Runs on every session after initialization to make incremental progress.
