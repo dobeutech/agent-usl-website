@@ -142,7 +142,10 @@ const checkHome = async (page, expected, combo, expectsDark) => {
     const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
     const hasWhatsApp = !!document.querySelector('a[href*="wa.me/16673041520"]')
     const darkClass = document.documentElement.classList.contains('dark')
-    return { navHasEmployers, talentSplit, benefits, formsLink, noOverflow, hasWhatsApp, darkClass }
+    const hasSuiteR22 = text.includes('Suite R22')
+    const hasEfax = text.includes('+12403923898')
+    const hasAccessibilityControls = !!document.querySelector('[aria-label*="accessibility"], [class*="Accessibility"]')
+    return { navHasEmployers, talentSplit, benefits, formsLink, noOverflow, hasWhatsApp, darkClass, hasSuiteR22, hasEfax, hasAccessibilityControls }
   }, expected)
 
   record(combo, 'home', 'nav employers label', homeChecks.navHasEmployers)
@@ -150,6 +153,8 @@ const checkHome = async (page, expected, combo, expectsDark) => {
   record(combo, 'home', 'benefits section', homeChecks.benefits)
   record(combo, 'home', 'forms link', homeChecks.formsLink)
   record(combo, 'home', 'whatsapp link', homeChecks.hasWhatsApp)
+  record(combo, 'home', 'suite R22 address', homeChecks.hasSuiteR22)
+  record(combo, 'home', 'eFax number', homeChecks.hasEfax)
   record(combo, 'home', 'no horizontal overflow', homeChecks.noOverflow)
   record(
     combo,

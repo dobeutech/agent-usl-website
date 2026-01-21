@@ -8,6 +8,7 @@ import { Services } from "@/components/Services"
 import { Industries } from "@/components/Industries"
 import { WhyChooseUs } from "@/components/WhyChooseUs"
 import { TalentSplitSection } from "@/components/TalentSplitSection"
+import { BenefitsSection } from "@/components/BenefitsSection"
 import { JobListings } from "@/components/JobListings"
 import { JobAlerts } from "@/components/JobAlerts"
 import { EnhancedApplyForm } from "@/components/EnhancedApplyForm"
@@ -119,7 +120,9 @@ export function Home() {
         <Industries />
         
         <TalentSplitSection />
-        
+
+        <BenefitsSection />
+
         <JobListings />
         
         {/* Job Alerts subscription */}

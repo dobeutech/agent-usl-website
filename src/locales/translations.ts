@@ -173,6 +173,8 @@ export interface Translations {
     formsLink: string
   }
   benefits: {
+    sectionTitle: string
+    sectionSubtitle: string
     vacationTitle: string
     vacationDescription: string
     holidayTitle: string
@@ -609,6 +611,8 @@ export const translations: Record<Language, Translations> = {
       formsLink: 'Looking for employee forms? Visit our Forms page.',
     },
     benefits: {
+      sectionTitle: 'Employee Benefits',
+      sectionSubtitle: 'Join our talent pool and enjoy competitive benefits designed to support your growth and well-being.',
       vacationTitle: 'Vacation paid-time',
       vacationDescription: 'Paid time off to recharge.',
       holidayTitle: 'Paid holiday',
@@ -1043,6 +1047,8 @@ export const translations: Record<Language, Translations> = {
       formsLink: '¿Busca formularios de empleados? Visite nuestra página de Formularios.',
     },
     benefits: {
+      sectionTitle: 'Beneficios para empleados',
+      sectionSubtitle: 'Únase a nuestra bolsa de talento y disfrute de beneficios competitivos diseñados para apoyar su crecimiento y bienestar.',
       vacationTitle: 'Tiempo libre pagado',
       vacationDescription: 'Tiempo libre pagado para recargar energías.',
       holidayTitle: 'Días festivos pagados',
@@ -1477,6 +1483,8 @@ export const translations: Record<Language, Translations> = {
       formsLink: 'Vous cherchez des formulaires d\'employés ? Visitez notre page Formulaires.',
     },
     benefits: {
+      sectionTitle: 'Avantages pour les employés',
+      sectionSubtitle: 'Rejoignez notre vivier de talents et bénéficiez d\'avantages compétitifs conçus pour soutenir votre croissance et votre bien-être.',
       vacationTitle: 'Congés payés',
       vacationDescription: 'Du temps libre payé pour se ressourcer.',
       holidayTitle: 'Jours fériés payés',
