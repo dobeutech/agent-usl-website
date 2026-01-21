@@ -39,7 +39,7 @@ export function ClientLogos() {
             Trusted by Industry Leaders
           </p>
           <h2 className="font-heading font-bold text-2xl lg:text-3xl text-foreground">
-            Partnering with Top Organizations Across the DMV
+            Partnering with Top Organizations across Many Industries
           </h2>
         </motion.div>
 

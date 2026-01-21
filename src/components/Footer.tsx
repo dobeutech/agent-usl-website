@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { Phone, Mail, MapPin, MessageSquare, Printer, Facebook } from "lucide-react"
 import { WhatsappLogo } from "@phosphor-icons/react"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, type Variants } from "framer-motion"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { BusinessAddress, BusinessPhone, BusinessEmail } from "@/components/seo/NAPDisplay"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -113,19 +113,19 @@ export function Footer() {
                 <motion.img
                   src="/logo.webp"
                   alt="Unique Staffing Professionals Logo"
-                  className="h-14 w-auto"
+                  className="h-14 w-auto bg-white/90 rounded-lg p-1"
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
                 />
-                <h3 className="font-heading font-bold text-2xl" itemProp="name">
+                <h3 className="font-heading font-bold text-xl sm:text-2xl text-primary-foreground drop-shadow-sm" itemProp="name">
                   {businessInfo.name}
                 </h3>
               </div>
-              <p className="text-primary-foreground/80 mb-4 leading-relaxed max-w-md" itemProp="description">
+              <p className="text-primary-foreground text-sm sm:text-base mb-4 leading-relaxed max-w-md drop-shadow-sm" itemProp="description">
                 {t('footer.tagline')}
               </p>
               {businessInfo.ceo && (
-                <p className="text-primary-foreground/60 text-sm mb-6">
+                <p className="text-primary-foreground/80 text-sm mb-6">
                   CEO: {businessInfo.ceo}
                 </p>
               )}
