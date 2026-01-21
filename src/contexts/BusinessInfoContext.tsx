@@ -83,7 +83,7 @@ export function BusinessInfoProvider({ children }: BusinessInfoProviderProps) {
           description: data.description,
           tagline: data.tagline,
           ceo: data.ceo,
-          location: normalizedLocation,
+          location: locationData,
           contact: data.contact as BusinessInfo["contact"],
           hours: data.hours as BusinessInfo["hours"],
           geo: data.geo as BusinessInfo["geo"],
