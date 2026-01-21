@@ -48,7 +48,7 @@ export function AnimatedSection({
       transition: {
         duration,
         delay,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     }
   }
@@ -127,7 +127,7 @@ export function StaggerItem({
         filter: 'blur(0px)',
         transition: {
           duration: 0.5,
-          ease: [0.25, 0.1, 0.25, 1]
+          ease: [0.25, 0.1, 0.25, 1] as const
         }
       }
     }

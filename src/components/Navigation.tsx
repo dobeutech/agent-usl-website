@@ -24,6 +24,7 @@ export function Navigation() {
     window.addEventListener('scroll', handleScroll)
     // Ensure initial state reflects the current scroll position
     handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const scrollToSection = (id: string) => {
@@ -239,7 +240,7 @@ export function Navigation() {
               <div className="px-4 py-6 space-y-2">
                 {navItems.map((item, i) => (
                   <motion.button
-                    key={item.label}
+                    key={item.id || item.path}
                     onClick={() => (
                       item.type === "route" && item.path
                         ? navigateTo(item.path)

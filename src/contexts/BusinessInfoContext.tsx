@@ -72,10 +72,6 @@ export function BusinessInfoProvider({ children }: BusinessInfoProviderProps) {
 
       if (data) {
         const locationData = (data.location as BusinessInfo["location"]) || defaultBusinessInfo.location
-        const normalizedLocation = {
-          ...locationData,
-          suite: "Suite R22"
-        }
         const transformedData: BusinessInfo = {
           id: data.id,
           name: data.name,
