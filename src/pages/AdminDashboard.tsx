@@ -230,10 +230,10 @@ export function AdminDashboard() {
     }
   }
 
-  const downloadResume = async (resumeUrl: string, filename: string) => {
+  const downloadFile = async (filePath: string, filename: string, bucket: 'resumes' | 'documents' = 'resumes') => {
     // In demo mode, show a message about demo limitations
-    if (isDemo || isDemoMode() || resumeUrl.startsWith('demo://')) {
-      toast.info("Demo mode: Resume download simulated", {
+    if (isDemo || isDemoMode() || filePath.startsWith('demo://')) {
+      toast.info("Demo mode: File download simulated", {
         description: `Would download: ${filename}`
       })
       return
@@ -241,8 +241,8 @@ export function AdminDashboard() {
 
     try {
       // Check if it's a legacy/public URL
-      if (resumeUrl.startsWith('http')) {
-        const response = await fetch(resumeUrl)
+      if (filePath.startsWith('http')) {
+        const response = await fetch(filePath)
         const blob = await response.blob()
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
@@ -252,21 +252,19 @@ export function AdminDashboard() {
         a.click()
         document.body.removeChild(a)
         window.URL.revokeObjectURL(url)
-        toast.success("Resume downloaded")
+        toast.success("File downloaded")
         return
       }
 
       // It's a storage path - generate signed URL
-      // Assume 'resumes' bucket for now as that's where resumes go
       const { data, error } = await supabase.storage
-        .from('resumes')
-        .createSignedUrl(resumeUrl, 60) // 60 seconds expiry
+        .from(bucket)
+        .createSignedUrl(filePath, 300) // 5 minutes expiry
 
       if (error) throw error
       if (!data?.signedUrl) throw new Error('Failed to generate signed URL')
 
-      // Open signed URL in new tab (triggers download due to content-disposition usually, or view)
-      // Or fetch it to force download name
+      // Fetch and download with proper filename
       const response = await fetch(data.signedUrl)
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
@@ -277,12 +275,17 @@ export function AdminDashboard() {
       a.click()
       document.body.removeChild(a)
       window.URL.revokeObjectURL(url)
-      toast.success("Resume downloaded")
+      toast.success("File downloaded")
 
     } catch (error) {
-      console.error('Error downloading resume:', error)
-      toast.error("Failed to download resume")
+      console.error('Error downloading file:', error)
+      toast.error("Failed to download file")
     }
+  }
+
+  // Wrapper for resume downloads (maintains backwards compatibility with existing components)
+  const downloadResume = (resumeUrl: string, filename: string) => {
+    downloadFile(resumeUrl, filename, 'resumes')
   }
 
   const handleSignOut = async () => {

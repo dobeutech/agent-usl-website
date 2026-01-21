@@ -154,11 +154,8 @@ export async function uploadFile(
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
     const filePath = folder ? `${folder}/${fileName}` : fileName
 
-    // In demo mode, simulate file upload with a mock URL
+    // In demo mode, simulate file upload with a mock path
     if (isDemoMode()) {
-      // Create a blob URL for demo purposes (file is stored in browser memory)
-      // Note: blob URL is created but not stored as it's not needed in demo mode
-      URL.createObjectURL(file)
       return {
         path: `demo://storage/${bucket}/${filePath}`,
         filename: file.name
