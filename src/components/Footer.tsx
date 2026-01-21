@@ -108,47 +108,61 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12" itemScope itemType="https://schema.org/LocalBusiness">
             
             {/* Company Info */}
-            <motion.div className="lg:col-span-2" variants={itemVariants}>
-              <div className="flex items-center gap-3 mb-6">
-                <motion.img
-                  src="/logo.webp"
-                  alt="Unique Staffing Professionals Logo"
-                  className="h-14 w-auto bg-white/90 rounded-lg p-1"
-                  whileHover={{ scale: 1.05, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                />
-                <h3 className="font-heading font-bold text-xl sm:text-2xl text-primary-foreground drop-shadow-sm" itemProp="name">
-                  {businessInfo.name}
-                </h3>
-              </div>
-              <p className="text-primary-foreground text-sm sm:text-base mb-4 leading-relaxed max-w-md drop-shadow-sm" itemProp="description">
-                {t('footer.tagline')}
-              </p>
+            <motion.div className="lg:col-span-2 relative" variants={itemVariants}>
+              {/* Background overlay for better text visibility */}
+              <div className="absolute inset-0 -m-4 p-4 bg-black/10 rounded-2xl backdrop-blur-sm" />
+              
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <motion.img
+                    src="/logo.webp"
+                    alt="Unique Staffing Professionals Logo"
+                    className="h-14 w-auto bg-white rounded-lg p-1.5 shadow-lg"
+                    whileHover={{ scale: 1.05, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  />
+                  <h3 
+                    className="font-heading font-bold text-xl sm:text-2xl text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_40%)]" 
+                    itemProp="name"
+                    data-testid="footer-company-name"
+                  >
+                    {businessInfo.name}
+                  </h3>
+                </div>
+                <p 
+                  className="text-white text-sm sm:text-base mb-4 leading-relaxed max-w-md font-medium [text-shadow:_0_1px_3px_rgb(0_0_0_/_50%)]" 
+                  itemProp="description"
+                  data-testid="footer-tagline"
+                >
+                  {t('footer.tagline')}
+                </p>
               {businessInfo.ceo && (
                 <p className="text-primary-foreground/80 text-sm mb-6">
                   CEO: {businessInfo.ceo}
                 </p>
               )}
               
-              {/* Social Links */}
-              <div className="flex gap-3">
-                {socialLinks.map((link, index) => (
-                  <motion.a
-                    key={index}
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    className="p-3 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 group"
-                    aria-label={link.label}
-                    whileHover={{ y: -4, scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <link.icon 
-                      size={22} 
-                      className="text-primary-foreground/80 group-hover:text-primary-foreground transition-colors" 
-                    />
-                  </motion.a>
-                ))}
+                {/* Social Links */}
+                <div className="flex gap-3">
+                  {socialLinks.map((link, index) => (
+                    <motion.a
+                      key={index}
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      className="p-3 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group shadow-lg"
+                      aria-label={link.label}
+                      data-testid={`footer-social-${index}`}
+                      whileHover={{ y: -4, scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <link.icon 
+                        size={22} 
+                        className="text-white group-hover:text-white transition-colors" 
+                      />
+                    </motion.a>
+                  ))}
+                </div>
               </div>
             </motion.div>
 
@@ -173,7 +187,9 @@ export function Footer() {
                   >
                     <button
                       onClick={() => scrollToSection(item.id)}
-                      className="text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group"
+                      className="text-white/80 hover:text-white transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group"
+                      aria-label={`Navigate to ${item.label} section`}
+                      data-testid={`footer-link-${item.id}`}
                     >
                       <span className="w-0 group-hover:w-4 h-0.5 bg-accent rounded-full transition-all duration-300" />
                       {item.label}
@@ -189,7 +205,7 @@ export function Footer() {
                 <span className="w-8 h-0.5 bg-accent rounded-full" />
                 {t('footer.contactUs')}
               </h4>
-              <ul className="space-y-4 text-primary-foreground/80 text-sm">
+              <ul className="space-y-4 text-white/90 text-sm">
                 <li className="flex items-start gap-3 group">
                   <MapPin size={18} className="flex-shrink-0 mt-0.5 text-accent" />
                   <BusinessAddress businessInfo={businessInfo} className="text-sm group-hover:text-primary-foreground transition-colors" />
@@ -249,7 +265,7 @@ export function Footer() {
             className="border-t border-primary-foreground/10 mt-12 pt-8"
             variants={itemVariants}
           >
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-primary-foreground/50 text-sm">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-white/70 text-sm">
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}

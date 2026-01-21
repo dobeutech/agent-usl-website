@@ -121,6 +121,8 @@ export function ThemeToggle() {
               theme === 'system' ? 'opacity-60' : ''
             }`}
             aria-label={getThemeAriaLabel()}
+            data-testid="theme-toggle"
+            data-theme={theme}
           >
             {getThemeIcon()}
             <span className="sr-only">{getThemeAriaLabel()}</span>
@@ -223,6 +225,7 @@ export function SystemToggle() {
           }`}
           aria-label={getSystemAriaLabel()}
           aria-pressed={theme === 'system'}
+          data-testid="theme-system"
         >
           <Monitor className={`h-4 w-4 transition-all duration-300 ${
             theme === 'system' ? 'text-primary' : ''

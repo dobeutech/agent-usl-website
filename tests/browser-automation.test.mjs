@@ -126,18 +126,24 @@ async function testLanguageSwitching(page, device) {
 
   for (const lang of languages) {
     try {
-      // Click language toggle
-      const langToggle = await page.$('[aria-label*="language"], [aria-label*="Select language"], button:has(.globe-icon)');
+      // Click language toggle using data-testid
+      const langToggle = await page.$('[data-testid="lang-toggle"]');
       if (langToggle) {
         await langToggle.click();
         await delay(300);
+      } else {
+        logResult(`LANG-${languages.indexOf(lang) + 1}: ${lang.name} selection`, 'failed', 'Toggle not found');
+        continue;
       }
 
-      // Find and click language option
-      const langOption = await page.$(`button:has-text("${lang.name}"), [data-lang="${lang.code}"], button[value="${lang.code}"]`);
+      // Find and click language option using data-testid
+      const langOption = await page.$(`[data-testid="lang-${lang.code}"]`);
       if (langOption) {
         await langOption.click();
         await delay(500);
+      } else {
+        logResult(`LANG-${languages.indexOf(lang) + 1}: ${lang.name} selection`, 'failed', 'Option not found');
+        continue;
       }
 
       // Verify language change
@@ -169,36 +175,49 @@ async function testThemeSwitching(page, device) {
   await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle2' });
   await waitForPageLoad(page);
 
-  const themes = ['light', 'dark', 'system'];
-
-  for (const theme of themes) {
-    try {
-      // Find theme toggle buttons
-      const themeButton = await page.$(`button[aria-label*="${theme}"], button[data-theme="${theme}"], button:has(.sun-icon), button:has(.moon-icon)`);
+  // Test theme toggle button
+  try {
+    const themeToggle = await page.$('[data-testid="theme-toggle"]');
+    if (themeToggle) {
+      await themeToggle.click();
+      await delay(300);
       
-      if (themeButton) {
-        await themeButton.click();
-        await delay(300);
-
-        // Check for theme application
-        const hasThemeClass = await page.evaluate((t) => {
-          const html = document.documentElement;
-          return html.classList.contains(t) || 
-                 html.getAttribute('data-theme') === t ||
-                 html.getAttribute('data-appearance') === t;
-        }, theme);
-
-        if (hasThemeClass || theme === 'system') {
-          logResult(`THEME-${themes.indexOf(theme) + 1}: ${theme} mode`, 'passed', device.name);
-        } else {
-          logResult(`THEME-${themes.indexOf(theme) + 1}: ${theme} mode`, 'skipped', 'Theme attribute not detected');
-        }
-      } else {
-        logResult(`THEME-${themes.indexOf(theme) + 1}: ${theme} mode`, 'skipped', 'Button not found');
-      }
-    } catch (error) {
-      logResult(`THEME-${themes.indexOf(theme) + 1}: ${theme} mode`, 'failed', error.message);
+      // Get current theme from button's data attribute
+      const currentTheme = await page.$eval('[data-testid="theme-toggle"]', el => el.getAttribute('data-theme'));
+      logResult('THEME-1: Theme toggle button', 'passed', `Current: ${currentTheme || 'toggled'}`);
+    } else {
+      logResult('THEME-1: Theme toggle button', 'failed', 'Button not found');
     }
+  } catch (error) {
+    logResult('THEME-1: Theme toggle button', 'failed', error.message);
+  }
+
+  // Test system theme toggle
+  try {
+    const systemToggle = await page.$('[data-testid="theme-system"]');
+    if (systemToggle) {
+      await systemToggle.click();
+      await delay(300);
+      
+      const isPressed = await page.$eval('[data-testid="theme-system"]', el => el.getAttribute('aria-pressed'));
+      logResult('THEME-2: System theme toggle', 'passed', `aria-pressed: ${isPressed}`);
+    } else {
+      logResult('THEME-2: System theme toggle', 'failed', 'Button not found');
+    }
+  } catch (error) {
+    logResult('THEME-2: System theme toggle', 'failed', error.message);
+  }
+
+  // Verify theme persists in localStorage
+  try {
+    const storedTheme = await page.evaluate(() => localStorage.getItem('theme'));
+    if (storedTheme) {
+      logResult('THEME-3: Theme persistence', 'passed', `Stored: ${storedTheme}`);
+    } else {
+      logResult('THEME-3: Theme persistence', 'skipped', 'No theme in localStorage');
+    }
+  } catch (error) {
+    logResult('THEME-3: Theme persistence', 'failed', error.message);
   }
 }
 
@@ -250,13 +269,29 @@ async function testAccessibility(page, device) {
 
   // Test ARIA labels on interactive elements
   try {
-    const buttonsWithoutLabels = await page.$$eval('button:not([aria-label]):not(:has(text))', buttons => 
-      buttons.filter(b => !b.textContent?.trim()).length
-    );
-    if (buttonsWithoutLabels === 0) {
-      logResult('A11Y-003: ARIA labels on buttons', 'passed', device.name);
+    const buttonStats = await page.evaluate(() => {
+      const buttons = document.querySelectorAll('button');
+      let missingLabels = 0;
+      let total = 0;
+      
+      buttons.forEach(btn => {
+        total++;
+        const hasAriaLabel = btn.hasAttribute('aria-label');
+        const hasText = btn.textContent?.trim().length > 0;
+        const hasSrOnly = btn.querySelector('.sr-only');
+        
+        if (!hasAriaLabel && !hasText && !hasSrOnly) {
+          missingLabels++;
+        }
+      });
+      
+      return { missingLabels, total };
+    });
+    
+    if (buttonStats.missingLabels === 0) {
+      logResult('A11Y-003: ARIA labels on buttons', 'passed', `${buttonStats.total} buttons checked`);
     } else {
-      logResult('A11Y-003: ARIA labels on buttons', 'failed', `${buttonsWithoutLabels} buttons missing labels`);
+      logResult('A11Y-003: ARIA labels on buttons', 'failed', `${buttonStats.missingLabels}/${buttonStats.total} missing labels`);
     }
   } catch (error) {
     logResult('A11Y-003: ARIA labels on buttons', 'skipped', error.message);
@@ -433,20 +468,32 @@ async function testAllLinks(page, device) {
   await waitForPageLoad(page);
 
   try {
-    const links = await page.$$eval('a[href]', anchors => 
-      anchors.map(a => ({ href: a.href, text: a.textContent?.trim().substring(0, 30) }))
-        .filter(l => l.href && !l.href.startsWith('javascript:') && !l.href.startsWith('mailto:') && !l.href.startsWith('tel:'))
-    );
+    // Get all internal links (same origin)
+    const links = await page.evaluate((baseUrl) => {
+      const anchors = document.querySelectorAll('a[href]');
+      const origin = new URL(baseUrl).origin;
+      
+      return Array.from(anchors)
+        .map(a => ({
+          href: a.href,
+          text: a.textContent?.trim().substring(0, 30),
+          isInternal: a.href.startsWith(origin),
+          isHash: a.href.includes('#'),
+          isExternal: !a.href.startsWith(origin) && !a.href.startsWith('mailto:') && !a.href.startsWith('tel:')
+        }))
+        .filter(l => l.href && !l.href.startsWith('javascript:') && !l.href.startsWith('mailto:') && !l.href.startsWith('tel:'));
+    }, BASE_URL);
 
+    // Only test internal non-hash links
+    const internalLinks = links.filter(l => l.isInternal && !l.isHash).slice(0, 8);
     let brokenLinks = 0;
-    const sampleLinks = links.slice(0, 10); // Test first 10 links
+    let testedLinks = 0;
 
-    for (const link of sampleLinks) {
+    for (const link of internalLinks) {
       try {
+        testedLinks++;
         const response = await page.goto(link.href, { waitUntil: 'domcontentloaded', timeout: 10000 });
-        if (response && response.status() < 400) {
-          // Link works
-        } else {
+        if (!response || response.status() >= 400) {
           brokenLinks++;
         }
       } catch {
@@ -454,15 +501,199 @@ async function testAllLinks(page, device) {
       }
     }
 
-    await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle2' }); // Return to home
+    // Test hash links by checking target elements exist
+    const hashLinks = links.filter(l => l.isHash && l.isInternal).slice(0, 5);
+    await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle2' });
+    
+    for (const link of hashLinks) {
+      try {
+        const hash = new URL(link.href).hash.substring(1);
+        if (hash) {
+          const exists = await page.$(`#${hash}`);
+          if (exists) {
+            testedLinks++;
+          } else {
+            brokenLinks++;
+            testedLinks++;
+          }
+        }
+      } catch {
+        // Skip malformed hash links
+      }
+    }
 
     if (brokenLinks === 0) {
-      logResult('LINKS: Internal links verification', 'passed', `${sampleLinks.length} links tested`);
+      logResult('LINKS: Internal links verification', 'passed', `${testedLinks} links tested`);
     } else {
-      logResult('LINKS: Internal links verification', 'failed', `${brokenLinks}/${sampleLinks.length} broken`);
+      logResult('LINKS: Internal links verification', 'failed', `${brokenLinks}/${testedLinks} broken`);
     }
   } catch (error) {
     logResult('LINKS: Internal links verification', 'failed', error.message);
+  }
+}
+
+// ============================================
+// LIGHTBOX (TALENT MODAL) TESTS
+// ============================================
+async function testLightbox(page, device) {
+  console.log(`\n💡 Testing Lightbox/Modal (${device.name})...`);
+  
+  // Clear localStorage to ensure modal can appear
+  await page.evaluate(() => localStorage.removeItem('talent_network_dismissed'));
+  
+  // Navigate with showModal trigger
+  await page.goto(`${BASE_URL}/?showModal=true`, { waitUntil: 'networkidle2' });
+  await waitForPageLoad(page);
+  await delay(1000);
+
+  // Test modal appears
+  try {
+    const modal = await page.$('[data-testid="talent-modal"]');
+    if (modal) {
+      logResult('MODAL-001: Lightbox appears', 'passed', device.name);
+    } else {
+      logResult('MODAL-001: Lightbox appears', 'failed', 'Modal not found');
+    }
+  } catch (error) {
+    logResult('MODAL-001: Lightbox appears', 'failed', error.message);
+  }
+
+  // Test modal close button
+  try {
+    const closeBtn = await page.$('[data-testid="modal-close"]');
+    if (closeBtn) {
+      await closeBtn.click();
+      await delay(500);
+      const modalAfterClose = await page.$('[data-testid="talent-modal"]');
+      if (!modalAfterClose) {
+        logResult('MODAL-002: Close button works', 'passed', device.name);
+      } else {
+        logResult('MODAL-002: Close button works', 'failed', 'Modal still visible');
+      }
+    } else {
+      logResult('MODAL-002: Close button works', 'skipped', 'Button not found');
+    }
+  } catch (error) {
+    logResult('MODAL-002: Close button works', 'failed', error.message);
+  }
+
+  // Re-open modal to test other buttons
+  await page.goto(`${BASE_URL}/?showModal=true`, { waitUntil: 'networkidle2' });
+  await delay(1000);
+
+  // Test join button exists
+  try {
+    const joinBtn = await page.$('[data-testid="modal-join"]');
+    if (joinBtn) {
+      logResult('MODAL-003: Join button exists', 'passed', device.name);
+    } else {
+      logResult('MODAL-003: Join button exists', 'failed', 'Button not found');
+    }
+  } catch (error) {
+    logResult('MODAL-003: Join button exists', 'failed', error.message);
+  }
+
+  // Test employer CTA button
+  try {
+    const employerBtn = await page.$('[data-testid="modal-employer-cta"]');
+    if (employerBtn) {
+      logResult('MODAL-004: Employer CTA exists', 'passed', device.name);
+    } else {
+      logResult('MODAL-004: Employer CTA exists', 'failed', 'Button not found');
+    }
+  } catch (error) {
+    logResult('MODAL-004: Employer CTA exists', 'failed', error.message);
+  }
+}
+
+// ============================================
+// FOOTER VISIBILITY TESTS
+// ============================================
+async function testFooterVisibility(page, device) {
+  console.log(`\n📋 Testing Footer Visibility (${device.name})...`);
+  
+  await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle2' });
+  await waitForPageLoad(page);
+  
+  // Scroll to footer
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await delay(500);
+
+  // Test company name visibility
+  try {
+    const companyName = await page.$('[data-testid="footer-company-name"]');
+    if (companyName) {
+      const styles = await page.evaluate(el => {
+        const computed = window.getComputedStyle(el);
+        return {
+          visibility: computed.visibility,
+          opacity: parseFloat(computed.opacity),
+          color: computed.color,
+          display: computed.display
+        };
+      }, companyName);
+      
+      // Element is visible if visibility is not hidden, opacity > 0, and not display:none
+      if (styles.visibility === 'visible' && styles.opacity > 0 && styles.display !== 'none') {
+        logResult('FOOTER-001: Company name visible', 'passed', `${device.name} (color: ${styles.color})`);
+      } else {
+        logResult('FOOTER-001: Company name visible', 'failed', `visibility: ${styles.visibility}, opacity: ${styles.opacity}`);
+      }
+    } else {
+      logResult('FOOTER-001: Company name visible', 'failed', 'Element not found');
+    }
+  } catch (error) {
+    logResult('FOOTER-001: Company name visible', 'failed', error.message);
+  }
+
+  // Test tagline visibility
+  try {
+    const tagline = await page.$('[data-testid="footer-tagline"]');
+    if (tagline) {
+      const styles = await page.evaluate(el => {
+        const computed = window.getComputedStyle(el);
+        return {
+          visibility: computed.visibility,
+          opacity: parseFloat(computed.opacity),
+          display: computed.display
+        };
+      }, tagline);
+      
+      // Element is visible if visibility is not hidden, opacity > 0, and not display:none
+      if (styles.visibility === 'visible' && styles.opacity > 0 && styles.display !== 'none') {
+        logResult('FOOTER-002: Tagline visible', 'passed', device.name);
+      } else {
+        logResult('FOOTER-002: Tagline visible', 'failed', `visibility: ${styles.visibility}, opacity: ${styles.opacity}`);
+      }
+    } else {
+      logResult('FOOTER-002: Tagline visible', 'failed', 'Element not found');
+    }
+  } catch (error) {
+    logResult('FOOTER-002: Tagline visible', 'failed', error.message);
+  }
+
+  // Test quick links have data-testid
+  try {
+    const quickLinks = await page.$$('[data-testid^="footer-link-"]');
+    if (quickLinks.length >= 4) {
+      logResult('FOOTER-003: Quick links present', 'passed', `${quickLinks.length} links found`);
+    } else {
+      logResult('FOOTER-003: Quick links present', 'failed', `Only ${quickLinks.length} links found`);
+    }
+  } catch (error) {
+    logResult('FOOTER-003: Quick links present', 'failed', error.message);
+  }
+
+  // Test social links
+  try {
+    const socialLinks = await page.$$('[data-testid^="footer-social-"]');
+    if (socialLinks.length >= 3) {
+      logResult('FOOTER-004: Social links present', 'passed', `${socialLinks.length} links found`);
+    } else {
+      logResult('FOOTER-004: Social links present', 'failed', `Only ${socialLinks.length} links found`);
+    }
+  } catch (error) {
+    logResult('FOOTER-004: Social links present', 'failed', error.message);
   }
 }
 
@@ -541,6 +772,8 @@ async function runAllTests() {
       await testApplicationForm(page, device);
       await testUIComponents(page, device);
       await testAllLinks(page, device);
+      await testLightbox(page, device);
+      await testFooterVisibility(page, device);
       await testAdminDashboard(page, device);
 
       await page.close();

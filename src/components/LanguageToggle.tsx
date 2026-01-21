@@ -34,6 +34,7 @@ export function LanguageToggle() {
               size="icon"
               className="relative h-9 w-9 transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label={t('language.select')}
+              data-testid="lang-toggle"
             >
               <Globe className="h-4 w-4" />
               <span className="sr-only">{t('language.select')}</span>
@@ -48,6 +49,8 @@ export function LanguageToggle() {
                   language === code ? 'bg-accent font-medium' : ''
                 }`}
                 aria-current={language === code ? 'true' : undefined}
+                data-testid={`lang-${code}`}
+                aria-label={`Switch to ${config.nativeName}`}
               >
                 <span className="flex items-center justify-between w-full">
                   {config.nativeName}

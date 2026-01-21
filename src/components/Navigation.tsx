@@ -121,6 +121,8 @@ export function Navigation() {
               <button
                 onClick={() => scrollToSection("hero")}
                 className="flex items-center gap-2 hover:opacity-80 transition-all duration-300 group"
+                aria-label="Go to homepage"
+                data-testid="nav-logo"
               >
                 <motion.img
                   src="/logo.webp"
@@ -150,6 +152,8 @@ export function Navigation() {
                   animate="visible"
                   variants={navItemVariants}
                   whileHover={{ y: -2 }}
+                  aria-label={`Navigate to ${item.label}`}
+                  data-testid={`nav-${item.id || item.path?.replace('/', '')}`}
                 >
                   {item.label}
                   {/* Animated underline */}
@@ -250,6 +254,8 @@ export function Navigation() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
+                    aria-label={`Navigate to ${item.label}`}
+                    data-testid={`mobile-nav-${item.id || item.path?.replace('/', '')}`}
                   >
                     {item.label}
                   </motion.button>

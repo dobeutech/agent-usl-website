@@ -17,6 +17,13 @@ export function TalentNetworkModal() {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
+    // Check for test trigger via URL parameter
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('showModal') === 'true') {
+      setIsOpen(true)
+      return
+    }
+
     // Check if user has dismissed the modal recently
     const dismissed = localStorage.getItem(MODAL_DISMISSED_KEY)
     if (dismissed) {
@@ -73,11 +80,12 @@ export function TalentNetworkModal() {
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <Card className="relative max-w-md w-full bg-card border-border shadow-2xl overflow-hidden">
+            <Card className="relative max-w-md w-full bg-card border-border shadow-2xl overflow-hidden" data-testid="talent-modal">
               <button
                 onClick={handleClose}
                 className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors z-10"
                 aria-label={t('accessibility.close')}
+                data-testid="modal-close"
               >
                 <X size={20} />
               </button>
@@ -115,6 +123,8 @@ export function TalentNetworkModal() {
                     onClick={handleJoin}
                     className="flex-1 group"
                     size="default"
+                    data-testid="modal-join"
+                    aria-label="Join our talent network"
                   >
                     {t('talentModal.joinNow')}
                     <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
@@ -124,6 +134,8 @@ export function TalentNetworkModal() {
                     variant="outline"
                     size="default"
                     className="flex-1"
+                    data-testid="modal-dismiss"
+                    aria-label="Dismiss this dialog"
                   >
                     {t('talentModal.dismiss')}
                   </Button>
@@ -149,6 +161,8 @@ export function TalentNetworkModal() {
                   onClick={handleEmployerClick}
                   variant="secondary"
                   className="w-full mt-4 group"
+                  data-testid="modal-employer-cta"
+                  aria-label="Learn about staffing solutions for employers"
                 >
                   {t('talentModal.employerCta')}
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
