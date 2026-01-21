@@ -207,6 +207,50 @@ To enable automated emails:
 
 ---
 
+## 🚀 Netlify Deployment Commands
+
+Since `netlify-cli` is not included in dependencies (for security reasons), use `npx` to run Netlify commands:
+
+```bash
+# Preview deployment (creates a draft URL for testing)
+npx netlify-cli deploy
+
+# Production deployment (deploys to live site)
+npx netlify-cli deploy --prod
+
+# Check deployment status
+npx netlify-cli status
+
+# Open Netlify dashboard
+npx netlify-cli open
+
+# View deployment logs
+npx netlify-cli deploy --json
+```
+
+### First-time Setup
+
+```bash
+# Login to Netlify (opens browser)
+npx netlify-cli login
+
+# Link to existing site
+npx netlify-cli link
+
+# Or create new site
+npx netlify-cli sites:create
+```
+
+### Environment Variables
+
+Set these in Netlify dashboard or via CLI:
+```bash
+npx netlify-cli env:set VITE_SUPABASE_URL "your-supabase-url"
+npx netlify-cli env:set VITE_SUPABASE_ANON_KEY "your-anon-key"
+```
+
+---
+
 ## 🔗 Important URLs
 
 - **Production Site:** https://unique-staffing-professionals.netlify.app

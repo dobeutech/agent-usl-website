@@ -243,6 +243,9 @@ export function AdminDashboard() {
       // Check if it's a legacy/public URL
       if (resumeUrl.startsWith('http')) {
         const response = await fetch(resumeUrl)
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
         const blob = await response.blob()
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
@@ -251,7 +254,8 @@ export function AdminDashboard() {
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
-        window.URL.revokeObjectURL(url)
+        // Delay revocation to ensure download starts
+        setTimeout(() => window.URL.revokeObjectURL(url), 1000)
         toast.success("Resume downloaded")
         return
       }
@@ -265,9 +269,11 @@ export function AdminDashboard() {
       if (error) throw error
       if (!data?.signedUrl) throw new Error('Failed to generate signed URL')
 
-      // Open signed URL in new tab (triggers download due to content-disposition usually, or view)
-      // Or fetch it to force download name
+      // Fetch signed URL to force download with correct filename
       const response = await fetch(data.signedUrl)
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -276,7 +282,8 @@ export function AdminDashboard() {
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
-      window.URL.revokeObjectURL(url)
+      // Delay revocation to ensure download starts
+      setTimeout(() => window.URL.revokeObjectURL(url), 1000)
       toast.success("Resume downloaded")
 
     } catch (error) {
