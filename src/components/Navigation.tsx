@@ -137,7 +137,7 @@ export function Navigation() {
             <div className="hidden md:flex items-center gap-8">
               {navItems.map((item, i) => (
                 <motion.button
-                  key={item.label}
+                  key={item.id || item.path}
                   onClick={() => (
                     item.type === "route" && item.path
                       ? navigateTo(item.path)
