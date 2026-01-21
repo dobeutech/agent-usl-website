@@ -124,6 +124,15 @@ async function testLanguageSwitching(page, device) {
     { code: 'fr', name: 'French', testText: 'Postuler' }
   ];
 
+  // On mobile, open the mobile menu first to access language toggles
+  if (device.viewport.isMobile) {
+    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+    if (menuButton) {
+      await menuButton.click();
+      await delay(500);
+    }
+  }
+
   for (const lang of languages) {
     try {
       // Click language toggle using data-testid
@@ -164,6 +173,15 @@ async function testLanguageSwitching(page, device) {
       logResult(`LANG-${languages.indexOf(lang) + 1}: ${lang.name} selection`, 'failed', error.message);
     }
   }
+
+  // Close mobile menu if open
+  if (device.viewport.isMobile) {
+    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+    if (menuButton) {
+      await menuButton.click();
+      await delay(300);
+    }
+  }
 }
 
 // ============================================
@@ -174,6 +192,15 @@ async function testThemeSwitching(page, device) {
   
   await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle2' });
   await waitForPageLoad(page);
+
+  // On mobile, open the mobile menu first to access theme toggles
+  if (device.viewport.isMobile) {
+    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+    if (menuButton) {
+      await menuButton.click();
+      await delay(500);
+    }
+  }
 
   // Test theme toggle button
   try {
@@ -206,6 +233,15 @@ async function testThemeSwitching(page, device) {
     }
   } catch (error) {
     logResult('THEME-2: System theme toggle', 'failed', error.message);
+  }
+
+  // Close mobile menu if open
+  if (device.viewport.isMobile) {
+    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+    if (menuButton) {
+      await menuButton.click();
+      await delay(300);
+    }
   }
 
   // Verify theme persists in localStorage (next-themes uses 'theme' key)
