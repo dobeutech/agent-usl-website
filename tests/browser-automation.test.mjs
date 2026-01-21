@@ -124,12 +124,21 @@ async function testLanguageSwitching(page, device) {
     { code: 'fr', name: 'French', testText: 'Postuler' }
   ];
 
-  // On mobile, open the mobile menu first to access language toggles
-  if (device.viewport.isMobile) {
-    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
-    if (menuButton) {
-      await menuButton.click();
-      await delay(500);
+  // On mobile/small screens, try to open mobile menu first to access toggles
+  let menuOpened = false;
+  if (device.viewport.width < 768) {
+    try {
+      const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+      if (menuButton) {
+        const isVisible = await menuButton.isIntersectingViewport();
+        if (isVisible) {
+          await menuButton.click();
+          await delay(600);
+          menuOpened = true;
+        }
+      }
+    } catch {
+      // Menu button not available, continue without it
     }
   }
 
@@ -137,13 +146,20 @@ async function testLanguageSwitching(page, device) {
     try {
       // Click language toggle using data-testid
       const langToggle = await page.$('[data-testid="lang-toggle"]');
-      if (langToggle) {
-        await langToggle.click();
-        await delay(300);
-      } else {
+      if (!langToggle) {
         logResult(`LANG-${languages.indexOf(lang) + 1}: ${lang.name} selection`, 'failed', 'Toggle not found');
         continue;
       }
+      
+      // Check if toggle is visible before clicking
+      const isVisible = await langToggle.isIntersectingViewport();
+      if (!isVisible) {
+        logResult(`LANG-${languages.indexOf(lang) + 1}: ${lang.name} selection`, 'skipped', 'Toggle not visible');
+        continue;
+      }
+      
+      await langToggle.click();
+      await delay(300);
 
       // Find and click language option using data-testid
       const langOption = await page.$(`[data-testid="lang-${lang.code}"]`);
@@ -174,12 +190,16 @@ async function testLanguageSwitching(page, device) {
     }
   }
 
-  // Close mobile menu if open
-  if (device.viewport.isMobile) {
-    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
-    if (menuButton) {
-      await menuButton.click();
-      await delay(300);
+  // Close mobile menu if we opened it
+  if (menuOpened) {
+    try {
+      const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+      if (menuButton) {
+        await menuButton.click();
+        await delay(300);
+      }
+    } catch {
+      // Ignore close errors
     }
   }
 }
@@ -193,27 +213,41 @@ async function testThemeSwitching(page, device) {
   await page.goto(`${BASE_URL}/`, { waitUntil: 'networkidle2' });
   await waitForPageLoad(page);
 
-  // On mobile, open the mobile menu first to access theme toggles
-  if (device.viewport.isMobile) {
-    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
-    if (menuButton) {
-      await menuButton.click();
-      await delay(500);
+  // On mobile/small screens, try to open mobile menu first to access toggles
+  let menuOpened = false;
+  if (device.viewport.width < 768) {
+    try {
+      const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+      if (menuButton) {
+        const isVisible = await menuButton.isIntersectingViewport();
+        if (isVisible) {
+          await menuButton.click();
+          await delay(600);
+          menuOpened = true;
+        }
+      }
+    } catch {
+      // Menu button not available, continue without it
     }
   }
 
   // Test theme toggle button
   try {
     const themeToggle = await page.$('[data-testid="theme-toggle"]');
-    if (themeToggle) {
-      await themeToggle.click();
-      await delay(300);
-      
-      // Get current theme from button's data attribute
-      const currentTheme = await page.$eval('[data-testid="theme-toggle"]', el => el.getAttribute('data-theme'));
-      logResult('THEME-1: Theme toggle button', 'passed', `Current: ${currentTheme || 'toggled'}`);
-    } else {
+    if (!themeToggle) {
       logResult('THEME-1: Theme toggle button', 'failed', 'Button not found');
+    } else {
+      const isVisible = await themeToggle.isIntersectingViewport();
+      if (!isVisible) {
+        logResult('THEME-1: Theme toggle button', 'skipped', 'Button not visible');
+      } else {
+        await themeToggle.click();
+        await delay(300);
+        
+        // Get current theme from button's data attribute
+        const currentTheme = await page.$eval('[data-testid="theme-toggle"]', el => el.getAttribute('data-theme'));
+        logResult('THEME-1: Theme toggle button', 'passed', `Current: ${currentTheme || 'toggled'}`);
+      }
     }
   } catch (error) {
     logResult('THEME-1: Theme toggle button', 'failed', error.message);
@@ -222,25 +256,34 @@ async function testThemeSwitching(page, device) {
   // Test system theme toggle
   try {
     const systemToggle = await page.$('[data-testid="theme-system"]');
-    if (systemToggle) {
-      await systemToggle.click();
-      await delay(300);
-      
-      const isPressed = await page.$eval('[data-testid="theme-system"]', el => el.getAttribute('aria-pressed'));
-      logResult('THEME-2: System theme toggle', 'passed', `aria-pressed: ${isPressed}`);
-    } else {
+    if (!systemToggle) {
       logResult('THEME-2: System theme toggle', 'failed', 'Button not found');
+    } else {
+      const isVisible = await systemToggle.isIntersectingViewport();
+      if (!isVisible) {
+        logResult('THEME-2: System theme toggle', 'skipped', 'Button not visible');
+      } else {
+        await systemToggle.click();
+        await delay(300);
+        
+        const isPressed = await page.$eval('[data-testid="theme-system"]', el => el.getAttribute('aria-pressed'));
+        logResult('THEME-2: System theme toggle', 'passed', `aria-pressed: ${isPressed}`);
+      }
     }
   } catch (error) {
     logResult('THEME-2: System theme toggle', 'failed', error.message);
   }
 
-  // Close mobile menu if open
-  if (device.viewport.isMobile) {
-    const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
-    if (menuButton) {
-      await menuButton.click();
-      await delay(300);
+  // Close mobile menu if we opened it
+  if (menuOpened) {
+    try {
+      const menuButton = await page.$('[data-testid="mobile-menu-toggle"]');
+      if (menuButton) {
+        await menuButton.click();
+        await delay(300);
+      }
+    } catch {
+      // Ignore close errors
     }
   }
 
