@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Sparkles, Users, ShoppingCart, Phone, Factory, MapPin } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, Variants } from "framer-motion"
 
 export function Industries() {
   const { t } = useLanguage()
@@ -42,7 +42,7 @@ export function Industries() {
     }
   ]
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -53,7 +53,7 @@ export function Industries() {
     }
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, y: 20 },
     visible: {
       opacity: 1,
@@ -61,7 +61,7 @@ export function Industries() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     }
   }

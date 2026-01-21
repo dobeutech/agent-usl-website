@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { Phone, Mail, MapPin, MessageSquare, Printer, Facebook } from "lucide-react"
 import { WhatsappLogo } from "@phosphor-icons/react"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, Variants } from "framer-motion"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { BusinessAddress, BusinessPhone, BusinessEmail } from "@/components/seo/NAPDisplay"
 import { useLanguage } from "@/contexts/LanguageContext"

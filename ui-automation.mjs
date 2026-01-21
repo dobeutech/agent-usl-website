@@ -205,6 +205,22 @@ const checkForms = async (page, expected, combo) => {
   record(combo, 'forms', 'no horizontal overflow', formChecks.noOverflow)
 }
 
+const checkAdminLogin = async (page, expected, combo) => {
+  await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle2', timeout: 30000 })
+  await sleep(800)
+  const adminChecks = await page.evaluate(() => {
+    const text = document.body.innerText
+    const hasLogin = text.toLowerCase().includes('login') || text.toLowerCase().includes('sign in')
+    const hasEmailInput = !!document.querySelector('input[type="email"]')
+    const hasPasswordInput = !!document.querySelector('input[type="password"]')
+    return { hasLogin, hasEmailInput, hasPasswordInput }
+  })
+
+  record(combo, 'admin/login', 'login text', adminChecks.hasLogin)
+  record(combo, 'admin/login', 'email input', adminChecks.hasEmailInput)
+  record(combo, 'admin/login', 'password input', adminChecks.hasPasswordInput)
+}
+
 const run = async () => {
   console.log('Starting preview server...')
   const preview = spawn(
@@ -246,6 +262,7 @@ const run = async () => {
             await checkHome(page, expected, combo, theme.expectsDark)
             await checkEmployers(page, expected, combo)
             await checkForms(page, expected, combo)
+            await checkAdminLogin(page, expected, combo)
 
             await page.close()
           }

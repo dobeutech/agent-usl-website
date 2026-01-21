@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Sparkles, Users, ShoppingCart, Phone, Factory } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, Variants } from "framer-motion"
 import { useRef } from "react"
 
 export function Services() {
@@ -11,7 +11,7 @@ export function Services() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const titleInView = useInView(titleRef, { once: true })
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -22,7 +22,7 @@ export function Services() {
     }
   }
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 40, filter: "blur(8px)" },
     visible: {
       opacity: 1,
@@ -30,7 +30,7 @@ export function Services() {
       filter: "blur(0px)",
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     }
   }
