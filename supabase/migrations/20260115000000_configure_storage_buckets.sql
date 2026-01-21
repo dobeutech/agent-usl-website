@@ -27,7 +27,8 @@ CREATE POLICY "Authenticated users can view resumes"
 
 CREATE POLICY "Authenticated users can update resumes"
   ON storage.objects FOR UPDATE TO authenticated
-  USING (bucket_id = 'resumes');
+  USING (bucket_id = 'resumes')
+  WITH CHECK (bucket_id = 'resumes');
 
 CREATE POLICY "Authenticated users can delete resumes"
   ON storage.objects FOR DELETE TO authenticated
