@@ -194,13 +194,12 @@ export function Navigation() {
             </motion.div>
 
             <div className="md:hidden flex items-center gap-2">
-              <LanguageToggle />
-              <ThemeToggle />
-              <SystemToggle />
               <motion.button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 text-foreground rounded-lg hover:bg-secondary/50 transition-colors"
                 aria-label={mobileMenuOpen ? t('accessibility.closeMenu') : t('accessibility.openMenu')}
+                data-testid="mobile-menu-toggle"
+                aria-expanded={mobileMenuOpen}
                 whileTap={{ scale: 0.9 }}
               >
                 <AnimatePresence mode="wait">
@@ -240,6 +239,8 @@ export function Navigation() {
               animate="visible"
               exit="hidden"
               variants={mobileMenuVariants}
+              data-testid="mobile-menu"
+              role="menu"
             >
               <div className="px-4 py-6 space-y-2">
                 {navItems.map((item, i) => (
@@ -282,6 +283,19 @@ export function Navigation() {
                 >
                   Admin Login
                 </motion.a>
+                
+                {/* Language and Theme Toggles in Mobile Menu */}
+                <motion.div 
+                  className="flex items-center justify-center gap-3 pt-4 mt-4 border-t border-border/50"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <span className="text-sm text-muted-foreground">{t('nav.settings') || 'Settings'}:</span>
+                  <LanguageToggle />
+                  <ThemeToggle />
+                  <SystemToggle />
+                </motion.div>
               </div>
             </motion.div>
           )}

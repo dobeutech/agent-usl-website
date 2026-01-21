@@ -1,10 +1,10 @@
 {
   "summary": {
-    "passed": 105,
-    "failed": 14,
-    "skipped": 6,
+    "passed": 115,
+    "failed": 10,
+    "skipped": 0,
     "total": 125,
-    "timestamp": "2026-01-21T23:16:03.590Z",
+    "timestamp": "2026-01-21T23:49:51.433Z",
     "baseUrl": "https://unique-staffing-professionals.netlify.app"
   },
   "tests": [
@@ -12,751 +12,751 @@
       "name": "NAV-1: Home route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:33.188Z"
+      "timestamp": "2026-01-21T23:45:43.700Z"
     },
     {
       "name": "NAV-2: Employers route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:34.463Z"
+      "timestamp": "2026-01-21T23:45:44.914Z"
     },
     {
       "name": "NAV-3: Forms route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:35.696Z"
+      "timestamp": "2026-01-21T23:45:46.144Z"
     },
     {
       "name": "NAV-4: Privacy Policy route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:36.979Z"
+      "timestamp": "2026-01-21T23:45:47.329Z"
     },
     {
       "name": "NAV-5: SMS Privacy route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:38.212Z"
+      "timestamp": "2026-01-21T23:45:48.563Z"
     },
     {
       "name": "NAV-6: Terms of Service route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:39.444Z"
+      "timestamp": "2026-01-21T23:45:49.730Z"
     },
     {
       "name": "NAV-7: Admin Login route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:40.955Z"
+      "timestamp": "2026-01-21T23:45:51.300Z"
     },
     {
       "name": "NAV-8: API Docs route",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:42.506Z"
+      "timestamp": "2026-01-21T23:45:52.721Z"
     },
     {
       "name": "NAV-REDIRECT: /tos → /terms",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:43.205Z"
+      "timestamp": "2026-01-21T23:45:53.372Z"
     },
     {
       "name": "LANG-1: English selection",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:11:45.828Z"
+      "timestamp": "2026-01-21T23:45:55.552Z"
     },
     {
       "name": "LANG-2: Spanish selection",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:11:45.869Z"
+      "timestamp": "2026-01-21T23:45:55.626Z"
     },
     {
       "name": "LANG-3: French selection",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:11:45.953Z"
+      "timestamp": "2026-01-21T23:45:55.664Z"
     },
     {
       "name": "THEME-1: Theme toggle button",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:11:48.392Z"
+      "timestamp": "2026-01-21T23:45:58.304Z"
     },
     {
       "name": "THEME-2: System theme toggle",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:11:48.432Z"
+      "timestamp": "2026-01-21T23:45:58.383Z"
     },
     {
       "name": "THEME-3: Theme persistence",
-      "status": "skipped",
-      "details": "No theme in localStorage",
-      "timestamp": "2026-01-21T23:11:48.433Z"
+      "status": "passed",
+      "details": "Applied: light",
+      "timestamp": "2026-01-21T23:45:58.910Z"
     },
     {
       "name": "A11Y-001: Skip to content link",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:51.830Z"
+      "timestamp": "2026-01-21T23:46:01.137Z"
     },
     {
       "name": "A11Y-002: Accessibility panel opens",
-      "status": "skipped",
-      "details": "Button not found",
-      "timestamp": "2026-01-21T23:11:51.832Z"
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T23:46:02.016Z"
     },
     {
       "name": "A11Y-003: ARIA labels on buttons",
       "status": "failed",
-      "details": "24/71 missing labels",
-      "timestamp": "2026-01-21T23:11:51.833Z"
+      "details": "14/68 missing labels",
+      "timestamp": "2026-01-21T23:46:02.423Z"
     },
     {
       "name": "A11Y-004: Keyboard navigation",
       "status": "passed",
-      "details": "First focus: A",
-      "timestamp": "2026-01-21T23:11:51.911Z"
+      "details": "First focus: BODY",
+      "timestamp": "2026-01-21T23:46:02.464Z"
     },
     {
       "name": "FORM-1: Full Name field",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:53.016Z"
+      "timestamp": "2026-01-21T23:46:03.560Z"
     },
     {
       "name": "FORM-2: Email field",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:53.019Z"
+      "timestamp": "2026-01-21T23:46:03.563Z"
     },
     {
       "name": "FORM-3: Phone field",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:53.024Z"
+      "timestamp": "2026-01-21T23:46:03.565Z"
     },
     {
       "name": "FORM-4: Experience field",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:53.025Z"
+      "timestamp": "2026-01-21T23:46:03.567Z"
     },
     {
       "name": "FORM-5: Resume Upload field",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:53.027Z"
+      "timestamp": "2026-01-21T23:46:03.569Z"
     },
     {
       "name": "FORM-POSITIONS: Position checkboxes",
-      "status": "failed",
-      "details": "No checkboxes found",
-      "timestamp": "2026-01-21T23:11:53.031Z"
+      "status": "passed",
+      "details": "10 options",
+      "timestamp": "2026-01-21T23:46:04.581Z"
     },
     {
       "name": "FORM-SUBMIT: Submit button",
       "status": "passed",
       "details": "Enabled",
-      "timestamp": "2026-01-21T23:11:53.033Z"
+      "timestamp": "2026-01-21T23:46:04.584Z"
     },
     {
       "name": "UI-001: Navigation bar",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:55.820Z"
+      "timestamp": "2026-01-21T23:46:07.183Z"
     },
     {
       "name": "UI-002: Hero section",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:55.853Z"
+      "timestamp": "2026-01-21T23:46:07.185Z"
     },
     {
       "name": "UI-003: Footer",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:56.442Z"
+      "timestamp": "2026-01-21T23:46:07.720Z"
     },
     {
       "name": "UI-004: Mobile menu toggle",
-      "status": "failed",
-      "details": "Menu not visible",
-      "timestamp": "2026-01-21T23:11:56.775Z"
+      "status": "passed",
+      "details": "Mobile",
+      "timestamp": "2026-01-21T23:46:08.281Z"
     },
     {
       "name": "UI-005: Cookie consent banner",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:11:56.778Z"
+      "timestamp": "2026-01-21T23:46:08.600Z"
     },
     {
       "name": "LINKS: Internal links verification",
       "status": "passed",
       "details": "8 links tested",
-      "timestamp": "2026-01-21T23:12:02.516Z"
+      "timestamp": "2026-01-21T23:46:13.499Z"
     },
     {
       "name": "MODAL-001: Lightbox appears",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:06.486Z"
+      "timestamp": "2026-01-21T23:46:16.596Z"
     },
     {
       "name": "MODAL-002: Close button works",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:07.119Z"
+      "timestamp": "2026-01-21T23:46:17.178Z"
     },
     {
       "name": "MODAL-003: Join button exists",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:10.499Z"
+      "timestamp": "2026-01-21T23:46:19.708Z"
     },
     {
       "name": "MODAL-004: Employer CTA exists",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:10.501Z"
+      "timestamp": "2026-01-21T23:46:19.714Z"
     },
     {
       "name": "FOOTER-001: Company name visible",
       "status": "passed",
       "details": "Mobile (color: rgb(255, 255, 255))",
-      "timestamp": "2026-01-21T23:12:13.325Z"
+      "timestamp": "2026-01-21T23:46:22.298Z"
     },
     {
       "name": "FOOTER-002: Tagline visible",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:13.328Z"
+      "timestamp": "2026-01-21T23:46:22.300Z"
     },
     {
       "name": "FOOTER-003: Quick links present",
       "status": "passed",
       "details": "4 links found",
-      "timestamp": "2026-01-21T23:12:13.343Z"
+      "timestamp": "2026-01-21T23:46:22.316Z"
     },
     {
       "name": "FOOTER-004: Social links present",
       "status": "passed",
       "details": "4 links found",
-      "timestamp": "2026-01-21T23:12:13.349Z"
+      "timestamp": "2026-01-21T23:46:22.326Z"
     },
     {
       "name": "ADMIN-001: Login form fields",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:14.936Z"
+      "timestamp": "2026-01-21T23:46:23.940Z"
     },
     {
       "name": "ADMIN-002: Protected route handling",
       "status": "passed",
       "details": "Mobile",
-      "timestamp": "2026-01-21T23:12:15.646Z"
+      "timestamp": "2026-01-21T23:46:24.775Z"
     },
     {
       "name": "NAV-1: Home route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:27.749Z"
+      "timestamp": "2026-01-21T23:46:34.162Z"
     },
     {
       "name": "NAV-2: Employers route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:29.159Z"
+      "timestamp": "2026-01-21T23:46:35.458Z"
     },
     {
       "name": "NAV-3: Forms route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:30.376Z"
+      "timestamp": "2026-01-21T23:46:36.657Z"
     },
     {
       "name": "NAV-4: Privacy Policy route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:31.598Z"
+      "timestamp": "2026-01-21T23:46:37.828Z"
     },
     {
       "name": "NAV-5: SMS Privacy route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:32.827Z"
+      "timestamp": "2026-01-21T23:46:39.026Z"
     },
     {
       "name": "NAV-6: Terms of Service route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:34.042Z"
+      "timestamp": "2026-01-21T23:46:40.192Z"
     },
     {
       "name": "NAV-7: Admin Login route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:35.416Z"
+      "timestamp": "2026-01-21T23:46:41.698Z"
     },
     {
       "name": "NAV-8: API Docs route",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:36.920Z"
+      "timestamp": "2026-01-21T23:46:43.134Z"
     },
     {
       "name": "NAV-REDIRECT: /tos → /terms",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:37.603Z"
+      "timestamp": "2026-01-21T23:46:43.804Z"
     },
     {
       "name": "LANG-1: English selection",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:44.095Z"
+      "timestamp": "2026-01-21T23:46:49.581Z"
     },
     {
       "name": "LANG-2: Spanish selection",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:45.401Z"
+      "timestamp": "2026-01-21T23:46:51.183Z"
     },
     {
       "name": "LANG-3: French selection",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:12:47.387Z"
+      "timestamp": "2026-01-21T23:46:52.520Z"
     },
     {
       "name": "THEME-1: Theme toggle button",
       "status": "passed",
       "details": "Current: dark",
-      "timestamp": "2026-01-21T23:12:54.837Z"
+      "timestamp": "2026-01-21T23:47:00.261Z"
     },
     {
       "name": "THEME-2: System theme toggle",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:12:57.139Z"
+      "timestamp": "2026-01-21T23:47:00.584Z"
     },
     {
       "name": "THEME-3: Theme persistence",
-      "status": "skipped",
-      "details": "No theme in localStorage",
-      "timestamp": "2026-01-21T23:12:57.231Z"
+      "status": "passed",
+      "details": "Applied: dark",
+      "timestamp": "2026-01-21T23:47:01.359Z"
     },
     {
       "name": "A11Y-001: Skip to content link",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:06.483Z"
+      "timestamp": "2026-01-21T23:47:09.979Z"
     },
     {
       "name": "A11Y-002: Accessibility panel opens",
-      "status": "skipped",
-      "details": "Button not found",
-      "timestamp": "2026-01-21T23:13:06.484Z"
+      "status": "passed",
+      "details": "Tablet",
+      "timestamp": "2026-01-21T23:47:10.924Z"
     },
     {
       "name": "A11Y-003: ARIA labels on buttons",
       "status": "failed",
-      "details": "24/71 missing labels",
-      "timestamp": "2026-01-21T23:13:06.558Z"
+      "details": "20/76 missing labels",
+      "timestamp": "2026-01-21T23:47:11.254Z"
     },
     {
       "name": "A11Y-004: Keyboard navigation",
       "status": "passed",
-      "details": "First focus: A",
-      "timestamp": "2026-01-21T23:13:06.806Z"
+      "details": "First focus: BUTTON",
+      "timestamp": "2026-01-21T23:47:11.335Z"
     },
     {
       "name": "FORM-1: Full Name field",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:08.017Z"
+      "timestamp": "2026-01-21T23:47:12.679Z"
     },
     {
       "name": "FORM-2: Email field",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:08.032Z"
+      "timestamp": "2026-01-21T23:47:12.683Z"
     },
     {
       "name": "FORM-3: Phone field",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:08.033Z"
+      "timestamp": "2026-01-21T23:47:12.685Z"
     },
     {
       "name": "FORM-4: Experience field",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:08.049Z"
+      "timestamp": "2026-01-21T23:47:12.692Z"
     },
     {
       "name": "FORM-5: Resume Upload field",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:08.068Z"
+      "timestamp": "2026-01-21T23:47:12.693Z"
     },
     {
       "name": "FORM-POSITIONS: Position checkboxes",
-      "status": "failed",
-      "details": "No checkboxes found",
-      "timestamp": "2026-01-21T23:13:08.072Z"
+      "status": "passed",
+      "details": "10 options",
+      "timestamp": "2026-01-21T23:47:13.720Z"
     },
     {
       "name": "FORM-SUBMIT: Submit button",
       "status": "passed",
       "details": "Enabled",
-      "timestamp": "2026-01-21T23:13:08.074Z"
+      "timestamp": "2026-01-21T23:47:13.731Z"
     },
     {
       "name": "UI-001: Navigation bar",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:17.271Z"
+      "timestamp": "2026-01-21T23:47:21.012Z"
     },
     {
       "name": "UI-002: Hero section",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:17.449Z"
+      "timestamp": "2026-01-21T23:47:21.015Z"
     },
     {
       "name": "UI-003: Footer",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:18.042Z"
+      "timestamp": "2026-01-21T23:47:21.580Z"
     },
     {
       "name": "UI-004: Mobile menu toggle",
       "status": "failed",
       "details": "Node is either not clickable or not an Element",
-      "timestamp": "2026-01-21T23:13:18.117Z"
+      "timestamp": "2026-01-21T23:47:21.664Z"
     },
     {
       "name": "UI-005: Cookie consent banner",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:18.157Z"
+      "timestamp": "2026-01-21T23:47:21.666Z"
     },
     {
       "name": "LINKS: Internal links verification",
       "status": "passed",
       "details": "8 links tested",
-      "timestamp": "2026-01-21T23:13:42.597Z"
+      "timestamp": "2026-01-21T23:47:39.579Z"
     },
     {
       "name": "MODAL-001: Lightbox appears",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:56.945Z"
+      "timestamp": "2026-01-21T23:47:48.160Z"
     },
     {
       "name": "MODAL-002: Close button works",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:13:57.639Z"
+      "timestamp": "2026-01-21T23:47:48.777Z"
     },
     {
       "name": "MODAL-003: Join button exists",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:14:07.277Z"
+      "timestamp": "2026-01-21T23:47:58.663Z"
     },
     {
       "name": "MODAL-004: Employer CTA exists",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:14:07.279Z"
+      "timestamp": "2026-01-21T23:47:58.665Z"
     },
     {
       "name": "FOOTER-001: Company name visible",
       "status": "passed",
       "details": "Tablet (color: rgb(255, 255, 255))",
-      "timestamp": "2026-01-21T23:14:18.377Z"
+      "timestamp": "2026-01-21T23:48:06.149Z"
     },
     {
       "name": "FOOTER-002: Tagline visible",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:14:18.383Z"
+      "timestamp": "2026-01-21T23:48:06.179Z"
     },
     {
       "name": "FOOTER-003: Quick links present",
       "status": "passed",
       "details": "4 links found",
-      "timestamp": "2026-01-21T23:14:18.410Z"
+      "timestamp": "2026-01-21T23:48:06.278Z"
     },
     {
       "name": "FOOTER-004: Social links present",
       "status": "passed",
       "details": "4 links found",
-      "timestamp": "2026-01-21T23:14:18.431Z"
+      "timestamp": "2026-01-21T23:48:06.401Z"
     },
     {
       "name": "ADMIN-001: Login form fields",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:14:20.115Z"
+      "timestamp": "2026-01-21T23:48:08.162Z"
     },
     {
       "name": "ADMIN-002: Protected route handling",
       "status": "passed",
       "details": "Tablet",
-      "timestamp": "2026-01-21T23:14:21.215Z"
+      "timestamp": "2026-01-21T23:48:09.218Z"
     },
     {
       "name": "NAV-1: Home route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:38.290Z"
+      "timestamp": "2026-01-21T23:48:24.179Z"
     },
     {
       "name": "NAV-2: Employers route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:39.623Z"
+      "timestamp": "2026-01-21T23:48:25.588Z"
     },
     {
       "name": "NAV-3: Forms route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:40.952Z"
+      "timestamp": "2026-01-21T23:48:26.792Z"
     },
     {
       "name": "NAV-4: Privacy Policy route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:42.155Z"
+      "timestamp": "2026-01-21T23:48:28.007Z"
     },
     {
       "name": "NAV-5: SMS Privacy route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:43.390Z"
+      "timestamp": "2026-01-21T23:48:29.219Z"
     },
     {
       "name": "NAV-6: Terms of Service route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:44.624Z"
+      "timestamp": "2026-01-21T23:48:30.418Z"
     },
     {
       "name": "NAV-7: Admin Login route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:46.120Z"
+      "timestamp": "2026-01-21T23:48:31.915Z"
     },
     {
       "name": "NAV-8: API Docs route",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:47.630Z"
+      "timestamp": "2026-01-21T23:48:33.346Z"
     },
     {
       "name": "NAV-REDIRECT: /tos → /terms",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:48.381Z"
+      "timestamp": "2026-01-21T23:48:34.083Z"
     },
     {
       "name": "LANG-1: English selection",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:57.170Z"
+      "timestamp": "2026-01-21T23:48:41.931Z"
     },
     {
       "name": "LANG-2: Spanish selection",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:14:59.079Z"
+      "timestamp": "2026-01-21T23:48:43.497Z"
     },
     {
       "name": "LANG-3: French selection",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:00.824Z"
+      "timestamp": "2026-01-21T23:48:45.449Z"
     },
     {
       "name": "THEME-1: Theme toggle button",
       "status": "passed",
       "details": "Current: dark",
-      "timestamp": "2026-01-21T23:15:08.272Z"
+      "timestamp": "2026-01-21T23:48:54.165Z"
     },
     {
       "name": "THEME-2: System theme toggle",
       "status": "passed",
       "details": "aria-pressed: true",
-      "timestamp": "2026-01-21T23:15:09.858Z"
+      "timestamp": "2026-01-21T23:48:56.370Z"
     },
     {
       "name": "THEME-3: Theme persistence",
-      "status": "skipped",
-      "details": "No theme in localStorage",
-      "timestamp": "2026-01-21T23:15:10.090Z"
+      "status": "passed",
+      "details": "Applied: light",
+      "timestamp": "2026-01-21T23:48:57.191Z"
     },
     {
       "name": "A11Y-001: Skip to content link",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:17.797Z"
+      "timestamp": "2026-01-21T23:49:03.230Z"
     },
     {
       "name": "A11Y-002: Accessibility panel opens",
-      "status": "skipped",
-      "details": "Button not found",
-      "timestamp": "2026-01-21T23:15:17.799Z"
+      "status": "passed",
+      "details": "Desktop",
+      "timestamp": "2026-01-21T23:49:04.369Z"
     },
     {
       "name": "A11Y-003: ARIA labels on buttons",
       "status": "failed",
-      "details": "24/71 missing labels",
-      "timestamp": "2026-01-21T23:15:17.800Z"
+      "details": "14/68 missing labels",
+      "timestamp": "2026-01-21T23:49:04.859Z"
     },
     {
       "name": "A11Y-004: Keyboard navigation",
       "status": "passed",
-      "details": "First focus: A",
-      "timestamp": "2026-01-21T23:15:18.134Z"
+      "details": "First focus: BODY",
+      "timestamp": "2026-01-21T23:49:05.017Z"
     },
     {
       "name": "FORM-1: Full Name field",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:19.477Z"
+      "timestamp": "2026-01-21T23:49:06.430Z"
     },
     {
       "name": "FORM-2: Email field",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:19.479Z"
+      "timestamp": "2026-01-21T23:49:06.436Z"
     },
     {
       "name": "FORM-3: Phone field",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:19.481Z"
+      "timestamp": "2026-01-21T23:49:06.438Z"
     },
     {
       "name": "FORM-4: Experience field",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:19.482Z"
+      "timestamp": "2026-01-21T23:49:06.439Z"
     },
     {
       "name": "FORM-5: Resume Upload field",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:19.484Z"
+      "timestamp": "2026-01-21T23:49:06.441Z"
     },
     {
       "name": "FORM-POSITIONS: Position checkboxes",
-      "status": "failed",
-      "details": "No checkboxes found",
-      "timestamp": "2026-01-21T23:15:19.499Z"
+      "status": "passed",
+      "details": "10 options",
+      "timestamp": "2026-01-21T23:49:07.486Z"
     },
     {
       "name": "FORM-SUBMIT: Submit button",
       "status": "passed",
       "details": "Enabled",
-      "timestamp": "2026-01-21T23:15:19.529Z"
+      "timestamp": "2026-01-21T23:49:07.488Z"
     },
     {
       "name": "UI-001: Navigation bar",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:26.342Z"
+      "timestamp": "2026-01-21T23:49:14.160Z"
     },
     {
       "name": "UI-002: Hero section",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:26.343Z"
+      "timestamp": "2026-01-21T23:49:14.164Z"
     },
     {
       "name": "UI-003: Footer",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:26.920Z"
+      "timestamp": "2026-01-21T23:49:14.822Z"
     },
     {
       "name": "UI-005: Cookie consent banner",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:26.951Z"
+      "timestamp": "2026-01-21T23:49:14.832Z"
     },
     {
       "name": "LINKS: Internal links verification",
       "status": "passed",
       "details": "8 links tested",
-      "timestamp": "2026-01-21T23:15:40.047Z"
+      "timestamp": "2026-01-21T23:49:27.394Z"
     },
     {
       "name": "MODAL-001: Lightbox appears",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:46.725Z"
+      "timestamp": "2026-01-21T23:49:34.611Z"
     },
     {
       "name": "MODAL-002: Close button works",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:47.460Z"
+      "timestamp": "2026-01-21T23:49:35.443Z"
     },
     {
       "name": "MODAL-003: Join button exists",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:54.139Z"
+      "timestamp": "2026-01-21T23:49:42.722Z"
     },
     {
       "name": "MODAL-004: Employer CTA exists",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:15:54.141Z"
+      "timestamp": "2026-01-21T23:49:42.724Z"
     },
     {
       "name": "FOOTER-001: Company name visible",
       "status": "passed",
       "details": "Desktop (color: rgb(255, 255, 255))",
-      "timestamp": "2026-01-21T23:16:00.806Z"
+      "timestamp": "2026-01-21T23:49:48.687Z"
     },
     {
       "name": "FOOTER-002: Tagline visible",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:16:00.808Z"
+      "timestamp": "2026-01-21T23:49:48.694Z"
     },
     {
       "name": "FOOTER-003: Quick links present",
       "status": "passed",
       "details": "4 links found",
-      "timestamp": "2026-01-21T23:16:00.887Z"
+      "timestamp": "2026-01-21T23:49:48.740Z"
     },
     {
       "name": "FOOTER-004: Social links present",
       "status": "passed",
       "details": "4 links found",
-      "timestamp": "2026-01-21T23:16:00.945Z"
+      "timestamp": "2026-01-21T23:49:48.744Z"
     },
     {
       "name": "ADMIN-001: Login form fields",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:16:02.574Z"
+      "timestamp": "2026-01-21T23:49:50.362Z"
     },
     {
       "name": "ADMIN-002: Protected route handling",
       "status": "passed",
       "details": "Desktop",
-      "timestamp": "2026-01-21T23:16:03.453Z"
+      "timestamp": "2026-01-21T23:49:51.319Z"
     }
   ]
 }

@@ -610,6 +610,8 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
                           id={`position-${position}`}
                           checked={formData.positions.includes(position)}
                           onCheckedChange={() => handlePositionToggle(position)}
+                          data-testid={`position-checkbox-${position.toLowerCase().replace(/\s+/g, '-')}`}
+                          aria-label={`Select ${position} position`}
                         />
                         <label
                           htmlFor={`position-${position}`}

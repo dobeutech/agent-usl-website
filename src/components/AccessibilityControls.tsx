@@ -174,6 +174,7 @@ export function AccessibilityControls() {
             size="icon"
             className="fixed bottom-20 right-4 z-50 rounded-full shadow-lg bg-card border-border hover:bg-secondary h-12 w-12"
             aria-label={t('accessibility.openMenu') || 'Open accessibility menu'}
+            data-testid="accessibility-toggle"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +196,7 @@ export function AccessibilityControls() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+        <SheetContent className="w-full sm:max-w-md overflow-y-auto" data-testid="accessibility-panel">
           <SheetHeader>
             <SheetTitle className="text-xl font-heading">
               {t('accessibility.title') || 'Accessibility Settings'}
