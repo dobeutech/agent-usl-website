@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useCallback, useMemo } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/Navigation"
@@ -30,9 +30,19 @@ export function Home() {
   const { businessInfo } = useBusinessInfo()
   const { t } = useLanguage()
 
-  const handleApplicationSuccess = () => {
+  const handleApplicationSuccess = useCallback(() => {
     navigate('/application-confirmation')
-  }
+  }, [navigate])
+
+  const seoKeywords = useMemo(() => [
+    "staffing agency Maryland",
+    "employment services",
+    "job placement Riverdale",
+    "temporary staffing",
+    "permanent placement",
+    "contract staffing",
+    "Prince George's County jobs"
+  ], [])
 
   useEffect(() => {
     if (!location.hash) return
@@ -85,15 +95,7 @@ export function Home() {
       {/* SEO */}
       <SEOHead
         businessInfo={businessInfo}
-        keywords={[
-          "staffing agency Maryland",
-          "employment services",
-          "job placement Riverdale",
-          "temporary staffing",
-          "permanent placement",
-          "contract staffing",
-          "Prince George's County jobs"
-        ]}
+        keywords={seoKeywords}
       />
       <StructuredData businessInfo={businessInfo} type="home" />
       

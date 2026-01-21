@@ -142,13 +142,13 @@ export function validateFileSize(file: File, maxSizeMB: number): boolean {
  * @param file - The file to upload
  * @param bucket - The storage bucket name
  * @param folder - Optional folder path within bucket
- * @returns Object containing URL and filename, or null on error
+ * @returns Object containing path and filename, or null on error
  */
 export async function uploadFile(
   file: File,
   bucket: string,
   folder?: string
-): Promise<{ url: string; filename: string } | null> {
+): Promise<{ path: string; filename: string } | null> {
   try {
     const fileExt = file.name.split('.').pop()
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
@@ -156,11 +156,11 @@ export async function uploadFile(
 
     // In demo mode, simulate file upload with a mock URL
     if (isDemoMode()) {
-      console.log('[uploadFile] Demo mode - simulating file upload for:', file.name)
       // Create a blob URL for demo purposes (file is stored in browser memory)
-      const blobUrl = URL.createObjectURL(file)
+      // Note: blob URL is created but not stored as it's not needed in demo mode
+      URL.createObjectURL(file)
       return {
-        url: `demo://storage/${bucket}/${filePath}`,
+        path: `demo://storage/${bucket}/${filePath}`,
         filename: file.name
       }
     }
@@ -173,11 +173,9 @@ export async function uploadFile(
       throw uploadError
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(filePath)
-
-    return { url: publicUrl, filename: file.name }
+    // Return the storage path instead of public URL
+    // Signed URLs will be generated on demand by the admin dashboard
+    return { path: filePath, filename: file.name }
   } catch (error) {
     console.error('Error uploading file:', error)
     return null

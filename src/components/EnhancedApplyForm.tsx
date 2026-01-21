@@ -329,7 +329,8 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
           setIsSubmitting(false)
           return
         }
-        resumeUrl = uploadResult.url
+        // Store path in resume_url field
+        resumeUrl = uploadResult.path
         resumeFilename = uploadResult.filename
       }
 
@@ -424,7 +425,7 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
               .insert([{
                 applicant_id: applicant.id,
                 document_type: doc.type,
-                document_url: uploadResult.url,
+                document_url: uploadResult.path,
                 document_filename: uploadResult.filename,
                 file_size: doc.file.size,
                 mime_type: doc.file.type
