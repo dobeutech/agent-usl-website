@@ -232,6 +232,9 @@ export interface Translations {
     closingSubtitle: string
     closingPrimaryCta: string
     closingSecondaryCta: string
+    ctaHeadline: string
+    ctaDescription: string
+    ctaTrust: string
   }
   cookieConsent: {
     title: string
@@ -339,6 +342,9 @@ export interface Translations {
     joinNow: string
     dismiss: string
     closingSoon: string
+    employerTitle: string
+    employerDescription: string
+    employerCta: string
   }
   privacy: {
     title: string
@@ -670,6 +676,9 @@ export const translations: Record<Language, Translations> = {
       closingSubtitle: 'Tell us about your hiring goals and we will respond with a tailored staffing plan.',
       closingPrimaryCta: 'Start the conversation',
       closingSecondaryCta: 'Call now',
+      ctaHeadline: 'Need Reliable Staff? We Can Help.',
+      ctaDescription: 'Get pre-screened, qualified candidates delivered fast. From temporary coverage to permanent hires, we handle it all.',
+      ctaTrust: 'Trusted by 500+ companies across the DMV region.',
     },
     cookieConsent: {
       title: 'We Value Your Privacy',
@@ -777,6 +786,9 @@ export const translations: Record<Language, Translations> = {
       joinNow: 'Join Now',
       dismiss: 'Maybe Later',
       closingSoon: 'This message will close automatically in',
+      employerTitle: 'Looking for Staffing Solutions?',
+      employerDescription: 'Partner with us to find reliable, pre-screened talent for your business.',
+      employerCta: 'Explore Employer Services',
     },
     privacy: {
       title: 'Privacy Policy',
@@ -1106,6 +1118,9 @@ export const translations: Record<Language, Translations> = {
       closingSubtitle: 'Cuéntenos sus objetivos de contratación y responderemos con un plan de personal a medida.',
       closingPrimaryCta: 'Iniciar la conversación',
       closingSecondaryCta: 'Llamar ahora',
+      ctaHeadline: '¿Necesita Personal Confiable? Podemos Ayudar.',
+      ctaDescription: 'Obtenga candidatos calificados y preseleccionados rápidamente. Desde cobertura temporal hasta contrataciones permanentes, lo manejamos todo.',
+      ctaTrust: 'Confiado por más de 500 empresas en la región DMV.',
     },
     testimonials: {
       title: 'Lo Que Dicen Nuestros Clientes',
@@ -1213,6 +1228,9 @@ export const translations: Record<Language, Translations> = {
       joinNow: 'Únase Ahora',
       dismiss: 'Tal Vez Más Tarde',
       closingSoon: 'Este mensaje se cerrará automáticamente en',
+      employerTitle: '¿Busca Soluciones de Personal?',
+      employerDescription: 'Asóciese con nosotros para encontrar talento confiable y preseleccionado para su negocio.',
+      employerCta: 'Explorar Servicios para Empleadores',
     },
     privacy: {
       title: 'Política de Privacidad',
@@ -1542,6 +1560,9 @@ export const translations: Record<Language, Translations> = {
       closingSubtitle: 'Parlez-nous de vos besoins de recrutement et nous répondrons avec un plan adapté.',
       closingPrimaryCta: 'Démarrer la conversation',
       closingSecondaryCta: 'Appeler maintenant',
+      ctaHeadline: 'Besoin de Personnel Fiable? Nous Pouvons Aider.',
+      ctaDescription: 'Obtenez des candidats qualifiés et présélectionnés rapidement. De la couverture temporaire aux embauches permanentes, nous gérons tout.',
+      ctaTrust: 'Fait confiance par plus de 500 entreprises dans la région DMV.',
     },
     testimonials: {
       title: 'Ce Que Disent Nos Clients',
@@ -1649,6 +1670,9 @@ export const translations: Record<Language, Translations> = {
       joinNow: 'Rejoindre Maintenant',
       dismiss: 'Peut-être Plus Tard',
       closingSoon: 'Ce message se fermera automatiquement dans',
+      employerTitle: 'Vous Cherchez des Solutions de Personnel?',
+      employerDescription: 'Associez-vous à nous pour trouver des talents fiables et présélectionnés pour votre entreprise.',
+      employerCta: 'Explorer les Services Employeurs',
     },
     privacy: {
       title: 'Politique de Confidentialité',

@@ -1,10 +1,11 @@
+import { useEffect } from "react"
 import { Navigation } from "@/components/Navigation"
 import { Footer } from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { Link } from "react-router-dom"
-import { ShieldCheck, Users, Clock, CheckCircle, Phone, Mail } from "lucide-react"
+import { ShieldCheck, Users, Clock, CheckCircle, Phone, Mail, Printer } from "lucide-react"
 import { EFAX_NUMBER } from "@/lib/contact-info"
 import { useLanguage } from "@/contexts/LanguageContext"
 
@@ -13,6 +14,11 @@ export function Employers() {
   const { t } = useLanguage()
   const phone = businessInfo?.contact.phone || "+13012772141"
   const email = businessInfo?.contact.email || "info@uniquestaffingprofessionals.com"
+
+  // Scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [])
   const processSteps = [
     {
       icon: ShieldCheck,
@@ -44,46 +50,70 @@ export function Employers() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               <div>
-                <p className="text-sm font-semibold text-primary mb-3">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
+                  <Users className="h-4 w-4" />
                   {t('employerPage.eyebrow')}
-                </p>
+                </div>
                 <h1 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4">
                   {t('employerPage.title')}
                 </h1>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                   {t('employerPage.subtitle')}
                 </p>
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild size="lg">
-                    <Link to="/#contact">{t('employerPage.primaryCta')}</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg">
-                    <Link to="/#apply">{t('employerPage.secondaryCta')}</Link>
-                  </Button>
+                
+                {/* Distinct CTA Section */}
+                <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6 mb-6">
+                  <h2 className="font-heading font-semibold text-lg text-foreground mb-2">
+                    {t('employerPage.ctaHeadline')}
+                  </h2>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {t('employerPage.ctaDescription')}
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild size="lg" className="shadow-lg shadow-primary/25">
+                      <Link to="/#contact">{t('employerPage.primaryCta')}</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="lg">
+                      <a href={`tel:${phone}`}>{t('employerPage.closingSecondaryCta')}</a>
+                    </Button>
+                  </div>
                 </div>
+                
+                <p className="text-sm text-muted-foreground">
+                  {t('employerPage.ctaTrust')}
+                </p>
               </div>
               <Card className="p-6 lg:p-8 border-border bg-card">
-                <h2 className="font-heading font-semibold text-xl text-foreground mb-4">
+                <h2 className="font-heading font-semibold text-xl text-foreground mb-6">
                   {t('employerPage.contactTitle')}
                 </h2>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-primary" />
-                    <a href={`tel:${phone}`} className="text-primary hover:underline">
+                <div className="space-y-4 text-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Phone className="h-5 w-5 text-primary" />
+                    </div>
+                    <a href={`tel:${phone}`} className="text-primary hover:underline font-medium">
                       {phone}
                     </a>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-primary" />
-                    <a href={`mailto:${email}`} className="text-primary hover:underline">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+                    <a href={`mailto:${email}`} className="text-primary hover:underline font-medium break-all">
                       {email}
                     </a>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-foreground">{t('employerPage.efaxLabel')}:</span>
-                    <span className="text-primary">{EFAX_NUMBER}</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Printer className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <span className="font-semibold text-foreground">{t('employerPage.efaxLabel')}: </span>
+                      <span className="text-primary font-medium">{EFAX_NUMBER}</span>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground pl-[52px]">
                     {t('employerPage.efaxNote')}
                   </p>
                 </div>

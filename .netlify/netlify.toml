@@ -1,19 +1,10 @@
 headersOrigin = "config"
 redirectsOrigin = "config"
-
-[functions]
-
-[functions."*"]
-
-[[plugins]]
-origin = "ui"
-package = "@netlify/plugin-lighthouse"
-pinned_version = "6"
-
-[plugins.inputs]
+plugins = []
 
 [build]
-publish = "E:\\cursor\\cursor-projects\\uniquestaffingprofessionals\\unique-staffing-prof\\dist"
+edge_functions = "/workspace/netlify/edge-functions"
+publish = "/workspace/dist"
 publishOrigin = "config"
 commandOrigin = "config"
 command = "npm run build"
@@ -33,6 +24,14 @@ NODE_VERSION = "20"
 
 [build.services]
 
+[[edge_functions]]
+path = "/.netlify/edge-functions/document-verify"
+function = "document-verify"
+
+[functions]
+
+[functions."*"]
+
 [[headers]]
 for = "/*"
 
@@ -41,6 +40,7 @@ X-Frame-Options = "DENY"
 X-XSS-Protection = "1; mode=block"
 X-Content-Type-Options = "nosniff"
 Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
 [[headers]]
 for = "/assets/*"
@@ -50,6 +50,12 @@ Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
 for = "/*.webp"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.woff2"
 
 [headers.values]
 Cache-Control = "public, max-age=31536000, immutable"
@@ -65,3 +71,16 @@ force = false
 [redirects.conditions]
 
 [redirects.headers]
+
+[[redirects]]
+from = "/api/*"
+to = "https://your-project.supabase.co/functions/v1/:splat"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+X-Custom-Header = "netlify-proxy"

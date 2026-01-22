@@ -121,6 +121,8 @@ export function Navigation() {
               <button
                 onClick={() => scrollToSection("hero")}
                 className="flex items-center gap-2 hover:opacity-80 transition-all duration-300 group"
+                aria-label="Go to homepage"
+                data-testid="nav-logo"
               >
                 <motion.img
                   src="/logo.webp"
@@ -150,6 +152,8 @@ export function Navigation() {
                   animate="visible"
                   variants={navItemVariants}
                   whileHover={{ y: -2 }}
+                  aria-label={`Navigate to ${item.label}`}
+                  data-testid={`nav-${item.id || item.path?.replace('/', '')}`}
                 >
                   {item.label}
                   {/* Animated underline */}
@@ -190,13 +194,12 @@ export function Navigation() {
             </motion.div>
 
             <div className="md:hidden flex items-center gap-2">
-              <LanguageToggle />
-              <ThemeToggle />
-              <SystemToggle />
               <motion.button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 text-foreground rounded-lg hover:bg-secondary/50 transition-colors"
                 aria-label={mobileMenuOpen ? t('accessibility.closeMenu') : t('accessibility.openMenu')}
+                data-testid="mobile-menu-toggle"
+                aria-expanded={mobileMenuOpen}
                 whileTap={{ scale: 0.9 }}
               >
                 <AnimatePresence mode="wait">
@@ -236,6 +239,8 @@ export function Navigation() {
               animate="visible"
               exit="hidden"
               variants={mobileMenuVariants}
+              data-testid="mobile-menu"
+              role="menu"
             >
               <div className="px-4 py-6 space-y-2">
                 {navItems.map((item, i) => (
@@ -250,6 +255,8 @@ export function Navigation() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
+                    aria-label={`Navigate to ${item.label}`}
+                    data-testid={`mobile-nav-${item.id || item.path?.replace('/', '')}`}
                   >
                     {item.label}
                   </motion.button>
@@ -276,6 +283,19 @@ export function Navigation() {
                 >
                   Admin Login
                 </motion.a>
+                
+                {/* Language and Theme Toggles in Mobile Menu */}
+                <motion.div 
+                  className="flex items-center justify-center gap-3 pt-4 mt-4 border-t border-border/50"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <span className="text-sm text-muted-foreground">{t('nav.settings') || 'Settings'}:</span>
+                  <LanguageToggle />
+                  <ThemeToggle />
+                  <SystemToggle />
+                </motion.div>
               </div>
             </motion.div>
           )}

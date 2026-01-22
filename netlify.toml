@@ -1,34 +1,18 @@
+# Netlify Configuration for Unique Staffing Professionals
+
 [build]
   command = "npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_FLAGS = "--legacy-peer-deps"
 
-# Development context overrides
-[context.deploy-preview]
-  command = "npm run build"
+# Edge Functions
+[[edge_functions]]
+  path = "/.netlify/edge-functions/document-verify"
+  function = "document-verify"
 
-[context.branch-deploy]
-  command = "npm run build"
-
-# SPA routing - redirect all routes to index.html
-# Without 'force = true', Netlify will serve existing files first
-# This redirect only applies when the requested file doesn't exist
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# API proxy to Supabase Edge Functions (if needed)
-# [[redirects]]
-#   from = "/api/*"
-#   to = "https://your-project.supabase.co/functions/v1/:splat"
-#   status = 200
-#   force = true
-
-# Security headers
+# Security Headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -39,7 +23,7 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'"
 
-# Static asset caching (1 year with immutable)
+# Cache static assets
 [[headers]]
   for = "/assets/*"
   [headers.values]
@@ -55,21 +39,18 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# SEO files - shorter cache for updates
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-    Content-Type = "application/xml; charset=utf-8"
+# SPA fallback for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
 
-[[headers]]
-  for = "/robots.txt"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/openapi.yaml"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
-    Content-Type = "application/x-yaml; charset=utf-8"
-    Access-Control-Allow-Origin = "*"
+# Note: API proxy to Supabase edge functions can be enabled by uncommenting below
+# and replacing with your actual Supabase project URL
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://<YOUR_SUPABASE_PROJECT_ID>.supabase.co/functions/v1/:splat"
+#   status = 200
+#   force = true
+#   headers = {X-Custom-Header = "netlify-proxy"}
