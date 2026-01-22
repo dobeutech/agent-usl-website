@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { List, X } from "@phosphor-icons/react"
 import { ThemeToggle, SystemToggle } from "@/components/ThemeToggle"
@@ -54,7 +54,7 @@ export function Navigation() {
     { label: t('nav.employers'), path: "/employers", type: "route" },
   ]
 
-  const navItemVariants = {
+  const navItemVariants: Variants = {
     hidden: { opacity: 0, y: -10 },
     visible: (i: number) => ({
       opacity: 1,
@@ -62,18 +62,18 @@ export function Navigation() {
       transition: {
         delay: i * 0.1,
         duration: 0.5,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     })
   }
 
-  const mobileMenuVariants = {
+  const mobileMenuVariants: Variants = {
     hidden: { 
       opacity: 0, 
       height: 0,
       transition: {
         duration: 0.3,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     },
     visible: { 
@@ -81,7 +81,7 @@ export function Navigation() {
       height: 'auto',
       transition: {
         duration: 0.4,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     }
   }
