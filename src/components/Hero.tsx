@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkle, Users, Building, Trophy } from "@phosphor-icons/react"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { motion, useScroll, useTransform, useInView, Variants } from "framer-motion"
 
 export function Hero() {
   const { t } = useLanguage()
@@ -13,7 +13,7 @@ export function Hero() {
   const y = useTransform(scrollY, [0, 500], [0, 150])
   const opacity = useTransform(scrollY, [0, 400], [1, 0])
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -24,7 +24,7 @@ export function Hero() {
     }
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
     visible: {
       opacity: 1,
@@ -32,12 +32,12 @@ export function Hero() {
       filter: "blur(0px)",
       transition: {
         duration: 0.8,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     }
   }
 
-  const floatVariants = {
+  const floatVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8, y: 20 },
     visible: {
       opacity: 1,
@@ -45,7 +45,7 @@ export function Hero() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1] as const
       }
     }
   }

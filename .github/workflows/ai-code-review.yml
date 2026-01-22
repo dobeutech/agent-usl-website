@@ -51,6 +51,7 @@ jobs:
             - TypeScript type safety
             - Accessibility concerns
           max_tokens: 4000
+          allowed_bots: 'cursor'
         continue-on-error: true
 
       - name: Capture Claude review result
