@@ -285,13 +285,12 @@ export function Navigation() {
                 </motion.a>
                 
                 {/* Language and Theme Toggles in Mobile Menu */}
-                <motion.div 
+                <motion.div
                   className="flex items-center justify-center gap-3 pt-4 mt-4 border-t border-border/50"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <span className="text-sm text-muted-foreground">{t('nav.settings') || 'Settings'}:</span>
                   <LanguageToggle />
                   <ThemeToggle />
                   <SystemToggle />

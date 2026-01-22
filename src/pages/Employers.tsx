@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { Link } from "react-router-dom"
-import { ShieldCheck, Users, Clock, CheckCircle, Phone, Mail, Printer } from "lucide-react"
+import { ShieldCheck, Users, Clock, CheckCircle, Phone, Mail, Printer, Sparkles, ShoppingCart, Factory, Headphones } from "lucide-react"
 import { EFAX_NUMBER } from "@/lib/contact-info"
 import { useLanguage } from "@/contexts/LanguageContext"
 
@@ -19,6 +19,14 @@ export function Employers() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [])
+  const industries = [
+    { icon: Sparkles, title: t('industries.janitorial') },
+    { icon: Users, title: t('industries.humanResources') },
+    { icon: ShoppingCart, title: t('industries.retailSales') },
+    { icon: Headphones, title: t('industries.callCenter') },
+    { icon: Factory, title: t('industries.industrial') },
+  ]
+
   const processSteps = [
     {
       icon: ShieldCheck,
@@ -79,9 +87,31 @@ export function Employers() {
                   </div>
                 </div>
                 
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground mb-8">
                   {t('employerPage.ctaTrust')}
                 </p>
+
+                {/* Industries We Serve Chart */}
+                <div className="mt-6">
+                  <h3 className="font-heading font-semibold text-lg text-foreground mb-4">
+                    {t('employerPage.industriesTitle')}
+                  </h3>
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 mb-4">
+                    {industries.map((industry) => (
+                      <div key={industry.title} className="flex flex-col items-center text-center">
+                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-2">
+                          <industry.icon className="h-6 w-6 text-primary" />
+                        </div>
+                        <span className="text-xs text-muted-foreground font-medium leading-tight">
+                          {industry.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-sm text-primary font-medium">
+                    {t('employerPage.industriesCta')}
+                  </p>
+                </div>
               </div>
               <Card className="p-6 lg:p-8 border-border bg-card">
                 <h2 className="font-heading font-semibold text-xl text-foreground mb-6">

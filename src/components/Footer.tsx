@@ -60,6 +60,7 @@ export function Footer() {
     businessInfo.contact.phone && { icon: Phone, href: `tel:${businessInfo.contact.phone}`, label: "Call us" },
     businessInfo.contact.email && { icon: Mail, href: `mailto:${businessInfo.contact.email}`, label: "Email us" },
     businessInfo.contact.textLine && { icon: MessageSquare, href: `sms:${businessInfo.contact.textLine}`, label: "Text us" },
+    { icon: WhatsappLogo, href: WHATSAPP_LINK, label: "Chat on WhatsApp", external: true },
     { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100090234361028", label: "Follow us on Facebook", external: true }
   ].filter(Boolean) as { icon: typeof Phone; href: string; label: string; external?: boolean }[]
 
@@ -110,8 +111,8 @@ export function Footer() {
             
             {/* Company Info */}
             <motion.div className="lg:col-span-2 relative" variants={itemVariants}>
-              {/* Background overlay for better text visibility - increased opacity for mobile */}
-              <div className="absolute inset-0 -m-4 p-4 bg-black/30 rounded-2xl backdrop-blur-md" />
+              {/* Background overlay for better text visibility - matching footer background */}
+              <div className="absolute inset-0 -m-4 p-4 bg-primary-foreground/10 rounded-2xl backdrop-blur-sm" />
               
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-6">

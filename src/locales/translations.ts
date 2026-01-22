@@ -235,6 +235,8 @@ export interface Translations {
     ctaHeadline: string
     ctaDescription: string
     ctaTrust: string
+    industriesTitle: string
+    industriesCta: string
   }
   cookieConsent: {
     title: string
@@ -691,7 +693,9 @@ export const translations: Record<Language, Translations> = {
       closingSecondaryCta: 'Call now',
       ctaHeadline: 'Need Reliable Staff? We Can Help.',
       ctaDescription: 'Get pre-screened, qualified candidates delivered fast. From temporary coverage to permanent hires, we handle it all.',
-      ctaTrust: 'Trusted by 500+ companies across the DMV region.',
+      ctaTrust: 'Trusted by 500+ companies across various industries and states we serve.',
+      industriesTitle: 'Industries We Serve',
+      industriesCta: "Don't see your industry? We still can help! Reach out to us and we can provide a tailored solution for you!",
     },
     cookieConsent: {
       title: 'We Value Your Privacy',
@@ -1146,7 +1150,9 @@ export const translations: Record<Language, Translations> = {
       closingSecondaryCta: 'Llamar ahora',
       ctaHeadline: '¿Necesita Personal Confiable? Podemos Ayudar.',
       ctaDescription: 'Obtenga candidatos calificados y preseleccionados rápidamente. Desde cobertura temporal hasta contrataciones permanentes, lo manejamos todo.',
-      ctaTrust: 'Confiado por más de 500 empresas en la región DMV.',
+      ctaTrust: 'Confiado por más de 500 empresas en diversas industrias y estados que servimos.',
+      industriesTitle: 'Industrias Que Servimos',
+      industriesCta: '¿No ve su industria? ¡Aún podemos ayudar! Contáctenos y podemos proporcionarle una solución personalizada.',
     },
     testimonials: {
       title: 'Lo Que Dicen Nuestros Clientes',
@@ -1601,7 +1607,9 @@ export const translations: Record<Language, Translations> = {
       closingSecondaryCta: 'Appeler maintenant',
       ctaHeadline: 'Besoin de Personnel Fiable? Nous Pouvons Aider.',
       ctaDescription: 'Obtenez des candidats qualifiés et présélectionnés rapidement. De la couverture temporaire aux embauches permanentes, nous gérons tout.',
-      ctaTrust: 'Fait confiance par plus de 500 entreprises dans la région DMV.',
+      ctaTrust: 'Fait confiance par plus de 500 entreprises dans diverses industries et états que nous servons.',
+      industriesTitle: 'Industries Que Nous Servons',
+      industriesCta: "Vous ne voyez pas votre industrie ? Nous pouvons quand même vous aider ! Contactez-nous et nous pouvons vous fournir une solution sur mesure !",
     },
     testimonials: {
       title: 'Ce Que Disent Nos Clients',
