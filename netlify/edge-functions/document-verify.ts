@@ -96,6 +96,10 @@ function validateFileSignature(extension: string, bytes: Uint8Array): boolean {
   }
 
   return config.signatures.some(signature => {
+    // Ensure the buffer has enough bytes for signature validation
+    if (bytes.length < signature.length) {
+      return false;
+    }
     for (let i = 0; i < signature.length; i++) {
       if (bytes[i] !== signature[i]) return false;
     }
@@ -254,15 +258,64 @@ export default async function handler(request: Request, context: Context): Promi
 
     // Handle JSON request (metadata validation only)
     if (contentType.includes('application/json')) {
-      const body = await request.json();
-      const { filename, contentType: fileContentType, size, bucket, fileSignature } = body;
-
-      // Validate required fields
-      if (!filename || !fileContentType || size === undefined || !bucket) {
+      // Parse JSON with validation
+      let body: unknown;
+      try {
+        body = await request.json();
+      } catch {
         return new Response(
           JSON.stringify({
             valid: false,
-            error: "Missing required fields: filename, contentType, size, bucket"
+            error: "Invalid JSON payload"
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+
+      // Validate body is an object
+      if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+        return new Response(
+          JSON.stringify({
+            valid: false,
+            error: "Request body must be a JSON object"
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+
+      const { filename, contentType: fileContentType, size, bucket, fileSignature } = body as Record<string, unknown>;
+
+      // Validate required fields exist and have correct types
+      if (
+        typeof filename !== 'string' ||
+        typeof fileContentType !== 'string' ||
+        typeof size !== 'number' ||
+        typeof bucket !== 'string'
+      ) {
+        return new Response(
+          JSON.stringify({
+            valid: false,
+            error: "Missing or invalid required fields: filename (string), contentType (string), size (number), bucket (string)"
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+
+      // Validate fileSignature if provided
+      if (fileSignature !== undefined && !Array.isArray(fileSignature)) {
+        return new Response(
+          JSON.stringify({
+            valid: false,
+            error: "fileSignature must be an array of numbers"
           }),
           {
             status: 400,

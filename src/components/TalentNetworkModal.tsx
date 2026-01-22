@@ -17,11 +17,13 @@ export function TalentNetworkModal() {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    // Check for test trigger via URL parameter
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('showModal') === 'true') {
-      setIsOpen(true)
-      return
+    // Only enable the test trigger in development mode
+    if (import.meta.env.DEV) {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('showModal') === 'true') {
+        setIsOpen(true)
+        return
+      }
     }
 
     // Check if user has dismissed the modal recently

@@ -141,18 +141,29 @@ export function validateFileSize(file: File, maxSizeMB: number): boolean {
  * Reads the first bytes of a file to get its signature (magic bytes)
  * @param file - The file to read
  * @param numBytes - Number of bytes to read (default 8)
- * @returns Array of byte values
+ * @returns Array of byte values (empty array for empty files)
  */
 export async function getFileSignature(file: File, numBytes: number = 8): Promise<number[]> {
+  // Handle empty files
+  if (file.size === 0) {
+    return []
+  }
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => {
+      // Handle null result case
+      if (reader.result === null) {
+        resolve([])
+        return
+      }
       const arrayBuffer = reader.result as ArrayBuffer
       const bytes = new Uint8Array(arrayBuffer)
       resolve(Array.from(bytes))
     }
     reader.onerror = () => reject(reader.error)
-    reader.readAsArrayBuffer(file.slice(0, numBytes))
+    // Read only up to the available bytes or numBytes, whichever is smaller
+    reader.readAsArrayBuffer(file.slice(0, Math.min(numBytes, file.size)))
   })
 }
 
@@ -230,7 +241,18 @@ export async function verifyDocumentServerSide(
       })
     })
 
+    // Check if response is valid JSON before parsing
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      console.warn('Edge function returned non-JSON response, falling back to client-side validation')
+      return performClientSideValidation(file, bucket)
+    }
+
+    // Handle non-2xx responses gracefully
     const result = await response.json()
+    
+    // Even non-200 responses from the edge function contain valid JSON with error info
+    // so we can return them directly
     return result
 
   } catch (error) {
