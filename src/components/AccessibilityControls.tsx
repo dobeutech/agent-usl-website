@@ -199,10 +199,10 @@ export function AccessibilityControls() {
         <SheetContent className="w-full sm:max-w-md overflow-y-auto" data-testid="accessibility-panel">
           <SheetHeader>
             <SheetTitle className="text-xl font-heading">
-              {t('accessibility.title') || 'Accessibility Settings'}
+              {t('accessibility.title')}
             </SheetTitle>
             <SheetDescription>
-              {t('accessibility.description') || 'Customize your viewing experience to meet your accessibility needs.'}
+              {t('accessibility.description')}
             </SheetDescription>
           </SheetHeader>
 
@@ -210,7 +210,7 @@ export function AccessibilityControls() {
             {/* Font Size */}
             <Card className="p-4">
               <Label className="text-base font-medium mb-3 block">
-                {t('accessibility.fontSize') || 'Text Size'}: {settings.fontSize}%
+                {t('accessibility.fontSize')}: {settings.fontSize}%
               </Label>
               <Slider
                 value={[settings.fontSize]}
@@ -232,12 +232,12 @@ export function AccessibilityControls() {
             {/* Toggle Settings */}
             <Card className="p-4 space-y-4">
               <h3 className="font-medium text-foreground mb-2">
-                {t('accessibility.visualSettings') || 'Visual Settings'}
+                {t('accessibility.visualSettings')}
               </h3>
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="highContrast" className="text-sm cursor-pointer flex-1">
-                  {t('accessibility.highContrast') || 'High Contrast'}
+                  {t('accessibility.highContrast')}
                 </Label>
                 <Switch
                   id="highContrast"
@@ -248,7 +248,7 @@ export function AccessibilityControls() {
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="reducedMotion" className="text-sm cursor-pointer flex-1">
-                  {t('accessibility.reducedMotion') || 'Reduce Motion'}
+                  {t('accessibility.reducedMotion')}
                 </Label>
                 <Switch
                   id="reducedMotion"
@@ -259,7 +259,7 @@ export function AccessibilityControls() {
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="dyslexiaFont" className="text-sm cursor-pointer flex-1">
-                  {t('accessibility.dyslexiaFont') || 'Dyslexia-Friendly Font'}
+                  {t('accessibility.dyslexiaFont')}
                 </Label>
                 <Switch
                   id="dyslexiaFont"
@@ -270,7 +270,7 @@ export function AccessibilityControls() {
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="underlineLinks" className="text-sm cursor-pointer flex-1">
-                  {t('accessibility.underlineLinks') || 'Underline All Links'}
+                  {t('accessibility.underlineLinks')}
                 </Label>
                 <Switch
                   id="underlineLinks"
@@ -283,12 +283,12 @@ export function AccessibilityControls() {
             {/* Interaction Settings */}
             <Card className="p-4 space-y-4">
               <h3 className="font-medium text-foreground mb-2">
-                {t('accessibility.interactionSettings') || 'Interaction Settings'}
+                {t('accessibility.interactionSettings')}
               </h3>
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="largeTargets" className="text-sm cursor-pointer flex-1">
-                  {t('accessibility.largeTargets') || 'Large Click Targets'}
+                  {t('accessibility.largeTargets')}
                 </Label>
                 <Switch
                   id="largeTargets"
@@ -299,7 +299,7 @@ export function AccessibilityControls() {
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="focusHighlight" className="text-sm cursor-pointer flex-1">
-                  {t('accessibility.focusHighlight') || 'Enhanced Focus Highlight'}
+                  {t('accessibility.focusHighlight')}
                 </Label>
                 <Switch
                   id="focusHighlight"
@@ -315,12 +315,12 @@ export function AccessibilityControls() {
               onClick={resetSettings}
               className="w-full"
             >
-              {t('accessibility.reset') || 'Reset to Defaults'}
+              {t('accessibility.reset')}
             </Button>
 
             {/* Help Text */}
             <p className="text-xs text-muted-foreground text-center">
-              {t('accessibility.helpText') || 'Settings are saved automatically and will persist across sessions.'}
+              {t('accessibility.helpText')}
             </p>
           </div>
         </SheetContent>

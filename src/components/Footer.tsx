@@ -110,10 +110,10 @@ export function Footer() {
             
             {/* Company Info */}
             <motion.div className="lg:col-span-2 relative" variants={itemVariants}>
-              {/* Background overlay for better text visibility */}
-              <div className="absolute inset-0 -m-4 p-4 bg-black/10 rounded-2xl backdrop-blur-sm" />
+              {/* Background overlay for better text visibility - increased opacity for mobile */}
+              <div className="absolute inset-0 -m-4 p-4 bg-black/30 rounded-2xl backdrop-blur-md" />
               
-              <div className="relative">
+              <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-6">
                   <motion.img
                     src="/logo.webp"
@@ -123,7 +123,7 @@ export function Footer() {
                     transition={{ type: "spring", stiffness: 300, damping: 15 }}
                   />
                   <h3 
-                    className="font-heading font-bold text-xl sm:text-2xl text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_40%)]" 
+                    className="font-heading font-bold text-xl sm:text-2xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]" 
                     itemProp="name"
                     data-testid="footer-company-name"
                   >
@@ -131,14 +131,14 @@ export function Footer() {
                   </h3>
                 </div>
                 <p 
-                  className="text-white text-sm sm:text-base mb-4 leading-relaxed max-w-md font-medium [text-shadow:_0_1px_3px_rgb(0_0_0_/_50%)]" 
+                  className="text-white text-sm sm:text-base mb-4 leading-relaxed max-w-md font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]" 
                   itemProp="description"
                   data-testid="footer-tagline"
                 >
                   {t('footer.tagline')}
                 </p>
               {businessInfo.ceo && (
-                <p className="text-primary-foreground/80 text-sm mb-6">
+                <p className="text-white/90 text-sm mb-6 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
                   CEO: {businessInfo.ceo}
                 </p>
               )}

@@ -322,6 +322,19 @@ export interface Translations {
     closeMenu: string
     languageChanged: string
     themeChanged: string
+    title: string
+    description: string
+    fontSize: string
+    visualSettings: string
+    highContrast: string
+    reducedMotion: string
+    dyslexiaFont: string
+    underlineLinks: string
+    interactionSettings: string
+    largeTargets: string
+    focusHighlight: string
+    reset: string
+    helpText: string
   }
   jobs: {
     title: string
@@ -766,6 +779,19 @@ export const translations: Record<Language, Translations> = {
       closeMenu: 'Close navigation menu',
       languageChanged: 'Language changed to',
       themeChanged: 'Theme changed to',
+      title: 'Accessibility Settings',
+      description: 'Customize your viewing experience to meet your accessibility needs.',
+      fontSize: 'Text Size',
+      visualSettings: 'Visual Settings',
+      highContrast: 'High Contrast',
+      reducedMotion: 'Reduce Motion',
+      dyslexiaFont: 'Dyslexia-Friendly Font',
+      underlineLinks: 'Underline All Links',
+      interactionSettings: 'Interaction Settings',
+      largeTargets: 'Large Click Targets',
+      focusHighlight: 'Enhanced Focus Highlight',
+      reset: 'Reset to Defaults',
+      helpText: 'Settings are saved automatically and will persist across sessions.',
     },
     jobs: {
       title: 'Current Job Openings',
@@ -1190,6 +1216,19 @@ export const translations: Record<Language, Translations> = {
       closeMenu: 'Cerrar menú de navegación',
       languageChanged: 'Idioma cambiado a',
       themeChanged: 'Tema cambiado a',
+      title: 'Configuración de Accesibilidad',
+      description: 'Personalice su experiencia de visualización para satisfacer sus necesidades de accesibilidad.',
+      fontSize: 'Tamaño del Texto',
+      visualSettings: 'Configuración Visual',
+      highContrast: 'Alto Contraste',
+      reducedMotion: 'Reducir Movimiento',
+      dyslexiaFont: 'Fuente para Dislexia',
+      underlineLinks: 'Subrayar Todos los Enlaces',
+      interactionSettings: 'Configuración de Interacción',
+      largeTargets: 'Objetivos de Clic Grandes',
+      focusHighlight: 'Resaltado de Enfoque Mejorado',
+      reset: 'Restablecer Valores Predeterminados',
+      helpText: 'La configuración se guarda automáticamente y persistirá entre sesiones.',
     },
     cookieConsent: {
       title: 'Valoramos Su Privacidad',
@@ -1632,6 +1671,19 @@ export const translations: Record<Language, Translations> = {
       closeMenu: 'Fermer le menu de navigation',
       languageChanged: 'Langue changée en',
       themeChanged: 'Thème changé en',
+      title: 'Paramètres d\'Accessibilité',
+      description: 'Personnalisez votre expérience de visualisation pour répondre à vos besoins d\'accessibilité.',
+      fontSize: 'Taille du Texte',
+      visualSettings: 'Paramètres Visuels',
+      highContrast: 'Contraste Élevé',
+      reducedMotion: 'Réduire les Mouvements',
+      dyslexiaFont: 'Police pour la Dyslexie',
+      underlineLinks: 'Souligner Tous les Liens',
+      interactionSettings: 'Paramètres d\'Interaction',
+      largeTargets: 'Grandes Cibles de Clic',
+      focusHighlight: 'Mise en Évidence du Focus Améliorée',
+      reset: 'Réinitialiser les Paramètres',
+      helpText: 'Les paramètres sont enregistrés automatiquement et persistent entre les sessions.',
     },
     cookieConsent: {
       title: 'Nous Valorisons Votre Vie Privée',
