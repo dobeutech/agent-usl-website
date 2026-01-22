@@ -38,8 +38,16 @@ const results = {
   tests: []
 };
 
+// Valid status values for test results
+const VALID_STATUSES = ['passed', 'failed', 'skipped'];
+
 // Helper function to log test results
 function logResult(testName, status, details = '') {
+  // Validate status to prevent corrupting summary counters
+  if (!VALID_STATUSES.includes(status)) {
+    console.warn(`Invalid test status "${status}" for "${testName}", defaulting to "failed"`);
+    status = 'failed';
+  }
   const emoji = status === 'passed' ? '✅' : status === 'failed' ? '❌' : '⏭️';
   console.log(`${emoji} ${testName}${details ? ` - ${details}` : ''}`);
   results[status]++;
@@ -302,9 +310,13 @@ async function testThemeSwitching(page, device) {
     } else {
       // Check if theme is applied via data attribute instead
       const appliedTheme = await page.evaluate(() => {
-        return document.documentElement.getAttribute('data-theme') ||
-               document.documentElement.classList.contains('dark') ? 'dark' : 
-               document.documentElement.classList.contains('light') ? 'light' : null;
+        // Check data-theme attribute first
+        const dataTheme = document.documentElement.getAttribute('data-theme');
+        if (dataTheme) return dataTheme;
+        // Fall back to checking CSS classes
+        if (document.documentElement.classList.contains('dark')) return 'dark';
+        if (document.documentElement.classList.contains('light')) return 'light';
+        return null;
       });
       if (appliedTheme) {
         logResult('THEME-3: Theme persistence', 'passed', `Applied: ${appliedTheme}`);
@@ -933,9 +945,9 @@ async function runAllTests() {
     tests: results.tests
   };
 
-  // Write report to file
-  const fs = await import('fs');
-  fs.writeFileSync('test-report.json', JSON.stringify(report, null, 2));
+  // Write report to file using async fs.promises API
+  const { writeFile } = await import('fs/promises');
+  await writeFile('test-report.json', JSON.stringify(report, null, 2));
   console.log('\n📄 Report saved to test-report.json');
 
   // Exit with error code if there were failures

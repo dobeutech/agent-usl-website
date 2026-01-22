@@ -55,12 +55,13 @@ export function Footer() {
     }
   }
 
+  // Filter out links with missing contact info to avoid invalid hrefs like "tel:undefined"
   const socialLinks = [
-    { icon: Phone, href: `tel:${businessInfo.contact.phone}`, label: "Call us" },
-    { icon: Mail, href: `mailto:${businessInfo.contact.email}`, label: "Email us" },
-    { icon: MessageSquare, href: `sms:${businessInfo.contact.textLine}`, label: "Text us" },
+    businessInfo.contact.phone && { icon: Phone, href: `tel:${businessInfo.contact.phone}`, label: "Call us" },
+    businessInfo.contact.email && { icon: Mail, href: `mailto:${businessInfo.contact.email}`, label: "Email us" },
+    businessInfo.contact.textLine && { icon: MessageSquare, href: `sms:${businessInfo.contact.textLine}`, label: "Text us" },
     { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100090234361028", label: "Follow us on Facebook", external: true }
-  ]
+  ].filter(Boolean) as { icon: typeof Phone; href: string; label: string; external?: boolean }[]
 
   return (
     <>
