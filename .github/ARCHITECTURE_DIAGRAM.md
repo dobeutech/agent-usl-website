@@ -150,43 +150,104 @@ graph TD
 
 ## Data Flow
 
+### Flow 1: Metadata-First Validation (Current Implementation)
+
+This flow validates file metadata (type, size, signature) via JSON before upload:
+
 ```mermaid
 sequenceDiagram
     participant User
     participant UI as React UI
     participant EF as Edge Functions
-    participant Supabase
-    participant DB as PostgreSQL
     participant Storage
+    participant DB as PostgreSQL
 
-    Note over User, Storage: Application Submission Flow
+    Note over User, DB: Application Submission with Metadata Validation
     
     User->>UI: Fill application form
     UI->>UI: Client-side validation
-    User->>UI: Upload resume
-    UI->>EF: document-verify (validate file)
-    EF-->>UI: Validation result
+    User->>UI: Select resume file
+    
+    Note right of UI: Read file signature (magic bytes)
+    UI->>UI: getFileSignature(file)
+    
+    UI->>EF: POST /document-verify<br/>JSON: {filename, contentType, size, bucket, fileSignature}
+    EF->>EF: Validate extension
+    EF->>EF: Check MIME type
+    EF->>EF: Verify size limits
+    EF->>EF: Compare file signature
+    EF-->>UI: {valid: true/false, details/error}
+    
+    alt Valid file metadata
+        UI->>Storage: Upload resume file
+        Storage-->>UI: Storage path
+        UI->>DB: Insert applicant record
+        DB-->>UI: Applicant ID
+        UI->>User: Show confirmation
+    else Invalid file
+        UI->>User: Show validation error
+    end
+```
+
+### Flow 2: Direct File Upload Validation (Alternative)
+
+This flow uploads the file directly to the edge function for validation:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as React UI
+    participant EF as Edge Functions
+    participant Storage
+    participant DB as PostgreSQL
+
+    Note over User, DB: Application Submission with Direct Upload
+    
+    User->>UI: Fill application form
+    User->>UI: Select resume file
+    
+    UI->>EF: POST /document-verify<br/>multipart/form-data: {file, bucket}
+    EF->>EF: Extract file from FormData
+    EF->>EF: Read file into memory
+    EF->>EF: Validate extension & MIME
+    EF->>EF: Check file signature (magic bytes)
+    EF->>EF: Scan for malicious patterns
+    EF-->>UI: {valid: true/false, details/error}
     
     alt Valid file
-        UI->>Storage: Upload resume
+        UI->>Storage: Upload to Supabase Storage
         Storage-->>UI: Storage path
         UI->>DB: Insert applicant
         DB-->>UI: Applicant ID
-        UI->>Supabase: Log email verification
-        Supabase-->>UI: Success
         UI->>User: Show confirmation
     else Invalid file
-        UI->>User: Show error
+        UI->>User: Show validation error
     end
+```
 
-    Note over User, Storage: Admin Dashboard Flow
+### Admin Dashboard Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as React UI
+    participant Supabase
+    participant DB as PostgreSQL
+
+    Note over User, DB: Admin Authentication & Dashboard
     
-    User->>UI: Login request
-    UI->>Supabase: Authenticate
-    Supabase-->>UI: Session token
-    UI->>DB: Fetch applicants
+    User->>UI: Navigate to /admin/login
+    User->>UI: Enter credentials
+    UI->>Supabase: signInWithPassword(email, password)
+    Supabase-->>UI: Session token + user data
+    UI->>UI: Store session in AuthContext
+    UI->>User: Redirect to /admin/dashboard
+    
+    UI->>DB: Fetch applicants (with RLS)
     DB-->>UI: Applicant list
-    UI->>User: Display dashboard
+    UI->>DB: Fetch analytics data
+    DB-->>UI: Visitor analytics
+    UI->>User: Display dashboard with stats
 ```
 
 ## State Management
