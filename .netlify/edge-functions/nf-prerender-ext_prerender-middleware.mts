@@ -49,7 +49,8 @@ var config = {
     // Exclude development paths of Vite/React
     "^/@.*$",
     // Exclude common framework and API paths
-    "^/(api|_next|_nuxt|_astro|_serverFn|static|_ipx)/.*$"
+    // eslint-disable-next-line no-useless-escape
+    "^/(api|_next|_nuxt|_astro|_serverFn|static|_ipx|.netlify)/.*$"
   ],
   method: "GET",
   header: {

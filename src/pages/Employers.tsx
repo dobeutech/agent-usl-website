@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { Link } from "react-router-dom"
-import { ShieldCheck, Users, Clock, CheckCircle, Phone, Mail, Printer } from "lucide-react"
+import { ShieldCheck, Users, Clock, CheckCircle, Phone, Mail, Printer, Sparkles, HeadphonesIcon, Factory, ShoppingBag, Building2 } from "lucide-react"
 import { EFAX_NUMBER } from "@/lib/contact-info"
 import { useLanguage } from "@/contexts/LanguageContext"
 
@@ -119,6 +119,48 @@ export function Employers() {
                 </div>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* Industries We Serve Section */}
+        <section className="py-12 lg:py-16 bg-muted/30">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="font-heading font-bold text-2xl lg:text-3xl text-foreground mb-2">
+                {t('employerPage.industriesTitle')}
+              </h2>
+              <p className="text-muted-foreground text-sm lg:text-base">
+                {t('employerPage.industriesSubtitle')}
+              </p>
+            </div>
+            
+            {/* Industries Grid - 3 columns on mobile */}
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-4 lg:gap-6 mb-6">
+              {[
+                { icon: Sparkles, name: t('industries.janitorial') },
+                { icon: Building2, name: t('industries.humanResources') },
+                { icon: ShoppingBag, name: t('industries.retailSales') },
+                { icon: HeadphonesIcon, name: t('industries.callCenter') },
+                { icon: Factory, name: t('industries.industrial') },
+              ].map((industry) => (
+                <div 
+                  key={industry.name} 
+                  className="flex flex-col items-center text-center p-3 lg:p-4 rounded-xl bg-background border border-border/50 hover:border-primary/30 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2 lg:mb-3">
+                    <industry.icon className="h-5 w-5 lg:h-6 lg:w-6 text-primary" />
+                  </div>
+                  <span className="text-xs lg:text-sm font-medium text-foreground leading-tight">
+                    {industry.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Not listed message */}
+            <p className="text-center text-sm text-muted-foreground italic max-w-2xl mx-auto">
+              {t('employerPage.industriesNotListed')}
+            </p>
           </div>
         </section>
 

@@ -1,6 +1,5 @@
 headersOrigin = "config"
 redirectsOrigin = "config"
-plugins = []
 
 [build]
 edge_functions = "/workspace/netlify/edge-functions"
@@ -32,6 +31,13 @@ function = "document-verify"
 
 [functions."*"]
 
+[[plugins]]
+origin = "ui"
+package = "@netlify/plugin-lighthouse"
+pinned_version = "6"
+
+[plugins.inputs]
+
 [[headers]]
 for = "/*"
 
@@ -41,6 +47,7 @@ X-XSS-Protection = "1; mode=block"
 X-Content-Type-Options = "nosniff"
 Referrer-Policy = "strict-origin-when-cross-origin"
 Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'"
 
 [[headers]]
 for = "/assets/*"
@@ -71,16 +78,3 @@ force = false
 [redirects.conditions]
 
 [redirects.headers]
-
-[[redirects]]
-from = "/api/*"
-to = "https://your-project.supabase.co/functions/v1/:splat"
-status = 200.0
-force = true
-
-[redirects.query]
-
-[redirects.conditions]
-
-[redirects.headers]
-X-Custom-Header = "netlify-proxy"

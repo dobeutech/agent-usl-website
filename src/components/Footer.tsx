@@ -60,8 +60,9 @@ export function Footer() {
     businessInfo.contact.phone && { icon: Phone, href: `tel:${businessInfo.contact.phone}`, label: "Call us" },
     businessInfo.contact.email && { icon: Mail, href: `mailto:${businessInfo.contact.email}`, label: "Email us" },
     businessInfo.contact.textLine && { icon: MessageSquare, href: `sms:${businessInfo.contact.textLine}`, label: "Text us" },
+    { icon: WhatsappLogo, href: WHATSAPP_LINK, label: "Message us on WhatsApp", external: true, isPhosphor: true },
     { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100090234361028", label: "Follow us on Facebook", external: true }
-  ].filter(Boolean) as { icon: typeof Phone; href: string; label: string; external?: boolean }[]
+  ].filter(Boolean) as { icon: typeof Phone | typeof WhatsappLogo; href: string; label: string; external?: boolean; isPhosphor?: boolean }[]
 
   return (
     <>
@@ -157,10 +158,18 @@ export function Footer() {
                       whileHover={{ y: -4, scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <link.icon 
-                        size={22} 
-                        className="text-white group-hover:text-white transition-colors" 
-                      />
+                      {link.isPhosphor ? (
+                        <link.icon 
+                          size={22}
+                          weight="fill"
+                          className="text-white group-hover:text-white transition-colors" 
+                        />
+                      ) : (
+                        <link.icon 
+                          size={22} 
+                          className="text-white group-hover:text-white transition-colors" 
+                        />
+                      )}
                     </motion.a>
                   ))}
                 </div>
