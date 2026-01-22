@@ -368,6 +368,35 @@ export default async function handler(request: Request, context: Context): Promi
         );
       }
 
+      // Reject empty files (mirroring multipart validation)
+      if (size === 0) {
+        return new Response(
+          JSON.stringify({
+            valid: false,
+            error: 'File is empty'
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+
+      // Enforce allowed buckets (same as multipart validation)
+      const allowedBuckets = ['resumes', 'documents'];
+      if (!allowedBuckets.includes(bucket)) {
+        return new Response(
+          JSON.stringify({
+            valid: false,
+            error: `Upload to bucket '${bucket}' is not allowed`
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+
       // Validate file signature if provided
       let signatureValid = true;
       if (fileSignature && Array.isArray(fileSignature) && fileSignature.length > 0) {
