@@ -61,28 +61,28 @@ export function AdminLogin() {
           </p>
         </div>
 
-        {showDemoMode && (
-          <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-            <div className="flex items-start gap-3">
-              <Info size={20} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-              <div className="text-sm">
-                <p className="font-medium text-amber-600 dark:text-amber-400 mb-1">Demo Mode</p>
-                <p className="text-muted-foreground mb-2">
-                  Supabase is not configured. Use demo credentials to test the dashboard.
-                </p>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={fillDemoCredentials}
-                  className="text-xs"
-                >
-                  Fill Demo Credentials
-                </Button>
-              </div>
+        {/* Demo credentials section - always visible for testing */}
+        <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+          <div className="flex items-start gap-3">
+            <Info size={20} className="text-primary flex-shrink-0 mt-0.5" />
+            <div className="text-sm">
+              <p className="font-medium text-primary mb-1">Demo Access Available</p>
+              <p className="text-muted-foreground mb-2">
+                Click below to auto-fill demo credentials and explore the admin dashboard.
+              </p>
+              <Button
+                type="button"
+                variant="default"
+                size="sm"
+                onClick={fillDemoCredentials}
+                className="text-xs"
+                data-testid="fill-demo-credentials"
+              >
+                Fill Demo Credentials
+              </Button>
             </div>
           </div>
-        )}
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
