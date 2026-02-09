@@ -214,12 +214,24 @@ export interface Translations {
     newEmployeeDescription: string
     contractorTitle: string
     contractorDescription: string
-    w2Title: string
-    w2Description: string
     assistanceTitle: string
     employerPromptTitle: string
     employerPromptDescription: string
     employerPromptCta: string
+    i9Label: string
+    reassignmentLabel: string
+    healthInsuranceLabel: string
+    ptoLabel: string
+    mdDcTitle: string
+    marylandSavingsLabel: string
+    dcFamilyLeaveLabel: string
+    securityTitle: string
+    securitySslTitle: string
+    securitySslDescription: string
+    securityAdobeTitle: string
+    securityAdobeDescription: string
+    securityTransparencyTitle: string
+    securityTransparencyDescription: string
   }
   employerPage: {
     eyebrow: string
@@ -669,13 +681,25 @@ export const translations: Record<Language, Translations> = {
       newEmployeeTitle: 'New employee forms',
       newEmployeeDescription: 'Employee application packet',
       contractorTitle: 'Contractor application',
-      contractorDescription: 'Independent contractor application',
-      w2Title: 'W-2 employee application',
-      w2Description: 'W-2 employee application packet',
+      contractorDescription: '1099 application specific for contractor employees',
       assistanceTitle: 'Questions or need assistance?',
       employerPromptTitle: 'Client looking for more info on our onboarding process?',
       employerPromptDescription: 'Visit our client section to learn how we staff, onboard, and support your team.',
       employerPromptCta: 'Go to client services',
+      i9Label: 'I-9 Form',
+      reassignmentLabel: 'Reassignment Form',
+      healthInsuranceLabel: 'Health Insurance',
+      ptoLabel: 'PTO Request Form',
+      mdDcTitle: 'Maryland / DC Current Employees',
+      marylandSavingsLabel: 'Maryland Savings',
+      dcFamilyLeaveLabel: 'DC Family Leave',
+      securityTitle: 'We Value Your Security',
+      securitySslTitle: 'Electronic Signatures',
+      securitySslDescription: 'Trusted and secured using SSL encryption to protect your sensitive documents.',
+      securityAdobeTitle: 'Adobe Acrobat Sign',
+      securityAdobeDescription: 'We use Adobe Acrobat Sign for your safety and security when signing documents.',
+      securityTransparencyTitle: 'Full Transparency',
+      securityTransparencyDescription: 'We believe in transparency and allow you to download anything you sign. All documents are available upon request — see our contact info below.',
     },
     employerPage: {
       eyebrow: 'For Clients',
@@ -1123,13 +1147,25 @@ export const translations: Record<Language, Translations> = {
       newEmployeeTitle: 'Formularios para nuevos empleados',
       newEmployeeDescription: 'Paquete de solicitud de empleo',
       contractorTitle: 'Solicitud de contratista',
-      contractorDescription: 'Solicitud de contratista independiente',
-      w2Title: 'Solicitud de empleado W-2',
-      w2Description: 'Paquete de solicitud para empleado W-2',
+      contractorDescription: 'Solicitud 1099 específica para empleados contratistas',
       assistanceTitle: '¿Preguntas o necesita ayuda?',
       employerPromptTitle: '¿Cliente buscando más información sobre nuestro proceso de incorporación?',
       employerPromptDescription: 'Visite nuestra sección para clientes y conozca cómo contratamos, incorporamos y apoyamos a su equipo.',
       employerPromptCta: 'Ir a servicios para clientes',
+      i9Label: 'Formulario I-9',
+      reassignmentLabel: 'Formulario de Reasignación',
+      healthInsuranceLabel: 'Seguro Médico',
+      ptoLabel: 'Formulario de Solicitud de PTO',
+      mdDcTitle: 'Empleados Actuales de Maryland / DC',
+      marylandSavingsLabel: 'Ahorros de Maryland',
+      dcFamilyLeaveLabel: 'Licencia Familiar de DC',
+      securityTitle: 'Valoramos Su Seguridad',
+      securitySslTitle: 'Firmas Electrónicas',
+      securitySslDescription: 'Confiable y seguro mediante cifrado SSL para proteger sus documentos confidenciales.',
+      securityAdobeTitle: 'Adobe Acrobat Sign',
+      securityAdobeDescription: 'Utilizamos Adobe Acrobat Sign para su seguridad al firmar documentos.',
+      securityTransparencyTitle: 'Transparencia Total',
+      securityTransparencyDescription: 'Creemos en la transparencia y le permitimos descargar todo lo que firma. Todos los documentos están disponibles a pedido — consulte nuestra información de contacto a continuación.',
     },
     employerPage: {
       eyebrow: 'Para Clientes',
@@ -1577,13 +1613,25 @@ export const translations: Record<Language, Translations> = {
       newEmployeeTitle: 'Formulaires pour nouveaux employés',
       newEmployeeDescription: 'Dossier de candidature',
       contractorTitle: 'Candidature de contractuel',
-      contractorDescription: 'Candidature de contractuel indépendant',
-      w2Title: 'Candidature d\'employé W-2',
-      w2Description: 'Dossier de candidature W-2',
+      contractorDescription: 'Candidature 1099 spécifique pour les employés contractuels',
       assistanceTitle: 'Des questions ou besoin d\'aide ?',
       employerPromptTitle: 'Client : besoin de plus d\'infos sur notre processus d\'intégration ?',
       employerPromptDescription: 'Visitez notre section clients pour découvrir comment nous recrutons, intégrons et soutenons votre équipe.',
       employerPromptCta: 'Accéder aux services clients',
+      i9Label: 'Formulaire I-9',
+      reassignmentLabel: 'Formulaire de Réaffectation',
+      healthInsuranceLabel: 'Assurance Maladie',
+      ptoLabel: 'Formulaire de Demande de Congé',
+      mdDcTitle: 'Employés Actuels Maryland / DC',
+      marylandSavingsLabel: 'Épargne Maryland',
+      dcFamilyLeaveLabel: 'Congé Familial DC',
+      securityTitle: 'Nous Valorisons Votre Sécurité',
+      securitySslTitle: 'Signatures Électroniques',
+      securitySslDescription: 'Fiable et sécurisé grâce au chiffrement SSL pour protéger vos documents sensibles.',
+      securityAdobeTitle: 'Adobe Acrobat Sign',
+      securityAdobeDescription: 'Nous utilisons Adobe Acrobat Sign pour votre sécurité lors de la signature de documents.',
+      securityTransparencyTitle: 'Transparence Totale',
+      securityTransparencyDescription: 'Nous croyons en la transparence et vous permettons de télécharger tout ce que vous signez. Tous les documents sont disponibles sur demande — consultez nos coordonnées ci-dessous.',
     },
     employerPage: {
       eyebrow: 'Pour les Clients',
