@@ -141,7 +141,7 @@ export function FAQ() {
                 <span className="text-lg">🏢</span>
               </div>
               <h3 className="font-heading font-semibold text-xl text-foreground">
-                For Employers
+                For Clients
               </h3>
             </div>
             <Accordion type="single" collapsible className="space-y-3">
