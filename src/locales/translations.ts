@@ -1175,7 +1175,7 @@ export const translations: Record<Language, Translations> = {
       secondaryCta: 'Explorar la red de talento',
       contactTitle: 'Opciones de contacto para clientes',
       efaxLabel: 'eFax',
-      efaxNote: 'Empleadores: envíenos un eFax para iniciar su solicitud de incorporación.',
+      efaxNote: 'Clientes: envíenos un eFax para iniciar su solicitud de incorporación.',
       processTitle: 'Nuestro proceso de incorporación',
       processSubtitle: 'Un enfoque ágil que mantiene el cumplimiento y la flexibilidad.',
       processComplianceTitle: 'Verificación I-9 y cumplimiento',
@@ -1242,7 +1242,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'Todos los derechos reservados.',
       privacy: 'Política de Privacidad',
       terms: 'Términos de Servicio',
-      employerEfaxNote: 'Empleadores: envíenos un eFax al {number}.',
+      employerEfaxNote: 'Clientes: envíenos un eFax al {number}.',
     },
     theme: {
       toggle: 'Cambiar tema',
@@ -1708,7 +1708,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'Tous droits réservés.',
       privacy: 'Politique de Confidentialité',
       terms: 'Conditions d\'Utilisation',
-      employerEfaxNote: 'Employeurs : envoyez-nous un eFax au {number}.',
+      employerEfaxNote: 'Clients : envoyez-nous un eFax au {number}.',
     },
     theme: {
       toggle: 'Changer le thème',
