@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card"
-import { Sparkles, Users, ShoppingCart, Phone, Factory } from "lucide-react"
+import { Sparkles, Users, ShoppingCart, Phone, Factory, Wrench } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { motion, useInView, Variants } from "framer-motion"
 import { useRef } from "react"
@@ -65,6 +65,12 @@ export function Services() {
       title: t('services.industrial.title'),
       description: t('services.industrial.description'),
       gradient: "from-slate-500/20 to-zinc-500/10"
+    },
+    {
+      icon: Wrench,
+      title: t('services.facilityManagement.title'),
+      description: t('services.facilityManagement.description'),
+      gradient: "from-cyan-500/20 to-sky-500/10"
     }
   ]
 
@@ -102,7 +108,7 @@ export function Services() {
 
         <motion.div
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}

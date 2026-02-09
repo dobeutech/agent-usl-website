@@ -51,10 +51,9 @@ export function Hero() {
   }
 
   const statsData = [
-    { value: "15+", label: t('hero.yearsExperience'), icon: Trophy },
-    { value: "500+", label: t('hero.companiesServed'), icon: Building },
-    { value: "5,000+", label: t('hero.placementsMade'), icon: Users },
-    { value: "98%", label: t('hero.clientSatisfaction'), icon: Sparkle }
+    { value: "20+", label: t('hero.yearsExperience'), icon: Trophy },
+    { value: "25+", label: t('hero.companiesServed'), icon: Building },
+    { value: "4,761+", label: t('hero.placementsMade'), icon: Users }
   ]
 
   const scrollToSection = (id: string) => {
@@ -129,7 +128,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8"
           >
             <Sparkle weight="fill" className="w-4 h-4" />
-            <span>Trusted by 500+ Companies</span>
+            <span>Trusted by 25+ Active Contracts</span>
           </motion.div>
 
           {/* Headline */}

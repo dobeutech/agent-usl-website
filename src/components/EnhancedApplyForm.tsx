@@ -42,6 +42,11 @@ const POSITIONS = [
   'Warehouse & Logistics',
   'Healthcare Support',
   'IT & Technology',
+  'Facilities Maintenance',
+  'Facilities HVAC Install / Repair',
+  'Construction - Painter',
+  'Construction - Dry Wall',
+  'Construction - Helper',
   'Other'
 ]
 

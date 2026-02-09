@@ -125,7 +125,7 @@ export function Navigation() {
                 data-testid="nav-logo"
               >
                 <motion.img
-                  src="/logo.webp"
+                  src="/logo.svg"
                   alt="Unique Staffing Professionals Logo"
                   className="h-10 lg:h-12 w-auto"
                   whileHover={{ scale: 1.05 }}

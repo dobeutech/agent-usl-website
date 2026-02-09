@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card"
-import { Zap, Heart, Shield, Users, Lightbulb, Handshake, Target, Award, Clock, Bus, GraduationCap, TrendingUp } from "lucide-react"
+import { Zap, Heart, Shield, Users, Lightbulb, Handshake, Target, Award, Clock, Bus, GraduationCap, TrendingUp, Headset } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 
 export function WhyChooseUs() {
@@ -68,6 +68,11 @@ const keyFeatures = [
       icon: TrendingUp,
       title: t('whyChooseUs.performanceBonuses.title'),
       description: t('whyChooseUs.performanceBonuses.description')
+    },
+    {
+      icon: Headset,
+      title: t('whyChooseUs.management24hr.title'),
+      description: t('whyChooseUs.management24hr.description')
     }
   ]
 
@@ -82,9 +87,17 @@ return (
             <p className="text-lg text-foreground/80 mb-6 leading-relaxed">
               {t('whyChooseUs.description1')}
             </p>
-            <p className="text-base text-muted-foreground leading-relaxed mb-8">
+            <p className="text-base text-muted-foreground leading-relaxed mb-4">
               {t('whyChooseUs.description2')}
             </p>
+            <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 mb-8">
+              <h4 className="font-heading font-semibold text-base text-primary mb-2">
+                {t('whyChooseUs.communityTitle')}
+              </h4>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {t('whyChooseUs.communityDescription')}
+              </p>
+            </div>
             <div className="space-y-4 mb-8">
               <h3 className="font-heading font-semibold text-xl text-foreground">{t('whyChooseUs.keyFeatures')}</h3>
               <div className="grid grid-cols-2 gap-4">

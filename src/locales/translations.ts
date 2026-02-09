@@ -53,20 +53,24 @@ export interface Translations {
       title: string
       description: string
     }
+    facilityManagement: {
+      title: string
+      description: string
+    }
   }
   industries: {
     title: string
     subtitle: string
     servingRegions: string
     janitorial: string
-    humanResources: string
+    construction: string
     retailSales: string
-    callCenter: string
+    facility: string
     industrial: string
     janitorialDesc: string
-    humanResourcesDesc: string
+    constructionDesc: string
     retailSalesDesc: string
-    callCenterDesc: string
+    facilityDesc: string
     industrialDesc: string
   }
   whyChooseUs: {
@@ -124,6 +128,12 @@ export interface Translations {
       title: string
       description: string
     }
+    management24hr: {
+      title: string
+      description: string
+    }
+    communityTitle: string
+    communityDescription: string
   }
   applyForm: {
     title: string
@@ -183,6 +193,8 @@ export interface Translations {
     trainingDescription: string
     networkTitle: string
     networkDescription: string
+    transportationTitle: string
+    transportationDescription: string
   }
   talentSplit: {
     jobSeekersTitle: string
@@ -497,26 +509,30 @@ export const translations: Record<Language, Translations> = {
         title: 'Industrial & Manufacturing',
         description: 'Production workers, warehouse staff, and manufacturing positions for operational excellence.',
       },
+      facilityManagement: {
+        title: 'Facility Management',
+        description: 'Comprehensive facility management services including maintenance, operations oversight, and building management to keep your workspace running efficiently.',
+      },
     },
     industries: {
       title: 'Where We Serve',
       subtitle: 'Professional staffing solutions across five key industries',
       servingRegions: 'Serving Washington D.C., Maryland, Virginia, Illinois, Ohio, and New Jersey',
       janitorial: 'Janitorial',
-      humanResources: 'Human Resources',
+      construction: 'Construction',
       retailSales: 'Retail & Sales',
-      callCenter: 'Call Center',
+      facility: 'Facility',
       industrial: 'Industrial',
       janitorialDesc: 'Professional cleaning and maintenance',
-      humanResourcesDesc: 'Staffing and recruitment solutions',
+      constructionDesc: 'Construction and building services',
       retailSalesDesc: 'Customer-facing positions',
-      callCenterDesc: 'Customer service specialists',
+      facilityDesc: 'Facilities management services',
       industrialDesc: 'Manufacturing and warehouse',
     },
     whyChooseUs: {
       title: 'Why Choose Unique Staffing Professionals Inc.?',
       subtitle: 'Your trusted partner in staffing excellence',
-      description1: 'Led by CEO Otniel Morilla, we are committed to expanding access to meaningful employment through innovative staffing solutions and local partnerships.',
+      description1: 'Since 2004, Otniel has been working in the staffing industry and he started Unique Staffing Professionals in 2016. The vision statement of the company is: "To inspire a worldwide movement of economic empowerment by building bridges between talent and opportunity — transforming underserved communities into thriving centers of growth, dignity, and shared success."',
       description2: 'Our community-focused approach combines comprehensive employment solutions with dedicated support services including transportation assistance, safety training programs, and performance incentives. We believe in empowering individuals and building bridges between talent and opportunity.',
       keyFeatures: 'Key Features',
       coreValues: 'Our Core Values',
@@ -568,6 +584,12 @@ export const translations: Record<Language, Translations> = {
         title: 'Performance Bonuses',
         description: 'Rewarding excellence and dedication in the workplace.',
       },
+      management24hr: {
+        title: 'Assigned 24hr Available Management Team',
+        description: 'Round-the-clock management support for all your staffing needs.',
+      },
+      communityTitle: 'Rooted in Service, Driven by Purpose',
+      communityDescription: 'We don\'t just fill jobs — we build bridges. Our team actively volunteers with organizations like the International Rescue Committee (IRC) and various Catholic Charities, standing alongside those who serve the most vulnerable. We believe that staffing is more than placement — it\'s a promise to uplift, empower, and transform lives. Whether you\'re taking your first step into the workforce or your next step toward impact, we\'re here to walk with you. Always ready. Always committed. Always community-first.',
     },
     applyForm: {
       title: 'Join Our Talent Network',
@@ -627,6 +649,8 @@ export const translations: Record<Language, Translations> = {
       trainingDescription: 'Get prepared with guided onboarding.',
       networkTitle: 'Robust employer network',
       networkDescription: 'Access growth opportunities across industries.',
+      transportationTitle: 'Transportation',
+      transportationDescription: 'Provided transportation to and from the job.',
     },
     talentSplit: {
       jobSeekersTitle: 'Join our talent pool',
@@ -939,26 +963,30 @@ export const translations: Record<Language, Translations> = {
         title: 'Industrial y Manufactura',
         description: 'Trabajadores de producción, personal de almacén y posiciones de manufactura para la excelencia operativa.',
       },
+      facilityManagement: {
+        title: 'Gestión de Instalaciones',
+        description: 'Servicios integrales de gestión de instalaciones incluyendo mantenimiento, supervisión de operaciones y administración de edificios para mantener su espacio de trabajo funcionando eficientemente.',
+      },
     },
     industries: {
       title: 'Dónde Servimos',
       subtitle: 'Soluciones profesionales de personal en cinco industrias clave',
       servingRegions: 'Sirviendo a Washington D.C., Maryland, Virginia, Illinois, Ohio y Nueva Jersey',
       janitorial: 'Servicios de Limpieza',
-      humanResources: 'Recursos Humanos',
+      construction: 'Construcción',
       retailSales: 'Ventas al Por Menor',
-      callCenter: 'Centro de Llamadas',
+      facility: 'Instalaciones',
       industrial: 'Industrial',
       janitorialDesc: 'Limpieza y mantenimiento profesional',
-      humanResourcesDesc: 'Soluciones de personal y reclutamiento',
+      constructionDesc: 'Servicios de construcción y edificación',
       retailSalesDesc: 'Posiciones de cara al cliente',
-      callCenterDesc: 'Especialistas en servicio al cliente',
+      facilityDesc: 'Servicios de gestión de instalaciones',
       industrialDesc: 'Manufactura y almacén',
     },
     whyChooseUs: {
       title: '¿Por Qué Elegir Unique Staffing Professionals Inc.?',
       subtitle: 'Su socio de confianza en excelencia de personal',
-      description1: 'Dirigidos por el CEO Otniel Morilla, estamos comprometidos a expandir el acceso a empleos significativos a través de soluciones innovadoras de personal y asociaciones locales.',
+      description1: 'Desde 2004, Otniel ha trabajado en la industria de personal y fundó Unique Staffing Professionals en 2016. La declaración de visión de la empresa es: "Inspirar un movimiento mundial de empoderamiento económico construyendo puentes entre el talento y la oportunidad — transformando comunidades desatendidas en centros prósperos de crecimiento, dignidad y éxito compartido."',
       description2: 'Nuestro enfoque centrado en la comunidad combina soluciones integrales de empleo con servicios de apoyo dedicados que incluyen asistencia de transporte, programas de capacitación en seguridad e incentivos de rendimiento. Creemos en empoderar a las personas y construir puentes entre el talento y la oportunidad.',
       keyFeatures: 'Características Clave',
       coreValues: 'Nuestros Valores Fundamentales',
@@ -1010,6 +1038,12 @@ export const translations: Record<Language, Translations> = {
         title: 'Bonos de Rendimiento',
         description: 'Recompensando la excelencia y dedicación en el lugar de trabajo.',
       },
+      management24hr: {
+        title: 'Equipo de Gestión Disponible 24 Horas',
+        description: 'Soporte de gestión las 24 horas para todas sus necesidades de personal.',
+      },
+      communityTitle: 'Arraigados en el Servicio, Impulsados por el Propósito',
+      communityDescription: 'No solo llenamos vacantes — construimos puentes. Nuestro equipo participa activamente como voluntario en organizaciones como el Comité Internacional de Rescate (IRC) y diversas organizaciones de Caridades Católicas, apoyando a quienes sirven a los más vulnerables. Creemos que el personal es más que una colocación — es una promesa de elevar, empoderar y transformar vidas. Ya sea que estés dando tu primer paso en la fuerza laboral o tu siguiente paso hacia el impacto, estamos aquí para caminar contigo. Siempre listos. Siempre comprometidos. Siempre primero la comunidad.',
     },
     applyForm: {
       title: 'Únase a Nuestra Red de Talento',
@@ -1069,6 +1103,8 @@ export const translations: Record<Language, Translations> = {
       trainingDescription: 'Prepárese con una incorporación guiada.',
       networkTitle: 'Red sólida de empleadores',
       networkDescription: 'Acceda a oportunidades de crecimiento en diversas industrias.',
+      transportationTitle: 'Transporte',
+      transportationDescription: 'Transporte proporcionado hacia y desde el trabajo.',
     },
     talentSplit: {
       jobSeekersTitle: 'Únase a nuestra bolsa de talento',
@@ -1381,26 +1417,30 @@ export const translations: Record<Language, Translations> = {
         title: 'Industriel et Fabrication',
         description: 'Travailleurs de production, personnel d\'entrepôt et postes de fabrication pour l\'excellence opérationnelle.',
       },
+      facilityManagement: {
+        title: 'Gestion des Installations',
+        description: 'Services complets de gestion des installations comprenant la maintenance, la supervision des opérations et la gestion des bâtiments pour maintenir votre espace de travail en bon fonctionnement.',
+      },
     },
     industries: {
       title: 'Où Nous Servons',
       subtitle: 'Solutions professionnelles de personnel dans cinq industries clés',
       servingRegions: 'Au Service de Washington D.C., Maryland, Virginie, Illinois, Ohio et New Jersey',
       janitorial: 'Services de Nettoyage',
-      humanResources: 'Ressources Humaines',
+      construction: 'Construction',
       retailSales: 'Commerce de Détail',
-      callCenter: 'Centre d\'Appels',
+      facility: 'Installations',
       industrial: 'Industriel',
       janitorialDesc: 'Nettoyage et entretien professionnels',
-      humanResourcesDesc: 'Solutions de personnel et recrutement',
+      constructionDesc: 'Services de construction et bâtiment',
       retailSalesDesc: 'Postes en contact avec la clientèle',
-      callCenterDesc: 'Spécialistes du service client',
+      facilityDesc: 'Services de gestion des installations',
       industrialDesc: 'Fabrication et entrepôt',
     },
     whyChooseUs: {
       title: 'Pourquoi Choisir Unique Staffing Professionals Inc.?',
       subtitle: 'Votre partenaire de confiance pour l\'excellence en recrutement',
-      description1: 'Dirigés par le PDG Otniel Morilla, nous nous engageons à élargir l\'accès à un emploi significatif grâce à des solutions de personnel innovantes et des partenariats locaux.',
+      description1: 'Depuis 2004, Otniel travaille dans l\'industrie du personnel et a fondé Unique Staffing Professionals en 2016. La vision de l\'entreprise est : « Inspirer un mouvement mondial d\'autonomisation économique en construisant des ponts entre le talent et l\'opportunité — transformant les communautés défavorisées en centres prospères de croissance, de dignité et de succès partagé. »',
       description2: 'Notre approche axée sur la communauté combine des solutions d\'emploi complètes avec des services de soutien dédiés, notamment l\'assistance au transport, des programmes de formation à la sécurité et des incitations à la performance. Nous croyons en l\'autonomisation des individus et en la construction de ponts entre le talent et l\'opportunité.',
       keyFeatures: 'Caractéristiques Clés',
       coreValues: 'Nos Valeurs Fondamentales',
@@ -1452,6 +1492,12 @@ export const translations: Record<Language, Translations> = {
         title: 'Bonus de Performance',
         description: 'Récompenser l\'excellence et le dévouement sur le lieu de travail.',
       },
+      management24hr: {
+        title: 'Équipe de Gestion Disponible 24h/24',
+        description: 'Support de gestion 24 heures sur 24 pour tous vos besoins en personnel.',
+      },
+      communityTitle: 'Enracinés dans le Service, Guidés par le But',
+      communityDescription: 'Nous ne faisons pas que pourvoir des postes — nous construisons des ponts. Notre équipe fait activement du bénévolat avec des organisations telles que le Comité International de Secours (IRC) et diverses œuvres caritatives catholiques, aux côtés de ceux qui servent les plus vulnérables. Nous croyons que le recrutement est plus qu\'un placement — c\'est une promesse d\'élever, d\'autonomiser et de transformer des vies. Que vous fassiez votre premier pas dans le monde du travail ou votre prochain pas vers l\'impact, nous sommes là pour marcher avec vous. Toujours prêts. Toujours engagés. Toujours communauté d\'abord.',
     },
     applyForm: {
       title: 'Rejoignez Notre Réseau de Talents',
@@ -1511,6 +1557,8 @@ export const translations: Record<Language, Translations> = {
       trainingDescription: 'Préparez-vous avec une intégration guidée.',
       networkTitle: 'Réseau solide d\'employeurs',
       networkDescription: 'Accédez à des opportunités de croissance dans plusieurs secteurs.',
+      transportationTitle: 'Transport',
+      transportationDescription: 'Transport fourni vers et depuis le lieu de travail.',
     },
     talentSplit: {
       jobSeekersTitle: 'Rejoignez notre vivier de talents',

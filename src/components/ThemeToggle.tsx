@@ -43,23 +43,23 @@ export function ThemeToggle() {
 
   const getThemeIcon = () => {
     if (!mounted) {
-      return <Sun className="h-4 w-4" />
+      return <Sun className="h-4 w-4 text-foreground" />
     }
 
     // If system mode is active, show the system's current theme
     if (theme === 'system') {
       return systemTheme === 'dark' ? (
-        <Moon className="h-4 w-4 transition-all duration-300" />
+        <Moon className="h-4 w-4 text-foreground transition-all duration-300" />
       ) : (
-        <Sun className="h-4 w-4 transition-all duration-300" />
+        <Sun className="h-4 w-4 text-foreground transition-all duration-300" />
       )
     }
 
     // Otherwise show the current theme
     return theme === 'dark' ? (
-      <Moon className="h-4 w-4 transition-all duration-300" />
+      <Moon className="h-4 w-4 text-foreground transition-all duration-300" />
     ) : (
-      <Sun className="h-4 w-4 transition-all duration-300" />
+      <Sun className="h-4 w-4 text-foreground transition-all duration-300" />
     )
   }
 
@@ -228,7 +228,7 @@ export function SystemToggle() {
           data-testid="theme-system"
         >
           <Monitor className={`h-4 w-4 transition-all duration-300 ${
-            theme === 'system' ? 'text-primary' : ''
+            theme === 'system' ? 'text-primary' : 'text-foreground'
           }`} />
           <span className="sr-only">{getSystemAriaLabel()}</span>
         </Button>

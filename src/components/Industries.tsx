@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { Card } from "@/components/ui/card"
-import { Sparkles, Users, ShoppingCart, Phone, Factory, MapPin } from "lucide-react"
+import { Sparkles, HardHat, ShoppingCart, Wrench, Factory, MapPin } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { motion, useInView, Variants } from "framer-motion"
 
@@ -17,9 +17,9 @@ export function Industries() {
       color: "bg-emerald-500"
     },
     {
-      icon: Users,
-      title: t('industries.humanResources'),
-      description: t('industries.humanResourcesDesc'),
+      icon: HardHat,
+      title: t('industries.construction'),
+      description: t('industries.constructionDesc'),
       color: "bg-blue-500"
     },
     {
@@ -29,9 +29,9 @@ export function Industries() {
       color: "bg-orange-500"
     },
     {
-      icon: Phone,
-      title: t('industries.callCenter'),
-      description: t('industries.callCenterDesc'),
+      icon: Wrench,
+      title: t('industries.facility'),
+      description: t('industries.facilityDesc'),
       color: "bg-purple-500"
     },
     {
