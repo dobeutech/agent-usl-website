@@ -1,7 +1,12 @@
 // src/edge-functions/prerender-middleware.mts
 var acceptContentTypes = ["text/html", "text/plain", "*/*"];
+var excludedUAs = [" Googlebot/", " bingbot/", " Amazonbot/", " Petalbot;", " GoogleOther", "AppleBot/"];
 var prerender_middleware_default = async (req, context) => {
   const originalUserAgent = req.headers.get("User-Agent") || "";
+  if (excludedUAs.some((e) => originalUserAgent.includes(e))) {
+    console.log(`Prerender middleware called by user-agent: "${originalUserAgent}" which runs Javascript, skipping prerendering`);
+    return;
+  }
   const clientIp = req.headers.get("X-Forwarded-For") || context.ip || "";
   const url = new URL(req.url);
   let logMessage = `Prerender middleware called for path: ${url.pathname}, user-agent: "${originalUserAgent}", IP: ${clientIp}`;
@@ -49,7 +54,8 @@ var config = {
     // Exclude development paths of Vite/React
     "^/@.*$",
     // Exclude common framework and API paths
-    "^/(api|_next|_nuxt|_astro|_serverFn|static|_ipx)/.*$"
+    // eslint-disable-next-line no-useless-escape
+    "^/(api|_next|_nuxt|_astro|_serverFn|static|_ipx|.netlify)/.*$"
   ],
   method: "GET",
   header: {

@@ -18,6 +18,7 @@ import { Contact } from "@/components/Contact"
 import { Footer } from "@/components/Footer"
 import { TalentNetworkModal } from "@/components/TalentNetworkModal"
 import { LiveChat } from "@/components/LiveChat"
+import { VideoHero } from "@/components/VideoHero"
 import { AnimatedBackground, FloatingOrbs } from "@/components/AnimatedBackground"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { SEOHead } from "@/components/seo/SEOHead"
@@ -102,6 +103,9 @@ export function Home() {
       {/* Animated backgrounds */}
       <AnimatedBackground particleCount={40} connectionDistance={120} />
       <FloatingOrbs />
+      
+      {/* Video Hero Intro */}
+      <VideoHero />
       
       {/* Navigation with glassmorphic effect */}
       <Navigation />

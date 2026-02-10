@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
-import { FileText, Briefcase, CheckCircle, Users, Phone, HelpCircle } from "lucide-react"
+import { FileText, Briefcase, Users, Phone, HelpCircle, ShieldCheck, FileSignature, Download, ClipboardList, Heart, Landmark, Shield, MapPin } from "lucide-react"
 import { WhatsappLogo } from "@phosphor-icons/react"
 import { useBusinessInfo } from "@/contexts/BusinessInfoContext"
 import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "@/lib/contact-info"
@@ -13,27 +13,36 @@ export function Forms() {
   const { businessInfo } = useBusinessInfo()
   const { t } = useLanguage()
   const phone = businessInfo?.contact.phone || "+13012772141"
-  const forms = [
+
+  const currentEmployeeForms = [
+    { icon: FileText, label: t('formsPage.currentEmployeeDescription') },
+    { icon: ClipboardList, label: t('formsPage.i9Label') },
+    { icon: FileSignature, label: t('formsPage.reassignmentLabel') },
+    { icon: Shield, label: t('formsPage.healthInsuranceLabel') },
+    { icon: FileText, label: t('formsPage.ptoLabel') },
+  ]
+
+  const mdDcForms = [
+    { icon: Landmark, label: t('formsPage.marylandSavingsLabel') },
+    { icon: MapPin, label: t('formsPage.dcFamilyLeaveLabel') },
+  ]
+
+  const securityItems = [
     {
-      icon: FileText,
-      title: t('formsPage.currentEmployeeTitle'),
-      description: t('formsPage.currentEmployeeDescription')
+      icon: ShieldCheck,
+      title: t('formsPage.securitySslTitle'),
+      description: t('formsPage.securitySslDescription'),
     },
     {
-      icon: Users,
-      title: t('formsPage.newEmployeeTitle'),
-      description: t('formsPage.newEmployeeDescription')
+      icon: FileSignature,
+      title: t('formsPage.securityAdobeTitle'),
+      description: t('formsPage.securityAdobeDescription'),
     },
     {
-      icon: Briefcase,
-      title: t('formsPage.contractorTitle'),
-      description: t('formsPage.contractorDescription')
+      icon: Download,
+      title: t('formsPage.securityTransparencyTitle'),
+      description: t('formsPage.securityTransparencyDescription'),
     },
-    {
-      icon: CheckCircle,
-      title: t('formsPage.w2Title'),
-      description: t('formsPage.w2Description')
-    }
   ]
 
   return (
@@ -52,23 +61,114 @@ export function Forms() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-              {forms.map((form) => (
-                <Card key={form.title} className="p-6 border-border bg-card">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <form.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h2 className="font-heading font-semibold text-xl text-foreground mb-1">
-                        {form.title}
-                      </h2>
-                      <p className="text-muted-foreground">{form.description}</p>
-                      <p className="text-xs text-muted-foreground mt-2">
-                        {t('formsPage.documentsSoon')}
-                      </p>
-                    </div>
+              {/* Current Employees */}
+              <Card className="p-6 border-border bg-card">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <FileText className="h-6 w-6 text-primary" />
                   </div>
-                </Card>
+                  <div className="flex-1">
+                    <h2 className="font-heading font-semibold text-xl text-foreground mb-2">
+                      {t('formsPage.currentEmployeeTitle')}
+                    </h2>
+                    <ul className="space-y-2">
+                      {currentEmployeeForms.map((form, index) => (
+                        <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <form.icon className="h-4 w-4 text-primary/70 flex-shrink-0" />
+                          {form.label}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-xs text-muted-foreground mt-3">
+                      {t('formsPage.documentsSoon')}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* New Employee Forms */}
+              <Card className="p-6 border-border bg-card">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Users className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="font-heading font-semibold text-xl text-foreground mb-1">
+                      {t('formsPage.newEmployeeTitle')}
+                    </h2>
+                    <p className="text-muted-foreground">{t('formsPage.newEmployeeDescription')}</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {t('formsPage.documentsSoon')}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Contractor Application */}
+              <Card className="p-6 border-border bg-card">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="font-heading font-semibold text-xl text-foreground mb-1">
+                      {t('formsPage.contractorTitle')}
+                    </h2>
+                    <p className="text-muted-foreground">{t('formsPage.contractorDescription')}</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {t('formsPage.documentsSoon')}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Maryland / DC Current Employees */}
+              <Card className="p-6 border-border bg-card">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Heart className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="font-heading font-semibold text-xl text-foreground mb-2">
+                      {t('formsPage.mdDcTitle')}
+                    </h2>
+                    <ul className="space-y-2">
+                      {mdDcForms.map((form, index) => (
+                        <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <form.icon className="h-4 w-4 text-primary/70 flex-shrink-0" />
+                          {form.label}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-xs text-muted-foreground mt-3">
+                      {t('formsPage.documentsSoon')}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* We Value Your Security Section */}
+        <section className="py-12 bg-secondary/20">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-heading font-bold text-2xl lg:text-3xl text-foreground text-center mb-8">
+              {t('formsPage.securityTitle')}
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-3">
+              {securityItems.map((item, index) => (
+                <div key={index} className="flex flex-col items-center text-center p-6">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                    <item.icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="font-heading font-semibold text-base text-foreground mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               ))}
             </div>
           </div>

@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Upload, CheckCircle, X, AlertCircle, FileText, Clock, ShieldCheck, Users } from "lucide-react"
+import { Upload, CheckCircle, X, AlertCircle, FileText, Clock, ShieldCheck, Users, Bus } from "lucide-react"
 import { WhatsappLogo } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { supabase, ApplicantInsert } from "@/lib/supabase"
@@ -42,6 +42,11 @@ const POSITIONS = [
   'Warehouse & Logistics',
   'Healthcare Support',
   'IT & Technology',
+  'Facilities Maintenance',
+  'Facilities HVAC Install / Repair',
+  'Construction - Painter',
+  'Construction - Dry Wall',
+  'Construction - Helper',
   'Other'
 ]
 
@@ -69,6 +74,11 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
       icon: Users,
       title: t('benefits.networkTitle'),
       description: t('benefits.networkDescription')
+    },
+    {
+      icon: Bus,
+      title: t('benefits.transportationTitle'),
+      description: t('benefits.transportationDescription')
     }
   ]
   const [formData, setFormData] = useState({

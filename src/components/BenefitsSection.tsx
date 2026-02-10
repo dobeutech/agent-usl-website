@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Card } from "@/components/ui/card"
-import { Suitcase, CalendarCheck, GraduationCap, ArrowsOutCardinal } from "@phosphor-icons/react"
+import { Suitcase, CalendarCheck, GraduationCap, ArrowsOutCardinal, Van } from "@phosphor-icons/react"
 import { useLanguage } from "@/contexts/LanguageContext"
 
 export function BenefitsSection() {
@@ -29,6 +29,11 @@ export function BenefitsSection() {
       icon: ArrowsOutCardinal,
       title: t('benefits.networkTitle'),
       description: t('benefits.networkDescription')
+    },
+    {
+      icon: Van,
+      title: t('benefits.transportationTitle'),
+      description: t('benefits.transportationDescription')
     }
   ]
 
@@ -52,7 +57,7 @@ export function BenefitsSection() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.title}

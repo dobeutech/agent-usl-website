@@ -110,20 +110,18 @@ export function Footer() {
             
             {/* Company Info */}
             <motion.div className="lg:col-span-2 relative" variants={itemVariants}>
-              {/* Background overlay for better text visibility */}
-              <div className="absolute inset-0 -m-4 p-4 bg-black/10 rounded-2xl backdrop-blur-sm" />
-              
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-6">
+              {/* Contained background box for logo section */}
+              <div className="relative bg-white/10 rounded-2xl p-5 overflow-hidden">
+                <div className="flex items-center gap-3 mb-4">
                   <motion.img
-                    src="/logo.webp"
+                    src="/logo.svg"
                     alt="Unique Staffing Professionals Logo"
                     className="h-14 w-auto bg-white rounded-lg p-1.5 shadow-lg"
                     whileHover={{ scale: 1.05, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 300, damping: 15 }}
                   />
                   <h3 
-                    className="font-heading font-bold text-xl sm:text-2xl text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_40%)]" 
+                    className="font-heading font-bold text-xl sm:text-2xl text-white" 
                     itemProp="name"
                     data-testid="footer-company-name"
                   >
@@ -131,39 +129,39 @@ export function Footer() {
                   </h3>
                 </div>
                 <p 
-                  className="text-white text-sm sm:text-base mb-4 leading-relaxed max-w-md font-medium [text-shadow:_0_1px_3px_rgb(0_0_0_/_50%)]" 
+                  className="text-white/90 text-sm sm:text-base mb-4 leading-relaxed max-w-md font-medium" 
                   itemProp="description"
                   data-testid="footer-tagline"
                 >
                   {t('footer.tagline')}
                 </p>
-              {businessInfo.ceo && (
-                <p className="text-primary-foreground/80 text-sm mb-6">
-                  CEO: {businessInfo.ceo}
-                </p>
-              )}
+                {businessInfo.ceo && (
+                  <p className="text-white/70 text-sm mb-4">
+                    CEO: {businessInfo.ceo}
+                  </p>
+                )}
+              </div>
               
-                {/* Social Links */}
-                <div className="flex gap-3">
-                  {socialLinks.map((link, index) => (
-                    <motion.a
-                      key={index}
-                      href={link.href}
-                      target={link.external ? "_blank" : undefined}
-                      rel={link.external ? "noopener noreferrer" : undefined}
-                      className="p-3 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group shadow-lg"
-                      aria-label={link.label}
-                      data-testid={`footer-social-${index}`}
-                      whileHover={{ y: -4, scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <link.icon 
-                        size={22} 
-                        className="text-white group-hover:text-white transition-colors" 
-                      />
-                    </motion.a>
-                  ))}
-                </div>
+              {/* Social Links - outside the box */}
+              <div className="flex gap-3 mt-4">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={index}
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    className="p-3 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group shadow-lg"
+                    aria-label={link.label}
+                    data-testid={`footer-social-${index}`}
+                    whileHover={{ y: -4, scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <link.icon 
+                      size={22} 
+                      className="text-white group-hover:text-white transition-colors" 
+                    />
+                  </motion.a>
+                ))}
               </div>
             </motion.div>
 
@@ -295,6 +293,17 @@ export function Footer() {
               </motion.div>
             </div>
           </motion.div>
+        </div>
+
+        {/* CEO Signature */}
+        <div className="relative mt-8 flex justify-center">
+          <div className="bg-gradient-to-t from-black/40 to-transparent absolute inset-0 rounded-lg" />
+          <img
+            src="/footer-otniel.gif"
+            alt="Otniel Morilla - CEO / President"
+            className="relative max-w-md w-full h-auto rounded-lg"
+            loading="lazy"
+          />
         </div>
       </motion.footer>
     </>

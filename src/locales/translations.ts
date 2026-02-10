@@ -53,20 +53,24 @@ export interface Translations {
       title: string
       description: string
     }
+    facilityManagement: {
+      title: string
+      description: string
+    }
   }
   industries: {
     title: string
     subtitle: string
     servingRegions: string
     janitorial: string
-    humanResources: string
+    construction: string
     retailSales: string
-    callCenter: string
+    facility: string
     industrial: string
     janitorialDesc: string
-    humanResourcesDesc: string
+    constructionDesc: string
     retailSalesDesc: string
-    callCenterDesc: string
+    facilityDesc: string
     industrialDesc: string
   }
   whyChooseUs: {
@@ -124,6 +128,12 @@ export interface Translations {
       title: string
       description: string
     }
+    management24hr: {
+      title: string
+      description: string
+    }
+    communityTitle: string
+    communityDescription: string
   }
   applyForm: {
     title: string
@@ -183,6 +193,8 @@ export interface Translations {
     trainingDescription: string
     networkTitle: string
     networkDescription: string
+    transportationTitle: string
+    transportationDescription: string
   }
   talentSplit: {
     jobSeekersTitle: string
@@ -202,12 +214,24 @@ export interface Translations {
     newEmployeeDescription: string
     contractorTitle: string
     contractorDescription: string
-    w2Title: string
-    w2Description: string
     assistanceTitle: string
     employerPromptTitle: string
     employerPromptDescription: string
     employerPromptCta: string
+    i9Label: string
+    reassignmentLabel: string
+    healthInsuranceLabel: string
+    ptoLabel: string
+    mdDcTitle: string
+    marylandSavingsLabel: string
+    dcFamilyLeaveLabel: string
+    securityTitle: string
+    securitySslTitle: string
+    securitySslDescription: string
+    securityAdobeTitle: string
+    securityAdobeDescription: string
+    securityTransparencyTitle: string
+    securityTransparencyDescription: string
   }
   employerPage: {
     eyebrow: string
@@ -452,7 +476,7 @@ export const translations: Record<Language, Translations> = {
       about: 'About',
       contact: 'Contact',
       apply: 'Apply Now',
-      employers: 'Employers',
+      employers: 'Clients',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
     },
@@ -461,13 +485,13 @@ export const translations: Record<Language, Translations> = {
       whatsappButton: 'Message on WhatsApp',
       joinNetwork: 'Join our network',
       callUs: 'Call us',
-      forEmployers: 'For Employers',
+      forEmployers: 'For Clients',
       forJobSeekers: 'For Job Seekers',
     },
     hero: {
       title: 'Where Opportunity Starts!',
       subtitle: 'Your Trusted Partner for Employment Opportunities. Serving Washington D.C., Maryland, Virginia, Illinois, Ohio, and New Jersey.',
-      ctaEmployers: 'Find Talent',
+      ctaEmployers: 'Explore Employer Services',
       ctaJobSeekers: 'Find Jobs',
       yearsExperience: 'Years Experience',
       companiesServed: 'Companies Served',
@@ -497,26 +521,30 @@ export const translations: Record<Language, Translations> = {
         title: 'Industrial & Manufacturing',
         description: 'Production workers, warehouse staff, and manufacturing positions for operational excellence.',
       },
+      facilityManagement: {
+        title: 'Facility Management',
+        description: 'Comprehensive facility management services including maintenance, operations oversight, and building management to keep your workspace running efficiently.',
+      },
     },
     industries: {
       title: 'Where We Serve',
       subtitle: 'Professional staffing solutions across five key industries',
       servingRegions: 'Serving Washington D.C., Maryland, Virginia, Illinois, Ohio, and New Jersey',
       janitorial: 'Janitorial',
-      humanResources: 'Human Resources',
+      construction: 'Construction',
       retailSales: 'Retail & Sales',
-      callCenter: 'Call Center',
+      facility: 'Facility',
       industrial: 'Industrial',
       janitorialDesc: 'Professional cleaning and maintenance',
-      humanResourcesDesc: 'Staffing and recruitment solutions',
+      constructionDesc: 'Construction and building services',
       retailSalesDesc: 'Customer-facing positions',
-      callCenterDesc: 'Customer service specialists',
+      facilityDesc: 'Facilities management services',
       industrialDesc: 'Manufacturing and warehouse',
     },
     whyChooseUs: {
       title: 'Why Choose Unique Staffing Professionals Inc.?',
       subtitle: 'Your trusted partner in staffing excellence',
-      description1: 'Led by CEO Otniel Morilla, we are committed to expanding access to meaningful employment through innovative staffing solutions and local partnerships.',
+      description1: 'Since 2004, Otniel has been working in the staffing industry and he started Unique Staffing Professionals in 2016. The vision statement of the company is: "To inspire a worldwide movement of economic empowerment by building bridges between talent and opportunity — transforming underserved communities into thriving centers of growth, dignity, and shared success."',
       description2: 'Our community-focused approach combines comprehensive employment solutions with dedicated support services including transportation assistance, safety training programs, and performance incentives. We believe in empowering individuals and building bridges between talent and opportunity.',
       keyFeatures: 'Key Features',
       coreValues: 'Our Core Values',
@@ -568,6 +596,12 @@ export const translations: Record<Language, Translations> = {
         title: 'Performance Bonuses',
         description: 'Rewarding excellence and dedication in the workplace.',
       },
+      management24hr: {
+        title: 'Assigned 24hr Available Management Team',
+        description: 'Round-the-clock management support for all your staffing needs.',
+      },
+      communityTitle: 'Rooted in Service, Driven by Purpose',
+      communityDescription: 'We don\'t just fill jobs — we build bridges. Our team actively volunteers with organizations like the International Rescue Committee (IRC) and various Catholic Charities, standing alongside those who serve the most vulnerable. We believe that staffing is more than placement — it\'s a promise to uplift, empower, and transform lives. Whether you\'re taking your first step into the workforce or your next step toward impact, we\'re here to walk with you. Always ready. Always committed. Always community-first.',
     },
     applyForm: {
       title: 'Join Our Talent Network',
@@ -627,6 +661,8 @@ export const translations: Record<Language, Translations> = {
       trainingDescription: 'Get prepared with guided onboarding.',
       networkTitle: 'Robust employer network',
       networkDescription: 'Access growth opportunities across industries.',
+      transportationTitle: 'Transportation',
+      transportationDescription: 'Provided transportation to and from the job.',
     },
     talentSplit: {
       jobSeekersTitle: 'Join our talent pool',
@@ -645,23 +681,35 @@ export const translations: Record<Language, Translations> = {
       newEmployeeTitle: 'New employee forms',
       newEmployeeDescription: 'Employee application packet',
       contractorTitle: 'Contractor application',
-      contractorDescription: 'Independent contractor application',
-      w2Title: 'W-2 employee application',
-      w2Description: 'W-2 employee application packet',
+      contractorDescription: '1099 application specific for contractor employees',
       assistanceTitle: 'Questions or need assistance?',
-      employerPromptTitle: 'Employer looking for more info on our onboarding process?',
-      employerPromptDescription: 'Visit our employer section to learn how we staff, onboard, and support your team.',
-      employerPromptCta: 'Go to employer services',
+      employerPromptTitle: 'Client looking for more info on our onboarding process?',
+      employerPromptDescription: 'Visit our client section to learn how we staff, onboard, and support your team.',
+      employerPromptCta: 'Go to client services',
+      i9Label: 'I-9 Form',
+      reassignmentLabel: 'Reassignment Form',
+      healthInsuranceLabel: 'Health Insurance',
+      ptoLabel: 'PTO Request Form',
+      mdDcTitle: 'Maryland / DC Current Employees',
+      marylandSavingsLabel: 'Maryland Savings',
+      dcFamilyLeaveLabel: 'DC Family Leave',
+      securityTitle: 'We Value Your Security',
+      securitySslTitle: 'Electronic Signatures',
+      securitySslDescription: 'Trusted and secured using SSL encryption to protect your sensitive documents.',
+      securityAdobeTitle: 'Adobe Acrobat Sign',
+      securityAdobeDescription: 'We use Adobe Acrobat Sign for your safety and security when signing documents.',
+      securityTransparencyTitle: 'Full Transparency',
+      securityTransparencyDescription: 'We believe in transparency and allow you to download anything you sign. All documents are available upon request — see our contact info below.',
     },
     employerPage: {
-      eyebrow: 'For Employers',
+      eyebrow: 'For Clients',
       title: 'Learn the Unique Staffing Professionals difference and partner with us for your staffing needs.',
-      subtitle: 'We deliver reliable, screened talent across the DMV region with a people-first approach that scales to your business.',
+      subtitle: 'We deliver reliable, screened talent across the mid-atlantic region with a people-first approach that scales to your business.',
       primaryCta: 'Request staffing support',
       secondaryCta: 'Explore the talent network',
-      contactTitle: 'Employer contact options',
+      contactTitle: 'Client contact options',
       efaxLabel: 'eFax',
-      efaxNote: 'Employers: send us an eFax to start your onboarding request.',
+      efaxNote: 'Clients: send us an eFax to start your onboarding request.',
       processTitle: 'Our onboarding process',
       processSubtitle: 'A streamlined approach that keeps compliance tight and staffing flexible.',
       processComplianceTitle: 'I-9 verification and compliance',
@@ -678,7 +726,7 @@ export const translations: Record<Language, Translations> = {
       closingSecondaryCta: 'Call now',
       ctaHeadline: 'Need Reliable Staff? We Can Help.',
       ctaDescription: 'Get pre-screened, qualified candidates delivered fast. From temporary coverage to permanent hires, we handle it all.',
-      ctaTrust: 'Trusted by 500+ companies across the DMV region.',
+      ctaTrust: 'Trusted by 500+ companies across the mid-atlantic region.',
     },
     cookieConsent: {
       title: 'We Value Your Privacy',
@@ -746,7 +794,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'All rights reserved.',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
-      employerEfaxNote: 'Employers: send us an eFax at {number}.',
+      employerEfaxNote: 'Clients: send us an eFax at {number}.',
     },
     theme: {
       toggle: 'Toggle theme',
@@ -894,7 +942,7 @@ export const translations: Record<Language, Translations> = {
       about: 'Acerca de',
       contact: 'Contacto',
       apply: 'Aplicar Ahora',
-      employers: 'Empleadores',
+      employers: 'Clientes',
       privacy: 'Política de Privacidad',
       terms: 'Términos de Servicio',
     },
@@ -903,13 +951,13 @@ export const translations: Record<Language, Translations> = {
       whatsappButton: 'Mensaje por WhatsApp',
       joinNetwork: 'Únase a nuestra red',
       callUs: 'Llámenos',
-      forEmployers: 'Para Empleadores',
+      forEmployers: 'Para Clientes',
       forJobSeekers: 'Para Buscadores de Empleo',
     },
     hero: {
       title: '¡Donde Comienza la Oportunidad!',
       subtitle: 'Su Socio de Confianza para Oportunidades de Empleo. Sirviendo a Washington D.C., Maryland, Virginia, Illinois, Ohio y Nueva Jersey.',
-      ctaEmployers: 'Encontrar Talento',
+      ctaEmployers: 'Explorar Servicios para Clientes',
       ctaJobSeekers: 'Encontrar Empleos',
       yearsExperience: 'Años de Experiencia',
       companiesServed: 'Empresas Atendidas',
@@ -939,26 +987,30 @@ export const translations: Record<Language, Translations> = {
         title: 'Industrial y Manufactura',
         description: 'Trabajadores de producción, personal de almacén y posiciones de manufactura para la excelencia operativa.',
       },
+      facilityManagement: {
+        title: 'Gestión de Instalaciones',
+        description: 'Servicios integrales de gestión de instalaciones incluyendo mantenimiento, supervisión de operaciones y administración de edificios para mantener su espacio de trabajo funcionando eficientemente.',
+      },
     },
     industries: {
       title: 'Dónde Servimos',
       subtitle: 'Soluciones profesionales de personal en cinco industrias clave',
       servingRegions: 'Sirviendo a Washington D.C., Maryland, Virginia, Illinois, Ohio y Nueva Jersey',
       janitorial: 'Servicios de Limpieza',
-      humanResources: 'Recursos Humanos',
+      construction: 'Construcción',
       retailSales: 'Ventas al Por Menor',
-      callCenter: 'Centro de Llamadas',
+      facility: 'Instalaciones',
       industrial: 'Industrial',
       janitorialDesc: 'Limpieza y mantenimiento profesional',
-      humanResourcesDesc: 'Soluciones de personal y reclutamiento',
+      constructionDesc: 'Servicios de construcción y edificación',
       retailSalesDesc: 'Posiciones de cara al cliente',
-      callCenterDesc: 'Especialistas en servicio al cliente',
+      facilityDesc: 'Servicios de gestión de instalaciones',
       industrialDesc: 'Manufactura y almacén',
     },
     whyChooseUs: {
       title: '¿Por Qué Elegir Unique Staffing Professionals Inc.?',
       subtitle: 'Su socio de confianza en excelencia de personal',
-      description1: 'Dirigidos por el CEO Otniel Morilla, estamos comprometidos a expandir el acceso a empleos significativos a través de soluciones innovadoras de personal y asociaciones locales.',
+      description1: 'Desde 2004, Otniel ha trabajado en la industria de personal y fundó Unique Staffing Professionals en 2016. La declaración de visión de la empresa es: "Inspirar un movimiento mundial de empoderamiento económico construyendo puentes entre el talento y la oportunidad — transformando comunidades desatendidas en centros prósperos de crecimiento, dignidad y éxito compartido."',
       description2: 'Nuestro enfoque centrado en la comunidad combina soluciones integrales de empleo con servicios de apoyo dedicados que incluyen asistencia de transporte, programas de capacitación en seguridad e incentivos de rendimiento. Creemos en empoderar a las personas y construir puentes entre el talento y la oportunidad.',
       keyFeatures: 'Características Clave',
       coreValues: 'Nuestros Valores Fundamentales',
@@ -1010,6 +1062,12 @@ export const translations: Record<Language, Translations> = {
         title: 'Bonos de Rendimiento',
         description: 'Recompensando la excelencia y dedicación en el lugar de trabajo.',
       },
+      management24hr: {
+        title: 'Equipo de Gestión Disponible 24 Horas',
+        description: 'Soporte de gestión las 24 horas para todas sus necesidades de personal.',
+      },
+      communityTitle: 'Arraigados en el Servicio, Impulsados por el Propósito',
+      communityDescription: 'No solo llenamos vacantes — construimos puentes. Nuestro equipo participa activamente como voluntario en organizaciones como el Comité Internacional de Rescate (IRC) y diversas organizaciones de Caridades Católicas, apoyando a quienes sirven a los más vulnerables. Creemos que el personal es más que una colocación — es una promesa de elevar, empoderar y transformar vidas. Ya sea que estés dando tu primer paso en la fuerza laboral o tu siguiente paso hacia el impacto, estamos aquí para caminar contigo. Siempre listos. Siempre comprometidos. Siempre primero la comunidad.',
     },
     applyForm: {
       title: 'Únase a Nuestra Red de Talento',
@@ -1069,6 +1127,8 @@ export const translations: Record<Language, Translations> = {
       trainingDescription: 'Prepárese con una incorporación guiada.',
       networkTitle: 'Red sólida de empleadores',
       networkDescription: 'Acceda a oportunidades de crecimiento en diversas industrias.',
+      transportationTitle: 'Transporte',
+      transportationDescription: 'Transporte proporcionado hacia y desde el trabajo.',
     },
     talentSplit: {
       jobSeekersTitle: 'Únase a nuestra bolsa de talento',
@@ -1087,23 +1147,35 @@ export const translations: Record<Language, Translations> = {
       newEmployeeTitle: 'Formularios para nuevos empleados',
       newEmployeeDescription: 'Paquete de solicitud de empleo',
       contractorTitle: 'Solicitud de contratista',
-      contractorDescription: 'Solicitud de contratista independiente',
-      w2Title: 'Solicitud de empleado W-2',
-      w2Description: 'Paquete de solicitud para empleado W-2',
+      contractorDescription: 'Solicitud 1099 específica para empleados contratistas',
       assistanceTitle: '¿Preguntas o necesita ayuda?',
-      employerPromptTitle: '¿Empleador buscando más información sobre nuestro proceso de incorporación?',
-      employerPromptDescription: 'Visite nuestra sección para empleadores y conozca cómo contratamos, incorporamos y apoyamos a su equipo.',
-      employerPromptCta: 'Ir a servicios para empleadores',
+      employerPromptTitle: '¿Cliente buscando más información sobre nuestro proceso de incorporación?',
+      employerPromptDescription: 'Visite nuestra sección para clientes y conozca cómo contratamos, incorporamos y apoyamos a su equipo.',
+      employerPromptCta: 'Ir a servicios para clientes',
+      i9Label: 'Formulario I-9',
+      reassignmentLabel: 'Formulario de Reasignación',
+      healthInsuranceLabel: 'Seguro Médico',
+      ptoLabel: 'Formulario de Solicitud de PTO',
+      mdDcTitle: 'Empleados Actuales de Maryland / DC',
+      marylandSavingsLabel: 'Ahorros de Maryland',
+      dcFamilyLeaveLabel: 'Licencia Familiar de DC',
+      securityTitle: 'Valoramos Su Seguridad',
+      securitySslTitle: 'Firmas Electrónicas',
+      securitySslDescription: 'Confiable y seguro mediante cifrado SSL para proteger sus documentos confidenciales.',
+      securityAdobeTitle: 'Adobe Acrobat Sign',
+      securityAdobeDescription: 'Utilizamos Adobe Acrobat Sign para su seguridad al firmar documentos.',
+      securityTransparencyTitle: 'Transparencia Total',
+      securityTransparencyDescription: 'Creemos en la transparencia y le permitimos descargar todo lo que firma. Todos los documentos están disponibles a pedido — consulte nuestra información de contacto a continuación.',
     },
     employerPage: {
-      eyebrow: 'Para Empleadores',
+      eyebrow: 'Para Clientes',
       title: 'Conozca la diferencia de Unique Staffing Professionals y asóciese con nosotros para sus necesidades de personal.',
-      subtitle: 'Ofrecemos talento confiable y evaluado en la región DMV con un enfoque centrado en las personas que se adapta a su negocio.',
+      subtitle: 'Ofrecemos talento confiable y evaluado en la región del medio atlántico con un enfoque centrado en las personas que se adapta a su negocio.',
       primaryCta: 'Solicitar apoyo de personal',
       secondaryCta: 'Explorar la red de talento',
-      contactTitle: 'Opciones de contacto para empleadores',
+      contactTitle: 'Opciones de contacto para clientes',
       efaxLabel: 'eFax',
-      efaxNote: 'Empleadores: envíenos un eFax para iniciar su solicitud de incorporación.',
+      efaxNote: 'Clientes: envíenos un eFax para iniciar su solicitud de incorporación.',
       processTitle: 'Nuestro proceso de incorporación',
       processSubtitle: 'Un enfoque ágil que mantiene el cumplimiento y la flexibilidad.',
       processComplianceTitle: 'Verificación I-9 y cumplimiento',
@@ -1120,7 +1192,7 @@ export const translations: Record<Language, Translations> = {
       closingSecondaryCta: 'Llamar ahora',
       ctaHeadline: '¿Necesita Personal Confiable? Podemos Ayudar.',
       ctaDescription: 'Obtenga candidatos calificados y preseleccionados rápidamente. Desde cobertura temporal hasta contrataciones permanentes, lo manejamos todo.',
-      ctaTrust: 'Confiado por más de 500 empresas en la región DMV.',
+      ctaTrust: 'Confiado por más de 500 empresas en la región del medio atlántico.',
     },
     testimonials: {
       title: 'Lo Que Dicen Nuestros Clientes',
@@ -1170,7 +1242,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'Todos los derechos reservados.',
       privacy: 'Política de Privacidad',
       terms: 'Términos de Servicio',
-      employerEfaxNote: 'Empleadores: envíenos un eFax al {number}.',
+      employerEfaxNote: 'Clientes: envíenos un eFax al {number}.',
     },
     theme: {
       toggle: 'Cambiar tema',
@@ -1336,7 +1408,7 @@ export const translations: Record<Language, Translations> = {
       about: 'À Propos',
       contact: 'Contact',
       apply: 'Postuler',
-      employers: 'Employeurs',
+      employers: 'Clients',
       privacy: 'Politique de Confidentialité',
       terms: 'Conditions d\'Utilisation',
     },
@@ -1345,13 +1417,13 @@ export const translations: Record<Language, Translations> = {
       whatsappButton: 'Message WhatsApp',
       joinNetwork: 'Rejoindre notre réseau',
       callUs: 'Appelez-nous',
-      forEmployers: 'Pour les Employeurs',
+      forEmployers: 'Pour les Clients',
       forJobSeekers: 'Pour les Demandeurs d\'Emploi',
     },
     hero: {
       title: 'Là Où L\'Opportunité Commence!',
       subtitle: 'Votre Partenaire de Confiance pour les Opportunités d\'Emploi. Au service de Washington D.C., Maryland, Virginie, Illinois, Ohio et New Jersey.',
-      ctaEmployers: 'Trouver des Talents',
+      ctaEmployers: 'Explorer les Services Clients',
       ctaJobSeekers: 'Trouver des Emplois',
       yearsExperience: 'Années d\'Expérience',
       companiesServed: 'Entreprises Servies',
@@ -1381,26 +1453,30 @@ export const translations: Record<Language, Translations> = {
         title: 'Industriel et Fabrication',
         description: 'Travailleurs de production, personnel d\'entrepôt et postes de fabrication pour l\'excellence opérationnelle.',
       },
+      facilityManagement: {
+        title: 'Gestion des Installations',
+        description: 'Services complets de gestion des installations comprenant la maintenance, la supervision des opérations et la gestion des bâtiments pour maintenir votre espace de travail en bon fonctionnement.',
+      },
     },
     industries: {
       title: 'Où Nous Servons',
       subtitle: 'Solutions professionnelles de personnel dans cinq industries clés',
       servingRegions: 'Au Service de Washington D.C., Maryland, Virginie, Illinois, Ohio et New Jersey',
       janitorial: 'Services de Nettoyage',
-      humanResources: 'Ressources Humaines',
+      construction: 'Construction',
       retailSales: 'Commerce de Détail',
-      callCenter: 'Centre d\'Appels',
+      facility: 'Installations',
       industrial: 'Industriel',
       janitorialDesc: 'Nettoyage et entretien professionnels',
-      humanResourcesDesc: 'Solutions de personnel et recrutement',
+      constructionDesc: 'Services de construction et bâtiment',
       retailSalesDesc: 'Postes en contact avec la clientèle',
-      callCenterDesc: 'Spécialistes du service client',
+      facilityDesc: 'Services de gestion des installations',
       industrialDesc: 'Fabrication et entrepôt',
     },
     whyChooseUs: {
       title: 'Pourquoi Choisir Unique Staffing Professionals Inc.?',
       subtitle: 'Votre partenaire de confiance pour l\'excellence en recrutement',
-      description1: 'Dirigés par le PDG Otniel Morilla, nous nous engageons à élargir l\'accès à un emploi significatif grâce à des solutions de personnel innovantes et des partenariats locaux.',
+      description1: 'Depuis 2004, Otniel travaille dans l\'industrie du personnel et a fondé Unique Staffing Professionals en 2016. La vision de l\'entreprise est : « Inspirer un mouvement mondial d\'autonomisation économique en construisant des ponts entre le talent et l\'opportunité — transformant les communautés défavorisées en centres prospères de croissance, de dignité et de succès partagé. »',
       description2: 'Notre approche axée sur la communauté combine des solutions d\'emploi complètes avec des services de soutien dédiés, notamment l\'assistance au transport, des programmes de formation à la sécurité et des incitations à la performance. Nous croyons en l\'autonomisation des individus et en la construction de ponts entre le talent et l\'opportunité.',
       keyFeatures: 'Caractéristiques Clés',
       coreValues: 'Nos Valeurs Fondamentales',
@@ -1452,6 +1528,12 @@ export const translations: Record<Language, Translations> = {
         title: 'Bonus de Performance',
         description: 'Récompenser l\'excellence et le dévouement sur le lieu de travail.',
       },
+      management24hr: {
+        title: 'Équipe de Gestion Disponible 24h/24',
+        description: 'Support de gestion 24 heures sur 24 pour tous vos besoins en personnel.',
+      },
+      communityTitle: 'Enracinés dans le Service, Guidés par le But',
+      communityDescription: 'Nous ne faisons pas que pourvoir des postes — nous construisons des ponts. Notre équipe fait activement du bénévolat avec des organisations telles que le Comité International de Secours (IRC) et diverses œuvres caritatives catholiques, aux côtés de ceux qui servent les plus vulnérables. Nous croyons que le recrutement est plus qu\'un placement — c\'est une promesse d\'élever, d\'autonomiser et de transformer des vies. Que vous fassiez votre premier pas dans le monde du travail ou votre prochain pas vers l\'impact, nous sommes là pour marcher avec vous. Toujours prêts. Toujours engagés. Toujours communauté d\'abord.',
     },
     applyForm: {
       title: 'Rejoignez Notre Réseau de Talents',
@@ -1511,6 +1593,8 @@ export const translations: Record<Language, Translations> = {
       trainingDescription: 'Préparez-vous avec une intégration guidée.',
       networkTitle: 'Réseau solide d\'employeurs',
       networkDescription: 'Accédez à des opportunités de croissance dans plusieurs secteurs.',
+      transportationTitle: 'Transport',
+      transportationDescription: 'Transport fourni vers et depuis le lieu de travail.',
     },
     talentSplit: {
       jobSeekersTitle: 'Rejoignez notre vivier de talents',
@@ -1529,23 +1613,35 @@ export const translations: Record<Language, Translations> = {
       newEmployeeTitle: 'Formulaires pour nouveaux employés',
       newEmployeeDescription: 'Dossier de candidature',
       contractorTitle: 'Candidature de contractuel',
-      contractorDescription: 'Candidature de contractuel indépendant',
-      w2Title: 'Candidature d\'employé W-2',
-      w2Description: 'Dossier de candidature W-2',
+      contractorDescription: 'Candidature 1099 spécifique pour les employés contractuels',
       assistanceTitle: 'Des questions ou besoin d\'aide ?',
-      employerPromptTitle: 'Employeur : besoin de plus d\'infos sur notre processus d\'intégration ?',
-      employerPromptDescription: 'Visitez notre section employeurs pour découvrir comment nous recrutons, intégrons et soutenons votre équipe.',
-      employerPromptCta: 'Accéder aux services employeurs',
+      employerPromptTitle: 'Client : besoin de plus d\'infos sur notre processus d\'intégration ?',
+      employerPromptDescription: 'Visitez notre section clients pour découvrir comment nous recrutons, intégrons et soutenons votre équipe.',
+      employerPromptCta: 'Accéder aux services clients',
+      i9Label: 'Formulaire I-9',
+      reassignmentLabel: 'Formulaire de Réaffectation',
+      healthInsuranceLabel: 'Assurance Maladie',
+      ptoLabel: 'Formulaire de Demande de Congé',
+      mdDcTitle: 'Employés Actuels Maryland / DC',
+      marylandSavingsLabel: 'Épargne Maryland',
+      dcFamilyLeaveLabel: 'Congé Familial DC',
+      securityTitle: 'Nous Valorisons Votre Sécurité',
+      securitySslTitle: 'Signatures Électroniques',
+      securitySslDescription: 'Fiable et sécurisé grâce au chiffrement SSL pour protéger vos documents sensibles.',
+      securityAdobeTitle: 'Adobe Acrobat Sign',
+      securityAdobeDescription: 'Nous utilisons Adobe Acrobat Sign pour votre sécurité lors de la signature de documents.',
+      securityTransparencyTitle: 'Transparence Totale',
+      securityTransparencyDescription: 'Nous croyons en la transparence et vous permettons de télécharger tout ce que vous signez. Tous les documents sont disponibles sur demande — consultez nos coordonnées ci-dessous.',
     },
     employerPage: {
-      eyebrow: 'Pour les Employeurs',
+      eyebrow: 'Pour les Clients',
       title: 'Découvrez la différence Unique Staffing Professionals et associez-vous à nous pour vos besoins en personnel.',
-      subtitle: 'Nous fournissons un talent fiable et présélectionné dans la région DMV avec une approche centrée sur l\'humain qui s\'adapte à votre entreprise.',
+      subtitle: 'Nous fournissons un talent fiable et présélectionné dans la région du moyen-atlantique avec une approche centrée sur l\'humain qui s\'adapte à votre entreprise.',
       primaryCta: 'Demander un soutien en personnel',
       secondaryCta: 'Explorer le réseau de talents',
-      contactTitle: 'Options de contact pour employeurs',
+      contactTitle: 'Options de contact pour clients',
       efaxLabel: 'eFax',
-      efaxNote: 'Employeurs : envoyez-nous un eFax pour démarrer votre demande d\'intégration.',
+      efaxNote: 'Clients : envoyez-nous un eFax pour démarrer votre demande d\'intégration.',
       processTitle: 'Notre processus d\'intégration',
       processSubtitle: 'Une approche simplifiée qui garantit la conformité et la flexibilité.',
       processComplianceTitle: 'Vérification I-9 et conformité',
@@ -1562,7 +1658,7 @@ export const translations: Record<Language, Translations> = {
       closingSecondaryCta: 'Appeler maintenant',
       ctaHeadline: 'Besoin de Personnel Fiable? Nous Pouvons Aider.',
       ctaDescription: 'Obtenez des candidats qualifiés et présélectionnés rapidement. De la couverture temporaire aux embauches permanentes, nous gérons tout.',
-      ctaTrust: 'Fait confiance par plus de 500 entreprises dans la région DMV.',
+      ctaTrust: 'Fait confiance par plus de 500 entreprises dans la région du moyen-atlantique.',
     },
     testimonials: {
       title: 'Ce Que Disent Nos Clients',
@@ -1612,7 +1708,7 @@ export const translations: Record<Language, Translations> = {
       rights: 'Tous droits réservés.',
       privacy: 'Politique de Confidentialité',
       terms: 'Conditions d\'Utilisation',
-      employerEfaxNote: 'Employeurs : envoyez-nous un eFax au {number}.',
+      employerEfaxNote: 'Clients : envoyez-nous un eFax au {number}.',
     },
     theme: {
       toggle: 'Changer le thème',

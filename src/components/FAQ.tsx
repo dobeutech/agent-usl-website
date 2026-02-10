@@ -20,7 +20,7 @@ const faqData = {
     },
     {
       question: "What types of jobs do you offer?",
-      answer: "We offer a wide range of positions including janitorial/custodial, human resources, retail and sales, call center and customer service, industrial and manufacturing, administrative, warehouse and logistics, healthcare support, and IT positions. We have both temporary and permanent placement opportunities."
+      answer: "We offer a wide range of positions including janitorial/custodial, human resources, retail and sales, call center and customer service, industrial and manufacturing, administrative, warehouse and logistics, healthcare support, facility management, construction clean up and health care custodial services. We have both temporary and permanent placement opportunities."
     },
     {
       question: "How long does the hiring process take?",
@@ -32,7 +32,7 @@ const faqData = {
     },
     {
       question: "What areas do you serve?",
-      answer: "We primarily serve the DMV area including Maryland, Washington D.C., and Northern Virginia. Our main office is located in Riverdale, MD, but we place candidates throughout the greater metropolitan area."
+      answer: "We primarily serve the DMV area including Maryland, Washington D.C., and Northern Virginia. Our main office is located in Riverdale, MD, but we place candidates throughout the greater metropolitan area. We also serve the east coast including: DMV, Delaware, New Jersey, and Ohio."
     }
   ],
   employers: [
@@ -141,7 +141,7 @@ export function FAQ() {
                 <span className="text-lg">🏢</span>
               </div>
               <h3 className="font-heading font-semibold text-xl text-foreground">
-                For Employers
+                For Clients
               </h3>
             </div>
             <Accordion type="single" collapsible className="space-y-3">
