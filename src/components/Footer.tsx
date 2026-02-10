@@ -111,7 +111,7 @@ export function Footer() {
             {/* Company Info */}
             <motion.div className="lg:col-span-2 relative" variants={itemVariants}>
               {/* Contained background box for logo section */}
-              <div className="relative bg-white/10 rounded-2xl p-5 overflow-hidden">
+              <div className="relative bg-white/10 rounded-2xl p-5 overflow-hidden isolate">
                 <div className="flex items-center gap-3 mb-4">
                   <motion.img
                     src="/logo.svg"

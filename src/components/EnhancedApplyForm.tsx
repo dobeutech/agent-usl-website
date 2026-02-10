@@ -34,9 +34,9 @@ interface EnhancedApplyFormProps {
 
 const POSITIONS = [
   'Janitorial',
-  'Human Resources',
+  'Construction',
   'Retail & Sales',
-  'Call Center & Customer Service',
+  'Facilities Management',
   'Industrial & Manufacturing',
   'Administrative',
   'Warehouse & Logistics',

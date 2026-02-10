@@ -11,9 +11,9 @@ import { supabase } from '@/lib/supabase'
 
 const jobCategories = [
   'Janitorial & Custodial',
-  'Human Resources',
+  'Construction',
   'Retail & Sales',
-  'Call Center',
+  'Facilities Management',
   'Industrial & Manufacturing',
   'Administrative',
   'Warehouse & Logistics',

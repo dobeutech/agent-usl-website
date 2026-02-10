@@ -37,7 +37,7 @@ export interface Translations {
       title: string
       description: string
     }
-    humanResources: {
+    construction: {
       title: string
       description: string
     }
@@ -45,7 +45,7 @@ export interface Translations {
       title: string
       description: string
     }
-    callCenter: {
+    facilitiesServices: {
       title: string
       description: string
     }
@@ -505,17 +505,17 @@ export const translations: Record<Language, Translations> = {
         title: 'Janitorial',
         description: 'Professional cleaning and facility maintenance services to keep your workspace spotless and welcoming.',
       },
-      humanResources: {
-        title: 'Human Resources',
-        description: 'Comprehensive staffing and recruitment solutions to build your ideal workforce.',
+      construction: {
+        title: 'Construction',
+        description: 'Skilled construction workers for painting, drywall, cleanup, and general helper positions.',
       },
       retailSales: {
         title: 'Retail & Sales',
         description: 'Customer-facing retail positions and sales roles to drive your business growth.',
       },
-      callCenter: {
-        title: 'Call Center & Customer Service',
-        description: 'Support representatives and customer service specialists to enhance client satisfaction.',
+      facilitiesServices: {
+        title: 'Facilities Management Services',
+        description: 'Comprehensive facilities management including maintenance, HVAC, and building operations support.',
       },
       industrial: {
         title: 'Industrial & Manufacturing',
@@ -971,17 +971,17 @@ export const translations: Record<Language, Translations> = {
         title: 'Servicios de Limpieza',
         description: 'Servicios profesionales de limpieza y mantenimiento de instalaciones para mantener su espacio de trabajo impecable y acogedor.',
       },
-      humanResources: {
-        title: 'Recursos Humanos',
-        description: 'Soluciones integrales de personal y reclutamiento para construir su fuerza laboral ideal.',
+      construction: {
+        title: 'Construcción',
+        description: 'Trabajadores de construcción calificados para pintura, paneles de yeso, limpieza y posiciones de ayudante general.',
       },
       retailSales: {
         title: 'Ventas al Por Menor',
         description: 'Posiciones de venta al por menor y roles de ventas para impulsar el crecimiento de su negocio.',
       },
-      callCenter: {
-        title: 'Centro de Llamadas y Servicio al Cliente',
-        description: 'Representantes de soporte y especialistas en servicio al cliente para mejorar la satisfacción del cliente.',
+      facilitiesServices: {
+        title: 'Servicios de Gestión de Instalaciones',
+        description: 'Gestión integral de instalaciones incluyendo mantenimiento, HVAC y soporte de operaciones de edificios.',
       },
       industrial: {
         title: 'Industrial y Manufactura',
@@ -1437,17 +1437,17 @@ export const translations: Record<Language, Translations> = {
         title: 'Services de Nettoyage',
         description: 'Services professionnels de nettoyage et d\'entretien des installations pour garder votre espace de travail impeccable et accueillant.',
       },
-      humanResources: {
-        title: 'Ressources Humaines',
-        description: 'Solutions complètes de personnel et de recrutement pour construire votre main-d\'œuvre idéale.',
+      construction: {
+        title: 'Construction',
+        description: 'Travailleurs de construction qualifiés pour la peinture, les cloisons sèches, le nettoyage et les postes d\'aide générale.',
       },
       retailSales: {
         title: 'Commerce de Détail et Ventes',
         description: 'Postes en contact avec la clientèle et rôles de vente pour stimuler la croissance de votre entreprise.',
       },
-      callCenter: {
-        title: 'Centre d\'Appels et Service Client',
-        description: 'Représentants du support et spécialistes du service client pour améliorer la satisfaction des clients.',
+      facilitiesServices: {
+        title: 'Services de Gestion des Installations',
+        description: 'Gestion complète des installations comprenant la maintenance, le CVC et le soutien aux opérations des bâtiments.',
       },
       industrial: {
         title: 'Industriel et Fabrication',

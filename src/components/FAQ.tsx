@@ -20,7 +20,7 @@ const faqData = {
     },
     {
       question: "What types of jobs do you offer?",
-      answer: "We offer a wide range of positions including janitorial/custodial, human resources, retail and sales, call center and customer service, industrial and manufacturing, administrative, warehouse and logistics, healthcare support, facility management, construction clean up and health care custodial services. We have both temporary and permanent placement opportunities."
+      answer: "We offer a wide range of positions including janitorial/custodial, construction, retail and sales, facilities management services, industrial and manufacturing, administrative, warehouse and logistics, healthcare support, facility management, construction clean up and health care custodial services. We have both temporary and permanent placement opportunities."
     },
     {
       question: "How long does the hiring process take?",
@@ -42,7 +42,7 @@ const faqData = {
     },
     {
       question: "What industries do you specialize in?",
-      answer: "We specialize in janitorial services, human resources, retail and sales, call center operations, industrial and manufacturing, administrative support, warehouse and logistics, and healthcare support. Our 15+ years of experience allows us to understand the unique needs of each industry."
+      answer: "We specialize in janitorial services, construction, retail and sales, facilities management services, industrial and manufacturing, administrative support, warehouse and logistics, and healthcare support. Our 15+ years of experience allows us to understand the unique needs of each industry."
     },
     {
       question: "Do you offer temp-to-perm options?",

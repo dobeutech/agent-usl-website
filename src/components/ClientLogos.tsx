@@ -8,7 +8,7 @@ const clients = [
   { name: "Health Care Custodians", industry: "Healthcare" },
   { name: "Retail Chains", industry: "Retail" },
   { name: "Manufacturing", industry: "Industrial" },
-  { name: "Call Centers", industry: "Customer Service" },
+  { name: "Facilities Management", industry: "Facilities Management" },
   { name: "Office Buildings", industry: "Commercial" },
   { name: "Educational Institutions", industry: "Education" },
   { name: "Facility Management", industry: "Facilities" },

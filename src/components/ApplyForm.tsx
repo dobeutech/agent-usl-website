@@ -212,9 +212,9 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Janitorial">{t('services.janitorial.title')}</SelectItem>
-                    <SelectItem value="Human Resources">{t('services.humanResources.title')}</SelectItem>
+                    <SelectItem value="Construction">{t('services.construction.title')}</SelectItem>
                     <SelectItem value="Retail & Sales">{t('services.retailSales.title')}</SelectItem>
-                    <SelectItem value="Call Center & Customer Service">{t('services.callCenter.title')}</SelectItem>
+                    <SelectItem value="Facilities Management">{t('services.facilitiesServices.title')}</SelectItem>
                     <SelectItem value="Industrial & Manufacturing">{t('services.industrial.title')}</SelectItem>
                   </SelectContent>
                 </Select>

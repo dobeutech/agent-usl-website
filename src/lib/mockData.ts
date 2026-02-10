@@ -64,7 +64,7 @@ function generateMockApplicants(): Applicant[] {
       phone: '202-555-5678',
       phone_normalized: '+12025555678',
       position_interested: 'Customer Service Representative',
-      positions_interested: ['Customer Service Representative', 'Call Center Agent'],
+      positions_interested: ['Customer Service Representative', 'Facilities Management'],
       experience_years: 5,
       resume_url: 'https://example.com/resume.pdf',
       resume_filename: 'james_wilson_resume.pdf',

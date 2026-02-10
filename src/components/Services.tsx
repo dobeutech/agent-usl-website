@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card"
-import { Sparkles, Users, ShoppingCart, Phone, Factory, Wrench } from "lucide-react"
+import { Sparkles, HardHat, ShoppingCart, Wrench, Factory, Building2 } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { motion, useInView, Variants } from "framer-motion"
 import { useRef } from "react"
@@ -43,9 +43,9 @@ export function Services() {
       gradient: "from-emerald-500/20 to-teal-500/10"
     },
     {
-      icon: Users,
-      title: t('services.humanResources.title'),
-      description: t('services.humanResources.description'),
+      icon: HardHat,
+      title: t('services.construction.title'),
+      description: t('services.construction.description'),
       gradient: "from-blue-500/20 to-indigo-500/10"
     },
     {
@@ -55,9 +55,9 @@ export function Services() {
       gradient: "from-orange-500/20 to-amber-500/10"
     },
     {
-      icon: Phone,
-      title: t('services.callCenter.title'),
-      description: t('services.callCenter.description'),
+      icon: Building2,
+      title: t('services.facilitiesServices.title'),
+      description: t('services.facilitiesServices.description'),
       gradient: "from-purple-500/20 to-pink-500/10"
     },
     {

@@ -228,7 +228,7 @@ export function SystemToggle() {
           data-testid="theme-system"
         >
           <Monitor className={`h-4 w-4 transition-all duration-300 ${
-            theme === 'system' ? 'text-primary' : 'text-foreground'
+            theme === 'system' ? 'text-accent-foreground' : 'text-foreground'
           }`} />
           <span className="sr-only">{getSystemAriaLabel()}</span>
         </Button>
