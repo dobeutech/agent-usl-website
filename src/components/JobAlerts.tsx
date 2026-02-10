@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/card'
 import { Bell, EnvelopeSimple, DeviceMobile, CheckCircle, Sparkle } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase'
+import { isDemoMode } from '@/lib/mockData'
 
 const jobCategories = [
   'Janitorial & Custodial',
@@ -59,7 +60,13 @@ export function JobAlerts() {
     setIsSubmitting(true)
 
     try {
-      // Save to newsletter_subscriptions table
+      if (isDemoMode()) {
+        setIsSuccess(true)
+        toast.success('Demo Mode: Subscription saved! In production, this would be stored in the database.')
+        setIsSubmitting(false)
+        return
+      }
+
       const { error } = await supabase
         .from('newsletter_subscriptions')
         .upsert({

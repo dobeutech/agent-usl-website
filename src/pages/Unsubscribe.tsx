@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { CheckCircle, ArrowLeft } from "lucide-react"
 import { supabase } from "@/lib/supabase"
+import { isDemoMode } from "@/lib/mockData"
 import { toast } from "sonner"
 
 export function Unsubscribe() {
@@ -31,6 +32,15 @@ export function Unsubscribe() {
 
   const loadPreferences = useCallback(async () => {
     if (!email) return
+
+    if (isDemoMode()) {
+      setPreferences({
+        newsletter: true,
+        jobNotifications: true,
+        smsNotifications: false
+      })
+      return
+    }
 
     try {
       const { data } = await supabase
