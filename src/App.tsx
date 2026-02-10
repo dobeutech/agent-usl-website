@@ -8,9 +8,9 @@ import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Toaster } from "@/components/ui/sonner"
 import { CookieConsent } from "@/components/CookieConsent"
 import { AccessibilityControls } from "@/components/AccessibilityControls"
+import { Home } from "@/pages/Home"
 
 // Lazy load pages for code splitting
-const Home = lazy(() => import("@/pages/Home").then(m => ({ default: m.Home })))
 const Employers = lazy(() => import("@/pages/Employers").then(m => ({ default: m.Employers })))
 const Forms = lazy(() => import("@/pages/Forms").then(m => ({ default: m.Forms })))
 const ServiceAreaPage = lazy(() => import("@/pages/ServiceAreaPage").then(m => ({ default: m.ServiceAreaPage })))

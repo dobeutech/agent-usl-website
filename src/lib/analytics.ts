@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { isDemoMode } from './mockData'
 
 interface ConsentPreferences {
   essential: boolean
@@ -51,6 +52,7 @@ function getDeviceInfo() {
 // Track visitor (called when consent is given)
 export async function trackVisitor(consent: ConsentPreferences) {
   if (!consent.analytics && !consent.marketing) return
+  if (isDemoMode()) return
 
   const visitorId = getVisitorId()
   const utm = getUTMParameters()
@@ -79,6 +81,7 @@ export async function trackVisitor(consent: ConsentPreferences) {
 // Track page view
 export async function trackPageView(consent: ConsentPreferences) {
   if (!consent.analytics) return
+  if (isDemoMode()) return
 
   const visitorId = getVisitorId()
   const startTime = Date.now()
@@ -127,6 +130,7 @@ export async function trackPageView(consent: ConsentPreferences) {
 
 // Update cookie consent in database
 export async function updateCookieConsent(consent: ConsentPreferences) {
+  if (isDemoMode()) return
   const visitorId = getVisitorId()
   const device = getDeviceInfo()
 

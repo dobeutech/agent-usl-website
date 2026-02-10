@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { useKV } from "@github/spark/hooks"
+import { useState, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -24,7 +23,7 @@ interface ContactSubmission {
 export function Contact() {
   const { businessInfo } = useBusinessInfo()
   const { t } = useLanguage()
-  const [, setSubmissions] = useKV<ContactSubmission[]>("contact-submissions", [])
+  const [submissions, setSubmissions] = useState<ContactSubmission[]>([])
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,7 +43,7 @@ export function Contact() {
       timestamp: Date.now()
     }
 
-    setSubmissions((current) => [...(current || []), submission])
+    setSubmissions(prev => [...prev, submission])
 
     toast.success(t('contact.success'))
 

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 import { supabase } from "@/lib/supabase"
+import { isDemoMode } from "@/lib/mockData"
 import type { BusinessInfo } from "@/types/business-info"
 
 interface BusinessInfoContextType {
@@ -103,6 +104,11 @@ export function BusinessInfoProvider({ children }: BusinessInfoProviderProps) {
   }
 
   useEffect(() => {
+    if (isDemoMode()) {
+      setBusinessInfo(defaultBusinessInfo)
+      setLoading(false)
+      return
+    }
     fetchBusinessInfo()
   }, [])
 
