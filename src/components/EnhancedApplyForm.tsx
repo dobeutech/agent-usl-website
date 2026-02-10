@@ -291,12 +291,25 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
 
       // In demo mode, show success message without actual database submission
       if (isDemoMode()) {
-        toast.success("Demo Mode: Application submitted successfully!", {
-          description: "In production mode, your application would be stored and a verification email would be sent.",
+        try {
+          await fetch(`${window.location.origin}/api/application-notification`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fullName: formData.full_name,
+              email: formData.email,
+              phone: formData.phone,
+              position: formData.positions.join(', '),
+              experienceYears: formData.experience_years
+            })
+          })
+        } catch {}
+
+        toast.success("Application submitted successfully!", {
+          description: "We'll review your application and get back to you soon.",
           duration: 5000
         })
 
-        // Reset form in demo mode
         setFormData({
           full_name: "",
           email: "",
