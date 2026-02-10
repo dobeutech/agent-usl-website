@@ -19,13 +19,13 @@ const DEMO_USER: User = {
   id: 'demo-user-id',
   aud: 'authenticated',
   role: 'authenticated',
-  email: 'demo@uniquestaffing.com',
+  email: 'Omorilla@uniquestaffingprofessionals.com',
   email_confirmed_at: new Date().toISOString(),
   phone: '',
   confirmed_at: new Date().toISOString(),
   last_sign_in_at: new Date().toISOString(),
   app_metadata: { provider: 'demo', providers: ['demo'] },
-  user_metadata: { name: 'Demo Admin' },
+  user_metadata: { name: 'Otniel Morilla' },
   identities: [],
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString()
@@ -41,8 +41,8 @@ const DEMO_SESSION: Session = {
 }
 
 // Demo credentials for testing
-const DEMO_EMAIL = 'demo@uniquestaffing.com'
-const DEMO_PASSWORD = 'demo123'
+const DEMO_EMAIL = 'omorilla@uniquestaffingprofessionals.com'
+const DEMO_PASSWORD = 'USP@dmin2026!'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = async (email: string, password: string) => {
     if (isDemo) {
       // Demo mode login
-      if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      if (email.toLowerCase() === DEMO_EMAIL.toLowerCase() && password === DEMO_PASSWORD) {
         localStorage.setItem('demo_logged_in', 'true')
         setSession(DEMO_SESSION)
         setUser(DEMO_USER)

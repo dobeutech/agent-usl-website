@@ -27,7 +27,7 @@ export function AdminLogin() {
       if (error) {
         toast.error("Login failed", {
           description: showDemoMode
-            ? "Use demo@uniquestaffing.com / demo123"
+            ? "Use Omorilla@uniquestaffingprofessionals.com and the provided password"
             : "Invalid email or password. Please try again."
         })
       } else {
@@ -42,8 +42,8 @@ export function AdminLogin() {
   }
 
   const fillDemoCredentials = () => {
-    setEmail("demo@uniquestaffing.com")
-    setPassword("demo123")
+    setEmail("Omorilla@uniquestaffingprofessionals.com")
+    setPassword("USP@dmin2026!")
   }
 
   return (
@@ -93,7 +93,7 @@ export function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder={showDemoMode ? "demo@uniquestaffing.com" : "admin@uniquestaffing.com"}
+              placeholder={showDemoMode ? "Omorilla@uniquestaffingprofessionals.com" : "admin@uniquestaffing.com"}
               autoComplete="email"
             />
           </div>
@@ -106,7 +106,7 @@ export function AdminLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder={showDemoMode ? "demo123" : "••••••••"}
+              placeholder={showDemoMode ? "••••••••" : "••••••••"}
               autoComplete="current-password"
             />
           </div>
