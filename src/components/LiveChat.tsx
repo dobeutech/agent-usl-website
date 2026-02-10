@@ -13,13 +13,7 @@ import {
   EnvelopeSimple,
   WhatsappLogo
 } from '@phosphor-icons/react'
-
-interface Message {
-  id: string
-  text: string
-  sender: 'user' | 'bot'
-  timestamp: Date
-}
+import { useChat } from '@/contexts/ChatContext'
 
 const quickResponses = [
   { id: 'jobs', text: "I'm looking for a job", response: "Great! We have many opportunities available. You can browse our current openings in the Jobs section above, or fill out our application form and we'll match you with suitable positions. What type of work are you interested in?" },
@@ -30,12 +24,17 @@ const quickResponses = [
 ]
 
 export function LiveChat() {
+  const { conversations, startConversation, sendUserMessage, sendBotMessage } = useChat()
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [conversationId, setConversationId] = useState<string | null>(null)
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [showQuickReplies, setShowQuickReplies] = useState(true)
+  const [greetingSent, setGreetingSent] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const conversation = conversations.find(c => c.id === conversationId)
+  const messages = conversation?.messages ?? []
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -46,68 +45,70 @@ export function LiveChat() {
   }, [messages])
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      // Initial greeting
-      setTimeout(() => {
-        setMessages([{
-          id: '1',
-          text: "Hi! 👋 Welcome to Unique Staffing Professionals. I'm here to help you find the perfect job or staffing solution. How can I assist you today?",
-          sender: 'bot',
-          timestamp: new Date()
-        }])
-      }, 500)
+    if (isOpen) {
+      let activeId = conversationId
+      if (!activeId) {
+        const existingActive = conversations.find(c => c.status !== 'closed')
+        if (existingActive) {
+          activeId = existingActive.id
+          setConversationId(existingActive.id)
+        } else {
+          activeId = startConversation()
+          setConversationId(activeId)
+        }
+      }
+
+      const conv = conversations.find(c => c.id === activeId)
+      if (conv && conv.messages.length === 0 && !greetingSent) {
+        setGreetingSent(true)
+        setTimeout(() => {
+          sendBotMessage(activeId!, "Hi! 👋 Welcome to Unique Staffing Professionals. I'm here to help you find the perfect job or staffing solution. How can I assist you today?")
+        }, 500)
+      }
     }
-  }, [isOpen, messages.length])
+  }, [isOpen, conversationId, conversations, startConversation, sendBotMessage, greetingSent])
+
+  const getVisitorName = () => {
+    return conversation?.visitorName ?? 'Visitor'
+  }
 
   const handleQuickResponse = (quick: typeof quickResponses[0]) => {
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: quick.text,
-      sender: 'user',
-      timestamp: new Date()
-    }
-    setMessages(prev => [...prev, userMessage])
+    if (!conversationId) return
+
+    sendUserMessage(conversationId, quick.text)
     setShowQuickReplies(false)
 
-    // Simulate typing
     setIsTyping(true)
     setTimeout(() => {
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: quick.response,
-        sender: 'bot',
-        timestamp: new Date()
-      }
-      setMessages(prev => [...prev, botMessage])
+      sendBotMessage(conversationId, quick.response)
       setIsTyping(false)
       setShowQuickReplies(true)
     }, 1000 + Math.random() * 1000)
   }
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || !conversationId) return
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: inputValue,
-      sender: 'user',
-      timestamp: new Date()
-    }
-    setMessages(prev => [...prev, userMessage])
+    const messageText = inputValue
+    sendUserMessage(conversationId, messageText)
     setInputValue('')
     setShowQuickReplies(false)
 
-    // Simulate typing and bot response
+    try {
+      await fetch(`${window.location.origin}/api/chat-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          visitorName: getVisitorName(),
+          message: messageText,
+          conversationId
+        })
+      })
+    } catch {}
+
     setIsTyping(true)
     setTimeout(() => {
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "Thank you for your message! For personalized assistance, please call us at (301) 277-2141 or email omorilla@uniquestaffingprofessionals.com. One of our staffing specialists will be happy to help you.",
-        sender: 'bot',
-        timestamp: new Date()
-      }
-      setMessages(prev => [...prev, botMessage])
+      sendBotMessage(conversationId, "Thank you for your message! For personalized assistance, please call us at (301) 277-2141 or email omorilla@uniquestaffingprofessionals.com. One of our staffing specialists will be happy to help you.")
       setIsTyping(false)
       setShowQuickReplies(true)
     }, 1500)

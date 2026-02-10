@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { MagnifyingGlass, MapPin, Briefcase, Clock, CurrencyDollar } from "@phosphor-icons/react"
 import { supabase, Job } from "@/lib/supabase"
-import { isDemoMode } from "@/lib/mockData"
+import { isDemoMode, getDemoJobs } from "@/lib/mockData"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { motion } from "framer-motion"
 import { useRef } from "react"
@@ -21,6 +21,7 @@ export function JobListings() {
 
   useEffect(() => {
     if (isDemoMode()) {
+      setJobs(getDemoJobs())
       setLoading(false)
       return
     }

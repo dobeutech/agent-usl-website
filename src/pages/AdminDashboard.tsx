@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SignOut, Buildings, ChartBar, Info } from "@phosphor-icons/react"
+import { SignOut, Buildings, ChartBar, Info, ChatCircleDots, Briefcase } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { useAuth } from "@/contexts/AuthContext"
 import { supabase, Applicant } from "@/lib/supabase"
@@ -13,10 +13,14 @@ import { ApplicantStats } from "@/components/admin/ApplicantStats"
 import { ApplicantFilters } from "@/components/admin/ApplicantFilters"
 import { ApplicantTable } from "@/components/admin/ApplicantTable"
 import { ApplicantDetailDialog } from "@/components/admin/ApplicantDetailDialog"
+import { LiveChatAdmin } from "@/components/admin/LiveChatAdmin"
+import { JobPostingsManager } from "@/components/admin/JobPostingsManager"
+import { useChat } from "@/contexts/ChatContext"
 
 export function AdminDashboard() {
   const navigate = useNavigate()
   const { user, signOut, loading, isDemo } = useAuth()
+  const { getUnreadCount } = useChat()
   const [applicants, setApplicants] = useState<Applicant[]>([])
   const [filteredApplicants, setFilteredApplicants] = useState<Applicant[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -347,8 +351,21 @@ export function AdminDashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="applicants" className="w-full">
-          <TabsList className="mb-6">
+          <TabsList className="mb-6 flex-wrap">
             <TabsTrigger value="applicants">Applicants</TabsTrigger>
+            <TabsTrigger value="live-chat" className="relative">
+              <ChatCircleDots size={16} className="mr-2" />
+              Live Chat
+              {getUnreadCount() > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
+                  {getUnreadCount()}
+                </span>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="job-postings">
+              <Briefcase size={16} className="mr-2" />
+              Job Postings
+            </TabsTrigger>
             <TabsTrigger value="analytics">
               <ChartBar size={16} className="mr-2" />
               Analytics
@@ -394,6 +411,14 @@ export function AdminDashboard() {
               updatingStatus={updatingStatus}
               onApplicantChange={setSelectedApplicant}
             />
+          </TabsContent>
+
+          <TabsContent value="live-chat">
+            <LiveChatAdmin />
+          </TabsContent>
+
+          <TabsContent value="job-postings">
+            <JobPostingsManager />
           </TabsContent>
 
           <TabsContent value="analytics">

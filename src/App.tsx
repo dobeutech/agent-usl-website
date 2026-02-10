@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { Suspense, lazy } from "react"
 import { AuthProvider } from "@/contexts/AuthContext"
+import { ChatProvider } from "@/contexts/ChatContext"
 import { BusinessInfoProvider } from "@/contexts/BusinessInfoContext"
 import { ThemeProvider } from "@/contexts/ThemeProvider"
 import { LanguageProvider } from "@/contexts/LanguageContext"
@@ -45,37 +46,39 @@ function App() {
       <LanguageProvider>
         <AuthProvider>
           <BusinessInfoProvider>
-            <Router>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/employers" element={<Employers />} />
-                  <Route path="/forms" element={<Forms />} />
-                  <Route path="/service-area/:city" element={<ServiceAreaPage />} />
-                  <Route path="/application-confirmation" element={<ApplicationConfirmation />} />
-                  <Route path="/verify-email" element={<EmailVerification />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/privacy/sms" element={<SMSPrivacyPolicy />} />
-                  <Route path="/terms" element={<TermsOfService />} />
-                  <Route path="/tos" element={<Navigate to="/terms" replace />} />
-                  <Route path="/unsubscribe" element={<Unsubscribe />} />
-                  <Route path="/openapi/docs" element={<OpenAPIDocs />} />
-                  <Route path="/developers/api/docs" element={<OpenAPIDocs />} />
-                  <Route path="/admin/login" element={<AdminLogin />} />
-                  <Route
-                    path="/admin/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </Suspense>
-              <Toaster />
-              <CookieConsent />
-              <AccessibilityControls />
-            </Router>
+            <ChatProvider>
+              <Router>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/employers" element={<Employers />} />
+                    <Route path="/forms" element={<Forms />} />
+                    <Route path="/service-area/:city" element={<ServiceAreaPage />} />
+                    <Route path="/application-confirmation" element={<ApplicationConfirmation />} />
+                    <Route path="/verify-email" element={<EmailVerification />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/privacy/sms" element={<SMSPrivacyPolicy />} />
+                    <Route path="/terms" element={<TermsOfService />} />
+                    <Route path="/tos" element={<Navigate to="/terms" replace />} />
+                    <Route path="/unsubscribe" element={<Unsubscribe />} />
+                    <Route path="/openapi/docs" element={<OpenAPIDocs />} />
+                    <Route path="/developers/api/docs" element={<OpenAPIDocs />} />
+                    <Route path="/admin/login" element={<AdminLogin />} />
+                    <Route
+                      path="/admin/dashboard"
+                      element={
+                        <ProtectedRoute>
+                          <AdminDashboard />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                </Suspense>
+                <Toaster />
+                <CookieConsent />
+                <AccessibilityControls />
+              </Router>
+            </ChatProvider>
           </BusinessInfoProvider>
         </AuthProvider>
       </LanguageProvider>

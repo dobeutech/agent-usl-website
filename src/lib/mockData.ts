@@ -1,5 +1,5 @@
 // Mock data for demo mode when Supabase is not configured
-import type { Applicant } from './supabase'
+import type { Applicant, Job } from './supabase'
 
 // Check if we're in demo mode (no Supabase configured or force demo mode)
 export function isDemoMode(): boolean {
@@ -273,4 +273,164 @@ export function updateDemoApplicant(id: string, updates: Partial<Applicant>): Ap
 
 export function resetDemoData(): void {
   demoApplicants = [...mockApplicants]
+}
+
+function generateDemoJobs(): Job[] {
+  const now = Date.now()
+  const day = 24 * 60 * 60 * 1000
+
+  return [
+    {
+      id: 'job-1',
+      created_at: new Date(now - 5 * day).toISOString(),
+      updated_at: new Date(now - 2 * day).toISOString(),
+      title: 'Commercial Janitorial Technician',
+      description: 'We are seeking reliable and detail-oriented janitorial technicians for commercial office buildings in the Baltimore metro area. Responsibilities include floor care, restroom sanitation, trash removal, and general cleaning of common areas. Evening and weekend shifts available.',
+      requirements: 'Must be able to lift 30+ lbs. Previous commercial cleaning experience preferred. Reliable transportation required. Background check required.',
+      location_city: 'Baltimore',
+      location_state: 'MD',
+      location_zip: '21201',
+      job_type: 'full-time',
+      category: 'Janitorial',
+      salary_min: 16,
+      salary_max: 20,
+      salary_type: 'hourly',
+      is_active: true,
+      featured: true,
+      expires_at: new Date(now + 30 * day).toISOString()
+    },
+    {
+      id: 'job-2',
+      created_at: new Date(now - 10 * day).toISOString(),
+      updated_at: new Date(now - 3 * day).toISOString(),
+      title: 'Construction Laborer',
+      description: 'Join our team on active commercial construction sites throughout the DC metropolitan area. Tasks include site preparation, material handling, demolition support, and assisting skilled tradespeople. Multiple openings available for immediate start.',
+      requirements: 'OSHA 10 certification preferred. Must have steel-toe boots and basic PPE. Ability to work outdoors in various weather conditions. Must pass drug screening.',
+      location_city: 'Washington',
+      location_state: 'DC',
+      location_zip: '20001',
+      job_type: 'contract',
+      category: 'Construction',
+      salary_min: 18,
+      salary_max: 25,
+      salary_type: 'hourly',
+      is_active: true,
+      featured: true,
+      expires_at: new Date(now + 45 * day).toISOString()
+    },
+    {
+      id: 'job-3',
+      created_at: new Date(now - 7 * day).toISOString(),
+      updated_at: new Date(now - 1 * day).toISOString(),
+      title: 'Warehouse Associate / Forklift Operator',
+      description: 'Immediate openings for warehouse associates at a distribution center in Jessup, MD. Duties include receiving and shipping freight, inventory management, order picking, and operating sit-down and stand-up forklifts. First and second shifts available.',
+      requirements: 'Valid forklift certification required for operator roles. Must be able to lift up to 50 lbs repeatedly. Previous warehouse experience a plus. Steel-toe boots required.',
+      location_city: 'Jessup',
+      location_state: 'MD',
+      location_zip: '20794',
+      job_type: 'full-time',
+      category: 'Warehouse & Logistics',
+      salary_min: 17,
+      salary_max: 22,
+      salary_type: 'hourly',
+      is_active: true,
+      featured: false,
+      expires_at: new Date(now + 21 * day).toISOString()
+    },
+    {
+      id: 'job-4',
+      created_at: new Date(now - 14 * day).toISOString(),
+      updated_at: new Date(now - 5 * day).toISOString(),
+      title: 'Facilities Maintenance Technician',
+      description: 'Seeking an experienced facilities maintenance technician for a corporate campus in Silver Spring. Responsibilities include preventive maintenance, HVAC filter changes, minor plumbing and electrical repairs, painting, and responding to tenant work orders.',
+      requirements: 'Minimum 2 years of building maintenance experience. Knowledge of HVAC, plumbing, and electrical systems. Valid driver\'s license. Must be available for on-call rotation.',
+      location_city: 'Silver Spring',
+      location_state: 'MD',
+      location_zip: '20910',
+      job_type: 'full-time',
+      category: 'Facilities Maintenance',
+      salary_min: 45000,
+      salary_max: 55000,
+      salary_type: 'annual',
+      is_active: true,
+      featured: false,
+      expires_at: new Date(now + 60 * day).toISOString()
+    },
+    {
+      id: 'job-5',
+      created_at: new Date(now - 3 * day).toISOString(),
+      updated_at: new Date(now - 1 * day).toISOString(),
+      title: 'Administrative Assistant',
+      description: 'Our client, a growing property management company in Columbia, MD, is looking for an organized administrative assistant. Duties include answering phones, scheduling appointments, data entry, filing, and supporting the office manager with daily operations.',
+      requirements: 'Proficiency in Microsoft Office Suite. Excellent communication skills. High school diploma or equivalent required; associate degree preferred. Bilingual English/Spanish is a plus.',
+      location_city: 'Columbia',
+      location_state: 'MD',
+      location_zip: '21044',
+      job_type: 'full-time',
+      category: 'Administrative',
+      salary_min: 38000,
+      salary_max: 45000,
+      salary_type: 'annual',
+      is_active: true,
+      featured: false,
+      expires_at: new Date(now + 30 * day).toISOString()
+    },
+    {
+      id: 'job-6',
+      created_at: new Date(now - 20 * day).toISOString(),
+      updated_at: new Date(now - 15 * day).toISOString(),
+      title: 'Part-Time Facilities Coordinator',
+      description: 'Part-time facilities coordinator needed for a mixed-use commercial property in Bethesda. Coordinate vendor schedules, manage work orders, conduct building inspections, and ensure compliance with safety regulations. Flexible schedule, 20-25 hours per week.',
+      requirements: 'Experience in facilities management or property management. Strong organizational and communication skills. Familiarity with CMMS software a plus. Must be detail-oriented.',
+      location_city: 'Bethesda',
+      location_state: 'MD',
+      location_zip: '20814',
+      job_type: 'part-time',
+      category: 'Facilities Management',
+      salary_min: 22,
+      salary_max: 28,
+      salary_type: 'hourly',
+      is_active: true,
+      featured: false,
+      expires_at: new Date(now + 14 * day).toISOString()
+    }
+  ]
+}
+
+export const demoJobs = generateDemoJobs()
+
+let demoJobsList = [...demoJobs]
+
+export function getDemoJobs(): Job[] {
+  return [...demoJobsList]
+}
+
+export function addDemoJob(job: Omit<Job, 'id' | 'created_at' | 'updated_at'>): Job {
+  const newJob: Job = {
+    ...job,
+    id: `job-${Date.now()}`,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+  demoJobsList = [newJob, ...demoJobsList]
+  return newJob
+}
+
+export function updateDemoJob(id: string, updates: Partial<Job>): Job | null {
+  const index = demoJobsList.findIndex(j => j.id === id)
+  if (index === -1) return null
+
+  demoJobsList[index] = {
+    ...demoJobsList[index],
+    ...updates,
+    updated_at: new Date().toISOString()
+  }
+  return demoJobsList[index]
+}
+
+export function deleteDemoJob(id: string): boolean {
+  const index = demoJobsList.findIndex(j => j.id === id)
+  if (index === -1) return false
+  demoJobsList.splice(index, 1)
+  return true
 }
