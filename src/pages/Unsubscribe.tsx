@@ -67,6 +67,13 @@ export function Unsubscribe() {
       return
     }
 
+    if (isDemoMode()) {
+      setIsSuccess(true)
+      toast.success(t('unsubscribe.successTitle'))
+      setIsSubmitting(false)
+      return
+    }
+
     setIsSubmitting(true)
 
     try {

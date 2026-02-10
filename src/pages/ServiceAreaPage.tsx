@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { supabase } from "@/lib/supabase"
+import { isDemoMode } from "@/lib/mockData"
 import { Navigation } from "@/components/Navigation"
 import { Footer } from "@/components/Footer"
 import { Contact } from "@/components/Contact"
@@ -44,6 +45,11 @@ export function ServiceAreaPage() {
   useEffect(() => {
     const fetchServiceAreaData = async () => {
       if (!city) return
+
+      if (isDemoMode()) {
+        setLoading(false)
+        return
+      }
 
       try {
         setLoading(true)

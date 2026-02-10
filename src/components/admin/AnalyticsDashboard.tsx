@@ -20,6 +20,7 @@ import {
   Cell
 } from 'recharts'
 import { Users, Briefcase, Clock, TrendingUp } from 'lucide-react'
+import { isDemoMode, getDemoApplicants } from '@/lib/mockData'
 
 const COLORS = ['#73B77D', '#6DA373', '#679169', '#617F5F', '#5B6D55']
 
@@ -34,6 +35,12 @@ export function AnalyticsDashboard() {
   }, [dateRange])
 
   const fetchApplicants = useCallback(async () => {
+    if (isDemoMode()) {
+      setApplicants(getDemoApplicants())
+      setLoading(false)
+      return
+    }
+
     try {
       setLoading(true)
 

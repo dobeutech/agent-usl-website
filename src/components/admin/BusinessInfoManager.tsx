@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
 import { toast } from "sonner"
 import { Save, RefreshCw } from "lucide-react"
+import { isDemoMode } from "@/lib/mockData"
 import type { BusinessInfo } from "@/types/business-info"
 
 export function BusinessInfoManager() {
@@ -24,6 +25,12 @@ export function BusinessInfoManager() {
   const handleSave = async () => {
     if (!formData.id) {
       toast.error("Business info ID is required")
+      return
+    }
+
+    if (isDemoMode()) {
+      toast.success("Demo Mode: Changes saved locally (not persisted to database)")
+      setIsSaving(false)
       return
     }
 

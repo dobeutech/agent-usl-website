@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, CheckCircle } from "@phosphor-icons/react"
 import { toast } from "sonner"
 import { supabase, ApplicantInsert } from "@/lib/supabase"
+import { isDemoMode } from "@/lib/mockData"
 import { useLanguage } from "@/contexts/LanguageContext"
 
 interface ApplyFormProps {
@@ -50,6 +51,10 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
   }
 
   const uploadResume = async (file: File): Promise<{ url: string; filename: string } | null> => {
+    if (isDemoMode()) {
+      return { url: `demo://${file.name}`, filename: file.name }
+    }
+
     try {
       const fileExt = file.name.split('.').pop()
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
@@ -63,7 +68,6 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
         throw uploadError
       }
 
-      // Return path instead of public URL
       return { url: filePath, filename: file.name }
     } catch (error) {
       console.error('Error uploading resume:', error)

@@ -349,9 +349,6 @@ export async function uploadFile(
 
     // In demo mode, simulate file upload with a mock URL
     if (isDemoMode()) {
-      // Create a blob URL for demo purposes (file is stored in browser memory)
-      // Note: blob URL is created but not stored as it's not needed in demo mode
-      URL.createObjectURL(file)
       return {
         path: `demo://storage/${bucket}/${filePath}`,
         filename: file.name
@@ -387,6 +384,10 @@ export async function createEmailVerificationLog(
   token: string,
   applicantId?: string
 ): Promise<boolean> {
+  if (isDemoMode()) {
+    return true
+  }
+
   try {
     const { error } = await supabase
       .from('email_verification_log')
@@ -466,7 +467,7 @@ export async function verifyEmailToken(token: string): Promise<{
   try {
     const { data, error } = await supabase
       .from('email_verification_log')
-      .select('email, applicant_id, verified_at')
+      .select('email, applicant_id, verified_at, sent_at')
       .eq('token', token)
       .maybeSingle()
 
@@ -474,9 +475,15 @@ export async function verifyEmailToken(token: string): Promise<{
       return { valid: false, email: null, applicantId: null }
     }
 
-    // Check if already verified
     if (data.verified_at) {
       return { valid: true, email: data.email, applicantId: data.applicant_id }
+    }
+
+    const sentAt = new Date(data.sent_at)
+    const now = new Date()
+    const hoursSinceSent = (now.getTime() - sentAt.getTime()) / (1000 * 60 * 60)
+    if (hoursSinceSent > 24) {
+      return { valid: false, email: null, applicantId: null }
     }
 
     // Mark as verified
