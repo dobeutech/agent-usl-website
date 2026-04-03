@@ -303,7 +303,9 @@ export function EnhancedApplyForm({ onSuccess }: EnhancedApplyFormProps) {
               experienceYears: formData.experience_years
             })
           })
-        } catch {}
+        } catch {
+          // Ignore notification errors in demo mode
+        }
 
         toast.success("Application submitted successfully!", {
           description: "We'll review your application and get back to you soon.",
