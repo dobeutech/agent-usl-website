@@ -150,7 +150,9 @@ function loadConversations(): ChatConversation[] {
         return parsed
       }
     }
-  } catch {}
+  } catch {
+    /* ignore corrupt or unreadable localStorage */
+  }
   const demo = generateDemoConversations()
   localStorage.setItem(STORAGE_KEY, JSON.stringify(demo))
   return demo

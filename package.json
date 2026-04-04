@@ -12,6 +12,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@datadog/browser-logs": "^6.32.0",
+        "@datadog/browser-rum": "^6.32.0",
         "@github/spark": "^0.39.0",
         "@heroicons/react": "^2.2.0",
         "@hookform/resolvers": "^4.1.3",
