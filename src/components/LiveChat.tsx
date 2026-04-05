@@ -104,7 +104,9 @@ export function LiveChat() {
           conversationId
         })
       })
-    } catch {}
+    } catch {
+      /* best-effort: admin email may be unavailable in static deploy */
+    }
 
     setIsTyping(true)
     setTimeout(() => {
