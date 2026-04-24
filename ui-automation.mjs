@@ -156,7 +156,7 @@ const checkHome = async (page, expected, combo, expectsDark) => {
   record(combo, 'home', 'benefits section', textIncludes(snapshot.text, expected.benefitsMarker))
   record(combo, 'home', 'forms link', textIncludes(snapshot.text, expected.formsLink))
   record(combo, 'home', 'whatsapp link', snapshot.hasWhatsApp)
-  record(combo, 'home', 'suite R22 address', /\br22\b/i.test(normalizedText))
+  record(combo, 'home', 'suite R20 address', /\br20\b/i.test(normalizedText))
   record(combo, 'home', 'eFax number', snapshot.text.includes('+12403923898'))
   record(combo, 'home', 'no horizontal overflow', snapshot.noOverflow)
   record(
