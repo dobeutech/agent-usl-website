@@ -51,7 +51,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: TypeScript check
-        run: npx tsc --noEmit -p tsconfig.json
+        run: npx tsc --noEmit --strict -p tsconfig.json
 
       - name: Check for any types
         run: |

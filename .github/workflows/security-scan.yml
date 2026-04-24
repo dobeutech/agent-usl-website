@@ -97,11 +97,7 @@ jobs:
       - name: TruffleHog Secret Scanning
         uses: trufflesecurity/trufflehog@main
         with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
-          extra_args: --debug --only-verified
-        continue-on-error: true
+          extra_args: --only-verified
 
       # 6. Check for hardcoded credentials
       - name: Check for hardcoded secrets
