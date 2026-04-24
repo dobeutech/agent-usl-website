@@ -135,11 +135,6 @@ export function Footer() {
                 >
                   {t('footer.tagline')}
                 </p>
-                {businessInfo.ceo && (
-                  <p className="text-white/70 text-sm mb-4">
-                    CEO: {businessInfo.ceo}
-                  </p>
-                )}
               </div>
               
               {/* Social Links - outside the box */}
@@ -295,16 +290,6 @@ export function Footer() {
           </motion.div>
         </div>
 
-        {/* CEO Signature */}
-        <div className="relative mt-8 flex justify-center">
-          <div className="bg-gradient-to-t from-black/40 to-transparent absolute inset-0 rounded-lg" />
-          <img
-            src="/footer-otniel.gif"
-            alt="Otniel Morilla - CEO / President"
-            className="relative max-w-md w-full h-auto rounded-lg"
-            loading="lazy"
-          />
-        </div>
       </motion.footer>
     </>
   )
