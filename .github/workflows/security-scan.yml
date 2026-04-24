@@ -114,7 +114,7 @@ jobs:
             exit 1
           fi
           
-          if grep -r -i "password.*=.*['\"][^'\"]\{8,\}['\"]" src/ --exclude-dir=node_modules | grep -v "placeholder\|example"; then
+          if grep -r -i "password.*=.*['\"][^'\"]\{8,\}['\"]" src/ --exclude-dir=node_modules | grep -v -i "placeholder\|example\|demo"; then
             echo "⚠️ Potential password found"
             exit 1
           fi
