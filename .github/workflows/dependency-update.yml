@@ -28,7 +28,7 @@ jobs:
 
       - name: Create issue for outdated dependencies
         if: hashFiles('outdated.json') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -186,7 +186,7 @@ jobs:
 
       - name: Create security issue
         if: env.AUDIT_FAILED == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
