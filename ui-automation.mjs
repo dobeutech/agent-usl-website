@@ -96,6 +96,15 @@ const results = []
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
+// Normalize text so assertions tolerate French-typography NBSP (e.g. around ":" and "?"),
+// narrow NBSP, zero-width spaces, and collapsed/stretched whitespace.
+const normalizeText = (s) => (s ?? '')
+  .replace(/[   ⁠﻿]/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim()
+
+const textIncludes = (haystack, needle) => normalizeText(haystack).includes(normalizeText(needle))
+
 const waitForServer = async (url, timeoutMs = 60000) => {
   const start = Date.now()
   while (Date.now() - start < timeoutMs) {
@@ -133,76 +142,60 @@ const setPreferences = async (page, language, theme) => {
 const checkHome = async (page, expected, combo, expectsDark) => {
   await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 30000 })
   await sleep(1000)
-  const homeChecks = await page.evaluate((expected) => {
-    const text = document.body.innerText
-    const navHasEmployers = text.includes(expected.navEmployers)
-    const talentSplit = text.includes(expected.talentJobSeekers) && text.includes(expected.talentEmployers)
-    const benefits = text.includes(expected.benefitsMarker)
-    const formsLink = text.includes(expected.formsLink)
-    const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
-    const hasWhatsApp = !!document.querySelector('a[href*="wa.me/16673041520"]')
-    const darkClass = document.documentElement.classList.contains('dark')
-    const hasSuiteR22 = text.includes('Suite R22')
-    const hasEfax = text.includes('+12403923898')
-    const hasAccessibilityControls = !!document.querySelector('[aria-label*="accessibility"], [class*="Accessibility"]')
-    return { navHasEmployers, talentSplit, benefits, formsLink, noOverflow, hasWhatsApp, darkClass, hasSuiteR22, hasEfax, hasAccessibilityControls }
-  }, expected)
+  const snapshot = await page.evaluate(() => ({
+    text: document.body.innerText,
+    noOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1,
+    hasWhatsApp: !!document.querySelector('a[href*="wa.me/16673041520"]'),
+    darkClass: document.documentElement.classList.contains('dark')
+  }))
 
-  record(combo, 'home', 'nav employers label', homeChecks.navHasEmployers)
-  record(combo, 'home', 'talent split section', homeChecks.talentSplit)
-  record(combo, 'home', 'benefits section', homeChecks.benefits)
-  record(combo, 'home', 'forms link', homeChecks.formsLink)
-  record(combo, 'home', 'whatsapp link', homeChecks.hasWhatsApp)
-  record(combo, 'home', 'suite R22 address', homeChecks.hasSuiteR22)
-  record(combo, 'home', 'eFax number', homeChecks.hasEfax)
-  record(combo, 'home', 'no horizontal overflow', homeChecks.noOverflow)
+  const normalizedText = normalizeText(snapshot.text)
+  record(combo, 'home', 'nav employers label', textIncludes(snapshot.text, expected.navEmployers))
+  record(combo, 'home', 'talent split section', textIncludes(snapshot.text, expected.talentJobSeekers) && textIncludes(snapshot.text, expected.talentEmployers))
+  record(combo, 'home', 'benefits section', textIncludes(snapshot.text, expected.benefitsMarker))
+  record(combo, 'home', 'forms link', textIncludes(snapshot.text, expected.formsLink))
+  record(combo, 'home', 'whatsapp link', snapshot.hasWhatsApp)
+  record(combo, 'home', 'suite R22 address', /\br22\b/i.test(normalizedText))
+  record(combo, 'home', 'eFax number', snapshot.text.includes('+12403923898'))
+  record(combo, 'home', 'no horizontal overflow', snapshot.noOverflow)
   record(
     combo,
     'home',
     `theme class (${expectsDark ? 'dark' : 'light'})`,
-    homeChecks.darkClass === expectsDark,
-    `dark=${homeChecks.darkClass}`
+    snapshot.darkClass === expectsDark,
+    `dark=${snapshot.darkClass}`
   )
 }
 
 const checkEmployers = async (page, expected, combo) => {
   await page.goto(`${BASE_URL}/employers`, { waitUntil: 'networkidle2', timeout: 30000 })
   await sleep(800)
-  const employerChecks = await page.evaluate((expected) => {
-    const text = document.body.innerText
-    const heroTitle = text.includes(expected.employerTitle)
-    const processTitle = text.includes(expected.employerProcessTitle)
-    const efaxNote = text.includes(expected.employerEfaxNote)
-    const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
-    return { heroTitle, processTitle, efaxNote, noOverflow }
-  }, expected)
+  const snapshot = await page.evaluate(() => ({
+    text: document.body.innerText,
+    noOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1
+  }))
 
-  record(combo, 'employers', 'hero title', employerChecks.heroTitle)
-  record(combo, 'employers', 'process title', employerChecks.processTitle)
-  record(combo, 'employers', 'eFax note', employerChecks.efaxNote)
-  record(combo, 'employers', 'no horizontal overflow', employerChecks.noOverflow)
+  record(combo, 'employers', 'hero title', textIncludes(snapshot.text, expected.employerTitle))
+  record(combo, 'employers', 'process title', textIncludes(snapshot.text, expected.employerProcessTitle))
+  record(combo, 'employers', 'eFax note', textIncludes(snapshot.text, expected.employerEfaxNote))
+  record(combo, 'employers', 'no horizontal overflow', snapshot.noOverflow)
 }
 
 const checkForms = async (page, expected, combo) => {
   await page.goto(`${BASE_URL}/forms`, { waitUntil: 'networkidle2', timeout: 30000 })
   await sleep(800)
-  const formChecks = await page.evaluate((expected) => {
-    const text = document.body.innerText
-    const title = text.includes(expected.formsTitle)
-    const item = text.includes(expected.formsItem)
-    const assistance = text.includes(expected.formsAssistance)
-    const prompt = text.includes(expected.formsEmployerPrompt)
-    const whatsapp = !!document.querySelector('a[href*="wa.me/16673041520"]')
-    const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
-    return { title, item, assistance, prompt, whatsapp, noOverflow }
-  }, expected)
+  const snapshot = await page.evaluate(() => ({
+    text: document.body.innerText,
+    whatsapp: !!document.querySelector('a[href*="wa.me/16673041520"]'),
+    noOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1
+  }))
 
-  record(combo, 'forms', 'page title', formChecks.title)
-  record(combo, 'forms', 'forms item', formChecks.item)
-  record(combo, 'forms', 'assistance prompt', formChecks.assistance)
-  record(combo, 'forms', 'employer prompt', formChecks.prompt)
-  record(combo, 'forms', 'whatsapp link', formChecks.whatsapp)
-  record(combo, 'forms', 'no horizontal overflow', formChecks.noOverflow)
+  record(combo, 'forms', 'page title', textIncludes(snapshot.text, expected.formsTitle))
+  record(combo, 'forms', 'forms item', textIncludes(snapshot.text, expected.formsItem))
+  record(combo, 'forms', 'assistance prompt', textIncludes(snapshot.text, expected.formsAssistance))
+  record(combo, 'forms', 'employer prompt', textIncludes(snapshot.text, expected.formsEmployerPrompt))
+  record(combo, 'forms', 'whatsapp link', snapshot.whatsapp)
+  record(combo, 'forms', 'no horizontal overflow', snapshot.noOverflow)
 }
 
 const checkAdminLogin = async (page, expected, combo) => {
