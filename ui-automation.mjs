@@ -97,10 +97,11 @@ const results = []
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 // Normalize text so assertions tolerate French-typography NBSP (e.g. around ":" and "?"),
-// narrow NBSP, zero-width spaces, and collapsed/stretched whitespace.
-const normalizeText = (s) => (s ?? '')
-  .replace(/[   ⁠﻿]/g, ' ')
-  .replace(/\s+/g, ' ')
+// narrow/figure NBSP, zero-width spaces (U+200B family, word joiner, BOM), and
+// collapsed/stretched whitespace.
+const normalizeText = (s) => (s ?? "")
+  .replace(/[   ​‌‍⁠﻿]/g, " ")
+  .replace(/\s+/g, " ")
   .trim()
 
 const textIncludes = (haystack, needle) => normalizeText(haystack).includes(normalizeText(needle))

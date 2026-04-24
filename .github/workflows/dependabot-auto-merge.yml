@@ -38,6 +38,9 @@ jobs:
         if: steps.metadata.outputs.update-type == 'version-update:semver-major'
         run: |
           gh pr comment "$PR_URL" --body "⚠️ **Major version bump detected** (${{ steps.metadata.outputs.dependency-names }} ${{ steps.metadata.outputs.previous-version }} → ${{ steps.metadata.outputs.new-version }}).\n\nThis PR requires manual review before merging. Please check the changelog for breaking changes.\n\n*Auto-flagged by DTS Dependabot pipeline*"
+          if ! gh label list --limit 1000 --json name --jq '.[].name' | grep -qx "needs-review"; then
+            gh label create "needs-review" --description "Requires manual review before merging" --color "FBCA04"
+          fi
           gh pr edit "$PR_URL" --add-label "needs-review"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
