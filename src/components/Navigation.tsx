@@ -127,7 +127,7 @@ export function Navigation() {
                 <motion.img
                   src="/logo.svg"
                   alt="Unique Staffing Professionals Logo"
-                  className="h-10 lg:h-12 w-auto"
+                  className="h-12 lg:h-16 w-auto"
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 />

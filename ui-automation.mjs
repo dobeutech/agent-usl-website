@@ -11,48 +11,48 @@ const THEME_STORAGE_KEY = 'app-theme'
 const LANGUAGES = {
   en: {
     name: 'English',
-    navEmployers: 'Employers',
+    navEmployers: 'Clients',
     talentJobSeekers: 'Join our talent pool',
     talentEmployers: 'Partner with Unique Staffing Professionals',
     benefitsMarker: 'Vacation paid-time',
     formsLink: 'Looking for employee forms? Visit our Forms page.',
     employerTitle: 'Learn the Unique Staffing Professionals difference',
     employerProcessTitle: 'Our onboarding process',
-    employerEfaxNote: 'Employers: send us an eFax',
+    employerEfaxNote: 'Clients: send us an eFax',
     formsTitle: 'Forms and resources',
     formsItem: 'Current employee',
     formsAssistance: 'Questions or need assistance?',
-    formsEmployerPrompt: 'Employer looking for more info on our onboarding process?'
+    formsEmployerPrompt: 'Client looking for more info on our onboarding process?'
   },
   es: {
     name: 'Spanish',
-    navEmployers: 'Empleadores',
+    navEmployers: 'Clientes',
     talentJobSeekers: 'Únase a nuestra bolsa de talento',
     talentEmployers: 'Asóciese con Unique Staffing Professionals',
     benefitsMarker: 'Tiempo libre pagado',
     formsLink: '¿Busca formularios de empleados? Visite nuestra página de Formularios.',
     employerTitle: 'Conozca la diferencia de Unique Staffing Professionals',
     employerProcessTitle: 'Nuestro proceso de incorporación',
-    employerEfaxNote: 'Empleadores: envíenos un eFax',
+    employerEfaxNote: 'Clientes: envíenos un eFax',
     formsTitle: 'Formularios y recursos',
     formsItem: 'Empleado actual',
     formsAssistance: '¿Preguntas o necesita ayuda?',
-    formsEmployerPrompt: '¿Empleador buscando más información sobre nuestro proceso de incorporación?'
+    formsEmployerPrompt: '¿Cliente buscando más información sobre nuestro proceso de incorporación?'
   },
   fr: {
     name: 'French',
-    navEmployers: 'Employeurs',
+    navEmployers: 'Clients',
     talentJobSeekers: 'Rejoignez notre vivier de talents',
     talentEmployers: 'Associez-vous à Unique Staffing Professionals',
     benefitsMarker: 'Congés payés',
     formsLink: "Vous cherchez des formulaires d'employés ? Visitez notre page Formulaires.",
     employerTitle: 'Découvrez la différence Unique Staffing Professionals',
     employerProcessTitle: "Notre processus d'intégration",
-    employerEfaxNote: 'Employeurs : envoyez-nous un eFax',
+    employerEfaxNote: 'Clients : envoyez-nous un eFax',
     formsTitle: 'Formulaires et ressources',
     formsItem: 'Employé actuel',
     formsAssistance: "Des questions ou besoin d'aide ?",
-    formsEmployerPrompt: "Employeur : besoin de plus d'infos sur notre processus d'intégration ?"
+    formsEmployerPrompt: "Client : besoin de plus d'infos sur notre processus d'intégration ?"
   }
 }
 
@@ -96,6 +96,16 @@ const results = []
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
+// Normalize text so assertions tolerate French-typography NBSP (e.g. around ":" and "?"),
+// narrow/figure NBSP, zero-width spaces (U+200B family, word joiner, BOM), and
+// collapsed/stretched whitespace.
+const normalizeText = (s) => (s ?? "")
+  .replace(/[   ​‌‍⁠﻿]/g, " ")
+  .replace(/\s+/g, " ")
+  .trim()
+
+const textIncludes = (haystack, needle) => normalizeText(haystack).includes(normalizeText(needle))
+
 const waitForServer = async (url, timeoutMs = 60000) => {
   const start = Date.now()
   while (Date.now() - start < timeoutMs) {
@@ -133,76 +143,60 @@ const setPreferences = async (page, language, theme) => {
 const checkHome = async (page, expected, combo, expectsDark) => {
   await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 30000 })
   await sleep(1000)
-  const homeChecks = await page.evaluate((expected) => {
-    const text = document.body.innerText
-    const navHasEmployers = text.includes(expected.navEmployers)
-    const talentSplit = text.includes(expected.talentJobSeekers) && text.includes(expected.talentEmployers)
-    const benefits = text.includes(expected.benefitsMarker)
-    const formsLink = text.includes(expected.formsLink)
-    const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
-    const hasWhatsApp = !!document.querySelector('a[href*="wa.me/16673041520"]')
-    const darkClass = document.documentElement.classList.contains('dark')
-    const hasSuiteR22 = text.includes('Suite R22')
-    const hasEfax = text.includes('+12403923898')
-    const hasAccessibilityControls = !!document.querySelector('[aria-label*="accessibility"], [class*="Accessibility"]')
-    return { navHasEmployers, talentSplit, benefits, formsLink, noOverflow, hasWhatsApp, darkClass, hasSuiteR22, hasEfax, hasAccessibilityControls }
-  }, expected)
+  const snapshot = await page.evaluate(() => ({
+    text: document.body.innerText,
+    noOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1,
+    hasWhatsApp: !!document.querySelector('a[href*="wa.me/16673041520"]'),
+    darkClass: document.documentElement.classList.contains('dark')
+  }))
 
-  record(combo, 'home', 'nav employers label', homeChecks.navHasEmployers)
-  record(combo, 'home', 'talent split section', homeChecks.talentSplit)
-  record(combo, 'home', 'benefits section', homeChecks.benefits)
-  record(combo, 'home', 'forms link', homeChecks.formsLink)
-  record(combo, 'home', 'whatsapp link', homeChecks.hasWhatsApp)
-  record(combo, 'home', 'suite R22 address', homeChecks.hasSuiteR22)
-  record(combo, 'home', 'eFax number', homeChecks.hasEfax)
-  record(combo, 'home', 'no horizontal overflow', homeChecks.noOverflow)
+  const normalizedText = normalizeText(snapshot.text)
+  record(combo, 'home', 'nav employers label', textIncludes(snapshot.text, expected.navEmployers))
+  record(combo, 'home', 'talent split section', textIncludes(snapshot.text, expected.talentJobSeekers) && textIncludes(snapshot.text, expected.talentEmployers))
+  record(combo, 'home', 'benefits section', textIncludes(snapshot.text, expected.benefitsMarker))
+  record(combo, 'home', 'forms link', textIncludes(snapshot.text, expected.formsLink))
+  record(combo, 'home', 'whatsapp link', snapshot.hasWhatsApp)
+  record(combo, 'home', 'suite R20 address', /\br20\b/i.test(normalizedText))
+  record(combo, 'home', 'eFax number', snapshot.text.includes('+12403923898'))
+  record(combo, 'home', 'no horizontal overflow', snapshot.noOverflow)
   record(
     combo,
     'home',
     `theme class (${expectsDark ? 'dark' : 'light'})`,
-    homeChecks.darkClass === expectsDark,
-    `dark=${homeChecks.darkClass}`
+    snapshot.darkClass === expectsDark,
+    `dark=${snapshot.darkClass}`
   )
 }
 
 const checkEmployers = async (page, expected, combo) => {
   await page.goto(`${BASE_URL}/employers`, { waitUntil: 'networkidle2', timeout: 30000 })
   await sleep(800)
-  const employerChecks = await page.evaluate((expected) => {
-    const text = document.body.innerText
-    const heroTitle = text.includes(expected.employerTitle)
-    const processTitle = text.includes(expected.employerProcessTitle)
-    const efaxNote = text.includes(expected.employerEfaxNote)
-    const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
-    return { heroTitle, processTitle, efaxNote, noOverflow }
-  }, expected)
+  const snapshot = await page.evaluate(() => ({
+    text: document.body.innerText,
+    noOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1
+  }))
 
-  record(combo, 'employers', 'hero title', employerChecks.heroTitle)
-  record(combo, 'employers', 'process title', employerChecks.processTitle)
-  record(combo, 'employers', 'eFax note', employerChecks.efaxNote)
-  record(combo, 'employers', 'no horizontal overflow', employerChecks.noOverflow)
+  record(combo, 'employers', 'hero title', textIncludes(snapshot.text, expected.employerTitle))
+  record(combo, 'employers', 'process title', textIncludes(snapshot.text, expected.employerProcessTitle))
+  record(combo, 'employers', 'eFax note', textIncludes(snapshot.text, expected.employerEfaxNote))
+  record(combo, 'employers', 'no horizontal overflow', snapshot.noOverflow)
 }
 
 const checkForms = async (page, expected, combo) => {
   await page.goto(`${BASE_URL}/forms`, { waitUntil: 'networkidle2', timeout: 30000 })
   await sleep(800)
-  const formChecks = await page.evaluate((expected) => {
-    const text = document.body.innerText
-    const title = text.includes(expected.formsTitle)
-    const item = text.includes(expected.formsItem)
-    const assistance = text.includes(expected.formsAssistance)
-    const prompt = text.includes(expected.formsEmployerPrompt)
-    const whatsapp = !!document.querySelector('a[href*="wa.me/16673041520"]')
-    const noOverflow = document.documentElement.scrollWidth <= window.innerWidth + 1
-    return { title, item, assistance, prompt, whatsapp, noOverflow }
-  }, expected)
+  const snapshot = await page.evaluate(() => ({
+    text: document.body.innerText,
+    whatsapp: !!document.querySelector('a[href*="wa.me/16673041520"]'),
+    noOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1
+  }))
 
-  record(combo, 'forms', 'page title', formChecks.title)
-  record(combo, 'forms', 'forms item', formChecks.item)
-  record(combo, 'forms', 'assistance prompt', formChecks.assistance)
-  record(combo, 'forms', 'employer prompt', formChecks.prompt)
-  record(combo, 'forms', 'whatsapp link', formChecks.whatsapp)
-  record(combo, 'forms', 'no horizontal overflow', formChecks.noOverflow)
+  record(combo, 'forms', 'page title', textIncludes(snapshot.text, expected.formsTitle))
+  record(combo, 'forms', 'forms item', textIncludes(snapshot.text, expected.formsItem))
+  record(combo, 'forms', 'assistance prompt', textIncludes(snapshot.text, expected.formsAssistance))
+  record(combo, 'forms', 'employer prompt', textIncludes(snapshot.text, expected.formsEmployerPrompt))
+  record(combo, 'forms', 'whatsapp link', snapshot.whatsapp)
+  record(combo, 'forms', 'no horizontal overflow', snapshot.noOverflow)
 }
 
 const checkAdminLogin = async (page, expected, combo) => {

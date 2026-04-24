@@ -67,18 +67,9 @@ export function AdminLogin() {
               <Info size={20} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
               <div className="text-sm">
                 <p className="font-medium text-amber-600 dark:text-amber-400 mb-1">Demo Mode</p>
-                <p className="text-muted-foreground mb-2">
-                  Supabase is not configured. Use demo credentials to test the dashboard.
+                <p className="text-muted-foreground">
+                  Supabase is not configured. Use the sample credentials below to explore the dashboard.
                 </p>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={fillDemoCredentials}
-                  className="text-xs"
-                >
-                  Fill Demo Credentials
-                </Button>
               </div>
             </div>
           </div>
@@ -118,6 +109,17 @@ export function AdminLogin() {
             disabled={isLoading}
           >
             {isLoading ? "Signing in..." : "Sign In"}
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            size="lg"
+            onClick={fillDemoCredentials}
+            data-testid="fill-demo-credentials"
+          >
+            Fill Sample Credentials
           </Button>
         </form>
 
