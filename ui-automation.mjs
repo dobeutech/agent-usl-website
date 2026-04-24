@@ -11,48 +11,48 @@ const THEME_STORAGE_KEY = 'app-theme'
 const LANGUAGES = {
   en: {
     name: 'English',
-    navEmployers: 'Employers',
+    navEmployers: 'Clients',
     talentJobSeekers: 'Join our talent pool',
     talentEmployers: 'Partner with Unique Staffing Professionals',
     benefitsMarker: 'Vacation paid-time',
     formsLink: 'Looking for employee forms? Visit our Forms page.',
     employerTitle: 'Learn the Unique Staffing Professionals difference',
     employerProcessTitle: 'Our onboarding process',
-    employerEfaxNote: 'Employers: send us an eFax',
+    employerEfaxNote: 'Clients: send us an eFax',
     formsTitle: 'Forms and resources',
     formsItem: 'Current employee',
     formsAssistance: 'Questions or need assistance?',
-    formsEmployerPrompt: 'Employer looking for more info on our onboarding process?'
+    formsEmployerPrompt: 'Client looking for more info on our onboarding process?'
   },
   es: {
     name: 'Spanish',
-    navEmployers: 'Empleadores',
+    navEmployers: 'Clientes',
     talentJobSeekers: 'Únase a nuestra bolsa de talento',
     talentEmployers: 'Asóciese con Unique Staffing Professionals',
     benefitsMarker: 'Tiempo libre pagado',
     formsLink: '¿Busca formularios de empleados? Visite nuestra página de Formularios.',
     employerTitle: 'Conozca la diferencia de Unique Staffing Professionals',
     employerProcessTitle: 'Nuestro proceso de incorporación',
-    employerEfaxNote: 'Empleadores: envíenos un eFax',
+    employerEfaxNote: 'Clientes: envíenos un eFax',
     formsTitle: 'Formularios y recursos',
     formsItem: 'Empleado actual',
     formsAssistance: '¿Preguntas o necesita ayuda?',
-    formsEmployerPrompt: '¿Empleador buscando más información sobre nuestro proceso de incorporación?'
+    formsEmployerPrompt: '¿Cliente buscando más información sobre nuestro proceso de incorporación?'
   },
   fr: {
     name: 'French',
-    navEmployers: 'Employeurs',
+    navEmployers: 'Clients',
     talentJobSeekers: 'Rejoignez notre vivier de talents',
     talentEmployers: 'Associez-vous à Unique Staffing Professionals',
     benefitsMarker: 'Congés payés',
     formsLink: "Vous cherchez des formulaires d'employés ? Visitez notre page Formulaires.",
     employerTitle: 'Découvrez la différence Unique Staffing Professionals',
     employerProcessTitle: "Notre processus d'intégration",
-    employerEfaxNote: 'Employeurs : envoyez-nous un eFax',
+    employerEfaxNote: 'Clients : envoyez-nous un eFax',
     formsTitle: 'Formulaires et ressources',
     formsItem: 'Employé actuel',
     formsAssistance: "Des questions ou besoin d'aide ?",
-    formsEmployerPrompt: "Employeur : besoin de plus d'infos sur notre processus d'intégration ?"
+    formsEmployerPrompt: "Client : besoin de plus d'infos sur notre processus d'intégration ?"
   }
 }
 
