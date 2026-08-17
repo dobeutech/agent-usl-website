@@ -157,7 +157,7 @@ jobs:
           path: dist/
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v3.0
+        uses: nwtgck/actions-netlify@v4.0
         with:
           publish-dir: './dist'
           production-branch: main
