@@ -92,7 +92,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload dependency check results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: dependency-check-report
@@ -132,7 +132,7 @@ jobs:
           ls -lah dist/
 
       - name: Upload production build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: production-build
           path: dist/
